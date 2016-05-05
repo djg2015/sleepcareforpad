@@ -10,6 +10,8 @@
 	<string>ewell.sleepcareforpad</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>173F61BEE8C691A7B7BFE773A926D16182DC2470</key>
+		<string>https://github.com/djg2015/sleepcareforpad.git</string>
 		<key>BC8CE8E8BBEBDC81F97830CD96DFA305BEB04BD3</key>
 		<string>github.com:djg2015/sleepcare.git</string>
 	</dict>
@@ -17,17 +19,27 @@
 	<string>ewell.sleepcareforpad.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>BC8CE8E8BBEBDC81F97830CD96DFA305BEB04BD3</key>
+		<key>173F61BEE8C691A7B7BFE773A926D16182DC2470</key>
 		<string>..</string>
+		<key>BC8CE8E8BBEBDC81F97830CD96DFA305BEB04BD3</key>
+		<string>../../ewell.sleepcareforpad</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:djg2015/sleepcare.git</string>
+	<string>https://github.com/djg2015/sleepcareforpad.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>BC8CE8E8BBEBDC81F97830CD96DFA305BEB04BD3</string>
+	<string>173F61BEE8C691A7B7BFE773A926D16182DC2470</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>173F61BEE8C691A7B7BFE773A926D16182DC2470</string>
+			<key>IDESourceControlWCCName</key>
+			<string>2.0.0</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

@@ -10,6 +10,7 @@
 		014F22D79C8AFDD24AC8065A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54127559369C5508905B3990 /* libPods.a */; };
 		0D0F2C061C3B814100758340 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D0F2C051C3B814100758340 /* LaunchScreen.xib */; };
 		0D1341C71C50BAA900051E2C /* ThemeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1341C61C50BAA900051E2C /* ThemeHelper.swift */; };
+		0D1AC3481CDC29CF005D8DBC /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D1AC3471CDC29CF005D8DBC /* Root.storyboard */; };
 		0D1F6F961CB3B5860016719C /* unnormalView.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F951CB3B5860016719C /* unnormalView.png */; };
 		0D1F6F981CB3B5A20016719C /* emptybedView.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F971CB3B5A20016719C /* emptybedView.png */; };
 		0D1F6F9A1CB3B5C50016719C /* offdutyView.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F991CB3B5C50016719C /* offdutyView.png */; };
@@ -215,6 +216,7 @@
 /* Begin PBXFileReference section */
 		0D0F2C051C3B814100758340 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		0D1341C61C50BAA900051E2C /* ThemeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeHelper.swift; sourceTree = "<group>"; };
+		0D1AC3471CDC29CF005D8DBC /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		0D1F6F951CB3B5860016719C /* unnormalView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unnormalView.png; sourceTree = "<group>"; };
 		0D1F6F971CB3B5A20016719C /* emptybedView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptybedView.png; sourceTree = "<group>"; };
 		0D1F6F991CB3B5C50016719C /* offdutyView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = offdutyView.png; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 				2C555B481BE341A0008A3AC9 /* QueryAlarmView.xib */,
 				0D9F873B1CA92238008E5F3E /* IMainView.xib */,
 				0D9F873F1CAA7F1B008E5F3E /* IQueryAlarmView.xib */,
+				0D1AC3471CDC29CF005D8DBC /* Root.storyboard */,
 			);
 			name = ipad;
 			sourceTree = "<group>";
@@ -1022,6 +1025,7 @@
 				3AFB93901BCF96F200042AF1 /* loginBtn.png in Resources */,
 				3AFB93931BCF96F200042AF1 /* textboxBorder.png in Resources */,
 				3AA3161B1BD0CFA500FC3C40 /* checkboxchoosed.png in Resources */,
+				0D1AC3481CDC29CF005D8DBC /* Root.storyboard in Resources */,
 				3A41ADC81BA7A65A000C109B /* Images.xcassets in Resources */,
 				3A9C12FF1BC789C6008EC314 /* onBed.png in Resources */,
 				0D978D9E1C3E09EE00E0CB9B /* 72pt-@2x.png in Resources */,

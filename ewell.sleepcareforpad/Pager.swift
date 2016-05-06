@@ -11,6 +11,8 @@ import UIKit
 @IBDesignable class Pager: UIView {
     var detegate:JumpPageDelegate!
     var selectedButton:UIButton!
+    
+    
     @IBInspectable var pageCount:Int = 0{
         didSet{
             self.CleanSubviews()

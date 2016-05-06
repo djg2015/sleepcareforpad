@@ -48,10 +48,6 @@ class ServerSettingController:BaseViewController {
                 showDialogMsg(ShowMessage(MessageEnum.ServerSettingSuccess), "提示", buttonTitle: "确定", action: { (isOtherButton) -> Void in
                     self.clickOK(nil)
                 })
-//                
-//                var alert = UIAlertController(title: "提示", message: "服务端配置保存成功", preferredStyle: UIAlertControllerStyle.Alert)
-//                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler:self.clickOK))
-//                self.presentViewController(alert, animated: true, completion: nil)
                 },
                 catch: { ex in
                     //异常处理

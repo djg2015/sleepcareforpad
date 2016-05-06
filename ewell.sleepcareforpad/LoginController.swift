@@ -65,7 +65,8 @@ class LoginController: BaseViewController{
     
     //点击查询类型
     func imageViewTouch(){
-       self.presentViewController(ServerSettingController(nibName:"ServerSettingView", bundle:nil), animated: true, completion: nil)
+        self.performSegueWithIdentifier("ServerSetting", sender: self)
+   
     }
     
    

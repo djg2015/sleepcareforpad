@@ -24,12 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
         
         InitPlistFile()
 
-        //设置启动界面
-            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-            self.window!.backgroundColor = UIColor.whiteColor()
-            self.window!.makeKeyAndVisible()
-            self.window!.rootViewController = UINavigationController(rootViewController:LoginController(nibName:"LoginView", bundle:nil))
-
+//        //设置启动界面
+//            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//            self.window!.backgroundColor = UIColor.whiteColor()
+//            self.window!.makeKeyAndVisible()
+//            self.window!.rootViewController = UINavigationController(rootViewController:LoginController(nibName:"LoginView", bundle:nil))
+//
         return true
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 
 
-class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate,ClearLoginInfoDelegate1 {
+class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
     //属性定义
     var _userName:String?
     dynamic var UserName:String?{
@@ -67,6 +67,7 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate,ClearLoginInfoDelegat
     
     var login: RACCommand?
     var remeberChecked: RACCommand?
+    
     
     //构造函数
     override init(){
@@ -191,21 +192,9 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate,ClearLoginInfoDelegat
                    
                     
                  //跳转主页面
-                    if (UIDevice.currentDevice().userInterfaceIdiom == .Phone){
-                    let controller = ISleepcareMainController(nibName:"IMainView", bundle:nil)
-                        if !self.IschechedBool{
-                            controller.clearlogininfoDelegate = self
-                        }
-                        self.JumpPage(controller)
+                    if self.controller != nil{
+                 self.controller.performSegueWithIdentifier("MainView", sender: self.controller)
                     }
-                    else{
-                        let controller = SleepcareMainController(nibName:"MainView", bundle:nil)
-                        if !self.IschechedBool{
-                            controller.clearlogininfoDelegate = self
-                        }
-                        self.JumpPage(controller)
-                    }
-
                     }
                 },
                 catch: { ex in

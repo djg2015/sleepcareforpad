@@ -211,64 +211,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
     }
     
     
-    //选择框
-    var _checkOnBed:Bool = true
-    dynamic var CheckOnBed:Bool{
-        get
-        {
-            return self._checkOnBed
-        }
-        set(value)
-        {
-            self._checkOnBed=value
-        }
-    }
-    var _checkLeaveBed:Bool = true
-    dynamic var CheckLeaveBed:Bool{
-        get
-        {
-            return self._checkLeaveBed
-        }
-        set(value)
-        {
-            self._checkLeaveBed=value
-        }
-    }
-    var _checkEmptyBed:Bool = true
-    dynamic var CheckEmptyBed:Bool{
-        get
-        {
-            return self._checkEmptyBed
-        }
-        set(value)
-        {
-            self._checkEmptyBed=value
-        }
-    }
-    var _checkOffDuty:Bool = true
-    dynamic var CheckOffDuty:Bool{
-        get
-        {
-            return self._checkOffDuty
-        }
-        set(value)
-        {
-            self._checkOffDuty=value
-        }
-    }
-    var _checkUnnormal:Bool = true
-    dynamic var CheckUnnormal:Bool{
-        get
-        {
-            return self._checkUnnormal
-        }
-        set(value)
-        {
-            self._checkUnnormal=value
-        }
-    }
-    
-    var _onbedCount:Int=0
+       var _onbedCount:Int=0
     dynamic var OnbedCount:Int{
         get
         {
@@ -457,7 +400,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
     func BeginWaringAttention(){
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showWarining", name: "TodoListShouldRefresh", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "CloseWaringAttention", name: "WarningClose", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,selector:"ReConnect", name:"ReConnectInternetForPad", object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self,selector:"ReConnect", name:"ReConnectInternetForPad", object: nil)
         
         self.ReloadAlarmInfo()
         
@@ -465,30 +408,29 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
         self.setWarningTimer()
     }
     
-    //弹窗提示：重新连接或退出登录
-    func ReConnect(){
-        //弹窗提示是否重连网络
-        SweetAlert(contentHeight: 300).showAlert(ShowMessage(MessageEnum.ConnectFail), subTitle:"提示", style: AlertStyle.None,buttonTitle:"退出登录",buttonColor: UIColor.colorFromRGB(0xAEDEF4),otherButtonTitle:"重新连接", otherButtonColor:UIColor.colorFromRGB(0xAEDEF4), action: self.ConnectAfterFail)
-    }
-    
-    func ConnectAfterFail(isOtherButton: Bool){
-        var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-        if isOtherButton{
-            self.CloseWaringAttention()
-            xmppMsgManager?.Close()
-            Session.ClearSession()
-            
-            let controller = LoginController(nibName:"LoginView", bundle:nil)
-            self.JumpPage(controller)
-        }
-        else{
-            var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-            let isLogin = xmppMsgManager!.RegistConnect()
-            if(!isLogin){
-                self.ReConnect()
-            }
-        }
-    }
+//    //弹窗提示：重新连接或退出登录
+//    func ReConnect(){
+//        //弹窗提示是否重连网络
+//        SweetAlert(contentHeight: 300).showAlert(ShowMessage(MessageEnum.ConnectFail), subTitle:"提示", style: AlertStyle.None,buttonTitle:"退出登录",buttonColor: UIColor.colorFromRGB(0xAEDEF4),otherButtonTitle:"重新连接", otherButtonColor:UIColor.colorFromRGB(0xAEDEF4), action: self.ConnectAfterFail)
+//    }
+//    func ConnectAfterFail(isOtherButton: Bool){
+//        var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
+//        if isOtherButton{
+//            self.CloseWaringAttention()
+//            xmppMsgManager?.Close()
+//            Session.ClearSession()
+//            
+//            let controller = LoginController(nibName:"LoginView", bundle:nil)
+//            self.JumpPage(controller)
+//        }
+//        else{
+//            var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
+//            let isLogin = xmppMsgManager!.RegistConnect()
+//            if(!isLogin){
+//                self.ReConnect()
+//            }
+//        }
+//    }
     
     // 获取未处理的报警信息，刷新todolist
     func ReloadAlarmInfo(){

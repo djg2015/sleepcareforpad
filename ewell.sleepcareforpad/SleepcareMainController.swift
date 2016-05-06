@@ -15,26 +15,26 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var lblMainName: UILabel!
     @IBOutlet weak var lblDateTime: UILabel!
-    @IBOutlet weak var lblBedCount: UILabel!
-    @IBOutlet weak var lblBindBedCount: UILabel!
     @IBOutlet weak var imgSearch: UIImageView!
     @IBOutlet weak var btnLogout: UIButton!
     @IBOutlet weak var txtSearchChoosed: UITextField!
-    @IBOutlet weak var uiWariningShow: UIView!
     @IBOutlet weak var lblWarining: UILabel!
     @IBOutlet weak var btnRefresh: UIButton!
     //床位状态
+    @IBOutlet weak var lblBedCount: UILabel!
+    @IBOutlet weak var lblBindBedCount: UILabel!
     @IBOutlet weak var lblOnBed: UILabel!
     @IBOutlet weak var lblLeaveBed: UILabel!
     @IBOutlet weak var lblEmptyBed: UILabel!
     //删选框
-    @IBOutlet weak var checkOnBed: UIImageView!
-    @IBOutlet weak var checkLeaveBed: UIImageView!
-    @IBOutlet weak var checkUnnormal: UIImageView!
-    @IBOutlet weak var checkEmptyBed: UIImageView!
-    @IBOutlet weak var checkOffDuty: UIImageView!
+    @IBOutlet weak var checkOnBed: UIButton!
+    @IBOutlet weak var checkLeaveBed: UIButton!
+    @IBOutlet weak var checkUnnormal: UIButton!
+    @IBOutlet weak var checkEmptyBed: UIButton!
+    @IBOutlet weak var checkOffDuty: UIButton!
+    //切换养老院
+    @IBOutlet weak var btnChoose: UIButton!
     
-    @IBOutlet weak var lblChoose: UILabel!
     //类字段
     var mainScroll:UIScrollView!
     var popDownList:PopDownList?
@@ -69,20 +69,18 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             if self.spinner != nil{
                 self.threadFlag = true
             }
-            
-            
-            
+
         }
     }
     
     var WarningSet:Int = 0{
         didSet{
             if(self.WarningSet > 0){
-                self.uiWariningShow.hidden = false
+               
                 self.lblWarining.text = "有" + self.WarningSet.description + "条报警未处理,请点击查看"
             }
             else{
-                self.uiWariningShow.hidden = true
+               self.lblWarining.text = ""
             }
         }
     }
@@ -159,7 +157,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         try {
             ({
                 //正常业务处理
-                self.presentViewController(DialogFrameController(nibName: "DialogFrame", userCode: bedModel.UserCode!), animated: true, completion: nil)
+             //   self.presentViewController(DialogFrameController(nibName: "DialogFrame", userCode: bedModel.UserCode!), animated: true, completion: nil)
                 },
                 catch: { ex in
                     //异常处理
@@ -188,7 +186,6 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         RACObserve(self.sleepcareMainViewModel, "OnbedCount") ~> RAC(self, "OnbedLabel")
         RACObserve(self.sleepcareMainViewModel, "LeavebedCount") ~> RAC(self, "LeavebedLabel")
         RACObserve(self.sleepcareMainViewModel, "EmptybedCount") ~> RAC(self, "EmptybedLabel")
-        
        RACObserve(self.sleepcareMainViewModel, "RefreshFlag") ~> RAC(self, "RefreshFlag")
         
         //退出登录
@@ -212,16 +209,13 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         }
         
         //checkbox绑定手势操作
-        var onbedTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "OnBedTouch")
-        self.checkOnBed.addGestureRecognizer(onbedTap)
-        var leavebedTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "LeaveBedTouch")
-        self.checkLeaveBed.addGestureRecognizer(leavebedTap)
-        var emptybedTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "EmptyBedTouch")
-        self.checkEmptyBed.addGestureRecognizer(emptybedTap)
-        var offdutyTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "OffDutyTouch")
-        self.checkOffDuty.addGestureRecognizer(offdutyTap)
-        var unnormalTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "UnnormalTouch")
-        self.checkUnnormal.addGestureRecognizer(unnormalTap)
+        self.checkEmptyBed.addTarget(self, action: "EmptyBedTouch", forControlEvents: UIControlEvents.TouchUpInside)
+        self.checkOnBed.addTarget(self, action: "OnBedTouch", forControlEvents: UIControlEvents.TouchUpInside)
+        self.checkLeaveBed.addTarget(self, action: "LeaveBedTouch", forControlEvents: UIControlEvents.TouchUpInside)
+        self.checkUnnormal.addTarget(self, action: "UnnormalTouch", forControlEvents: UIControlEvents.TouchUpInside)
+        self.checkOffDuty.addTarget(self, action: "OffDutyTouch", forControlEvents: UIControlEvents.TouchUpInside)
+        
+       
         
         //设置选择查找类型
         self.imgSearch.userInteractionEnabled = true
@@ -255,10 +249,25 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         self.choosepart!.parentController = self
         self.choosepart!.choosepartDelegate = self
         
-        self.lblChoose.userInteractionEnabled = true
-        var choosePart1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "mainNameTouch")
-        self.lblChoose.addGestureRecognizer(choosePart1)
+        self.btnChoose.addTarget(self, action: "mainNameTouch", forControlEvents: UIControlEvents.TouchUpInside)
         
+    //筛选btn
+        self.checkUnnormal.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
+        self.checkUnnormal.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
+
+        self.checkOnBed.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
+        self.checkOnBed.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
+        
+        self.checkLeaveBed.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
+        self.checkLeaveBed.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
+        
+        self.checkEmptyBed.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
+        self.checkEmptyBed.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
+        
+        self.checkOffDuty.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
+        self.checkOffDuty.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
+        
+       
     }
     
     
@@ -325,18 +334,14 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     }
     
     func ResetCheckbox(){
-        if self.sleepcareMainViewModel != nil{
-            self.sleepcareMainViewModel!.CheckUnnormal = true
-            self.checkUnnormal.image = UIImage(named:"checkboxchoosed.png")
-            self.sleepcareMainViewModel!.CheckOnBed = true
-            self.checkOnBed.image = UIImage(named:"checkboxchoosed.png")
-            self.sleepcareMainViewModel!.CheckLeaveBed = true
-            self.checkLeaveBed.image = UIImage(named:"checkboxchoosed.png")
-            self.sleepcareMainViewModel!.CheckEmptyBed = true
-            self.checkEmptyBed.image = UIImage(named:"checkboxchoosed.png")
-            self.sleepcareMainViewModel!.CheckOffDuty = true
-            self.checkOffDuty.image = UIImage(named:"checkboxchoosed.png")
-        }
+       
+           
+            self.checkEmptyBed.selected = true
+            self.checkOnBed.selected = true
+         self.checkLeaveBed.selected = true
+         self.checkEmptyBed.selected = true
+        self.checkOffDuty.selected = true
+        
     }
     
     
@@ -349,16 +354,23 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         if (self.BedViews != nil && self.sleepcareMainViewModel != nil){
             //通过bedviews做删选，放入ShowBedViews数组
             self.ShowBedViews = Array<BedModel>()
-            let onbedViews =  self.sleepcareMainViewModel!.CheckOnBed ? self.BedViews!.filter({$0.BedStatus == BedStatusType.onbed}) : Array<BedModel>()
-            let leavebedViews = self.sleepcareMainViewModel!.CheckLeaveBed ?  self.BedViews!.filter({$0.BedStatus == BedStatusType.leavebed}) : Array<BedModel>()
-            let emptybedViews = self.sleepcareMainViewModel!.CheckEmptyBed ? self.BedViews!.filter({$0.BedStatus == BedStatusType.emptybed}) : Array<BedModel>()
-            let offdutyViews = self.sleepcareMainViewModel!.CheckOffDuty ? self.BedViews!.filter({$0.BedStatus == BedStatusType.offduty}) : Array<BedModel>()
-            let unnormalViews = self.sleepcareMainViewModel!.CheckUnnormal ? self.BedViews!.filter({$0.BedStatus == BedStatusType.unnormal}) : Array<BedModel>()
+            let onbedViews =  self.checkOnBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.onbed}) : Array<BedModel>()
+            let leavebedViews = self.checkLeaveBed.selected ?  self.BedViews!.filter({$0.BedStatus == BedStatusType.leavebed}) : Array<BedModel>()
+            let emptybedViews = self.checkEmptyBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.emptybed}) : Array<BedModel>()
+            let offdutyViews = self.checkOffDuty.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.offduty}) : Array<BedModel>()
+            let unnormalViews = self.checkUnnormal.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.unnormal}) : Array<BedModel>()
             self.ShowBedViews = onbedViews + leavebedViews + emptybedViews + offdutyViews + unnormalViews
             
             //放入主页面中，实现分页
             let pageCount = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
+            
+            //pagercount发生变化时才赋值给viewmodel，这样通知到pager进行更新
+            if (pageCount != self.sleepcareMainViewModel?.PageCount){
+              
             self.sleepcareMainViewModel?.PageCount = pageCount
+            }
+            
+            
             self.mainScroll.contentSize = CGSize(width: self.mainScroll.bounds.size.width * CGFloat(pageCount), height: self.mainScroll.bounds.size.height)
             self.mainScroll.contentOffset.x = 0
             
@@ -380,54 +392,28 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     
     
     func OnBedTouch(){
-        self.sleepcareMainViewModel!.CheckOnBed = !self.sleepcareMainViewModel!.CheckOnBed
-        if self.sleepcareMainViewModel!.CheckOnBed{
-            self.checkOnBed.image = UIImage(named:"checkboxchoosed.png")
-        }
-        else{
-            self.checkOnBed.image = UIImage(named:"checkbox.png")
-        }
+       
+      self.checkOnBed.selected = !self.checkOnBed.selected
         self.ReloadMainScrollView()
     }
+    
     func LeaveBedTouch(){
-        self.sleepcareMainViewModel!.CheckLeaveBed = !self.sleepcareMainViewModel!.CheckLeaveBed
-        if self.sleepcareMainViewModel!.CheckLeaveBed{
-            self.checkLeaveBed.image = UIImage(named:"checkboxchoosed.png")
-        }
-        else{
-            self.checkLeaveBed.image = UIImage(named:"checkbox.png")
-        }
+        
+        self.checkLeaveBed.selected = !self.checkLeaveBed.selected
         self.ReloadMainScrollView()
     }
     
     func EmptyBedTouch(){
-        self.sleepcareMainViewModel!.CheckEmptyBed = !self.sleepcareMainViewModel!.CheckEmptyBed
-        if self.sleepcareMainViewModel!.CheckEmptyBed{
-            self.checkEmptyBed.image = UIImage(named:"checkboxchoosed.png")
-        }
-        else{
-            self.checkEmptyBed.image = UIImage(named:"checkbox.png")
-        }
+        self.checkEmptyBed.selected = !self.checkEmptyBed.selected
        self.ReloadMainScrollView()
     }
     func OffDutyTouch(){
-        self.sleepcareMainViewModel!.CheckOffDuty = !self.sleepcareMainViewModel!.CheckOffDuty
-        if self.sleepcareMainViewModel!.CheckOffDuty{
-            self.checkOffDuty.image = UIImage(named:"checkboxchoosed.png")
-        }
-        else{
-            self.checkOffDuty.image = UIImage(named:"checkbox.png")
-        }
+       
+       self.checkOffDuty.selected = !self.checkOffDuty.selected
        self.ReloadMainScrollView()
     }
     func UnnormalTouch(){
-        self.sleepcareMainViewModel!.CheckUnnormal = !self.sleepcareMainViewModel!.CheckUnnormal
-        if self.sleepcareMainViewModel!.CheckUnnormal{
-            self.checkUnnormal.image = UIImage(named:"checkboxchoosed.png")
-        }
-        else{
-            self.checkUnnormal.image = UIImage(named:"checkbox.png")
-        }
+        self.checkUnnormal.selected = !self.checkUnnormal.selected
        self.ReloadMainScrollView()
     }
     

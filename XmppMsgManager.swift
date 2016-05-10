@@ -33,25 +33,6 @@ class XmppMsgManager:MessageDelegate{
         return self._xmppMsgManager
     }
     
-    //是否能够连接
-    func Connect() -> Bool{
-        let curTime = NSDate()
-        if(_xmppMsgHelper!.connect(_timeout))
-        {
-            var sec:NSTimeInterval = 0
-            while _xmppMsgHelper!.loginFlag == 0 {
-                sec = NSDate().timeIntervalSinceDate(curTime)
-                if(sec > 4){
-                    return false
-                }
-            }
-            if(_xmppMsgHelper!.loginFlag == 1){
-                isInstance = true
-            }
-            return _xmppMsgHelper!.loginFlag == 1 ? true : false
-        }
-        return false
-    }
     
     //ipad连接，iphone注册账号时连接
     func RegistConnect() -> Bool{
@@ -82,22 +63,32 @@ class XmppMsgManager:MessageDelegate{
     
     //发送数据--等待数据响应
     func SendData(baseMessage:BaseMessage,timeOut:NSTimeInterval=9)->BaseMessage?{
-    
+        var  result :BaseMessage!
         
-        _xmppMsgHelper?.sendElement(baseMessage.ToXml())
-        requsetQuene[baseMessage.messageSubject.requestID!] = self
-        var now = NSDate()
-        //添加时间判断，没收到数据则抛出异常
-        var sec:NSTimeInterval = 0
-        while requsetQuene[baseMessage.messageSubject.requestID!]!.isKindOfClass(BaseMessage) == false {
-            sec = NSDate().timeIntervalSinceDate(now)
-            if(sec > timeOut){
-                throw("-2", ShowMessage(MessageEnum.GetDataOvertime))
+        //非注册相关的服务器数据请求
+        if self.RegistConnect(){
+            _xmppMsgHelper?.sendElement(baseMessage.ToXml())
+            requsetQuene[baseMessage.messageSubject.requestID!] = self
+            
+            //添加时间判断，没收到数据则抛出异常
+            var now = NSDate()
+            var sec:NSTimeInterval = 0
+            while requsetQuene[baseMessage.messageSubject.requestID!]!.isKindOfClass(BaseMessage) == false {
+                
+                sec = NSDate().timeIntervalSinceDate(now)
+                if(sec > timeOut){
+                    throw("-2", ShowMessage(MessageEnum.GetDataOvertime))
+                }
             }
+            result = requsetQuene.removeValueForKey(baseMessage.messageSubject.requestID!) as! BaseMessage
         }
-        var result:BaseMessage = requsetQuene.removeValueForKey(baseMessage.messageSubject.requestID!) as! BaseMessage
+        else {
+            throw("-2", ShowMessage(MessageEnum.ConnectFail))
+            
+        }
         
         return result
+        
     }
 
     

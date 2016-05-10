@@ -158,6 +158,8 @@ public class Popover: UIView {
     case .Down:
       point = CGPoint(x: fromView.frame.origin.x + (fromView.frame.size.width / 2), y: fromView.frame.origin.y + fromView.frame.size.height)
     }
+    
+   
     self.show(contentView, point: point, inView: inView)
   }
 

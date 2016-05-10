@@ -20,6 +20,7 @@
 		0D336D0E1C92596D0049883F /* RemoteNoticeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D336D0D1C92596D0049883F /* RemoteNoticeHelper.swift */; };
 		0D35D5F61C488CDE009F8EB2 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D35D5F51C488CDE009F8EB2 /* MessageHelper.swift */; };
 		0D35D5FA1C4CC3D8009F8EB2 /* Message.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D35D5F91C4CC3D8009F8EB2 /* Message.plist */; };
+		0D3E68C91CE1843F003D24DA /* SleepQualityPandectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3E68C81CE1843F003D24DA /* SleepQualityPandectController.swift */; };
 		0D9160B01CAE3CA600AECFAF /* partandmainInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9160AF1CAE3CA600AECFAF /* partandmainInfo.swift */; };
 		0D978D7C1C3E09D600E0CB9B /* 29pt-@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D978D7B1C3E09D600E0CB9B /* 29pt-@2x.png */; };
 		0D978D7F1C3E09DF00E0CB9B /* 29pt-@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D978D7D1C3E09DF00E0CB9B /* 29pt-@3x.png */; };
@@ -38,7 +39,6 @@
 		0D978DAC1C3E1E2100E0CB9B /* 1024X768@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D978DAB1C3E1E2100E0CB9B /* 1024X768@2x.png */; };
 		0D978DAE1C3E200700E0CB9B /* 1024X748@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D978DAD1C3E200700E0CB9B /* 1024X748@2x.png */; };
 		0D9AE0791C8E7FB800625D5E /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9AE0781C8E7FB800625D5E /* Const.swift */; };
-		0D9F87381CA92187008E5F3E /* SleepQualityPandect.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D9F87371CA92187008E5F3E /* SleepQualityPandect.xib */; };
 		0D9F87441CABA57A008E5F3E /* MainAndPartInfoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F87431CABA57A008E5F3E /* MainAndPartInfoHelper.swift */; };
 		0D9F87461CACC9DE008E5F3E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F87451CACC9DE008E5F3E /* Result.swift */; };
 		0D9F87481CACFFD2008E5F3E /* RoleTreeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9F87471CACFFD2008E5F3E /* RoleTreeList.swift */; };
@@ -61,6 +61,11 @@
 		0DE1D21F1C910A5600F820DB /* black_loginBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DE1D21E1C910A5600F820DB /* black_loginBack.png */; };
 		0DE1D2211C910A5E00F820DB /* black_sleepcareblock.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DE1D2201C910A5E00F820DB /* black_sleepcareblock.png */; };
 		0DEC19001C97DF54007BDF5D /* OpenFireServerInfoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEC18FF1C97DF54007BDF5D /* OpenFireServerInfoHelper.swift */; };
+		0DF032581CE0526000629BA1 /* DetailTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF032571CE0526000629BA1 /* DetailTabbarController.swift */; };
+		0DF0325C1CE06EFD00629BA1 /* SleepDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF0325B1CE06EFD00629BA1 /* SleepDetailController.swift */; };
+		0DF032641CE08FB800629BA1 /* 总览.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF032631CE08FB800629BA1 /* 总览.png */; };
+		0DF032661CE0A92700629BA1 /* 明细.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF032651CE0A92700629BA1 /* 明细.png */; };
+		0DF032681CE0A92D00629BA1 /* 监护.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DF032671CE0A92D00629BA1 /* 监护.png */; };
 		0DF6BD801C599FEC007BF0A9 /* LoadImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF6BD7F1C599FEC007BF0A9 /* LoadImageHelper.swift */; };
 		0DF6BD821C59AB26007BF0A9 /* DateFormatterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF6BD811C59AB26007BF0A9 /* DateFormatterHelper.swift */; };
 		2C28CA141BE87D3D000C46C4 /* ServerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C28CA131BE87D3D000C46C4 /* ServerResult.swift */; };
@@ -76,7 +81,6 @@
 		2C3BAF131BCBA387003A2F48 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3BAF121BCBA387003A2F48 /* AlarmViewModel.swift */; };
 		2C3BAF151BCBA481003A2F48 /* AlarmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C3BAF141BCBA481003A2F48 /* AlarmView.xib */; };
 		2C3BAF171BCBA4C3003A2F48 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3BAF161BCBA4C3003A2F48 /* AlarmView.swift */; };
-		2C4911BD1BD0A15400A167A9 /* SleepQualityPandectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4911BC1BD0A15400A167A9 /* SleepQualityPandectView.swift */; };
 		2C555B471BE31763008A3AC9 /* QueryAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C555B461BE31763008A3AC9 /* QueryAlarmViewModel.swift */; };
 		2C555B491BE341A0008A3AC9 /* QueryAlarmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C555B481BE341A0008A3AC9 /* QueryAlarmView.xib */; };
 		2C555B4B1BE341B8008A3AC9 /* QueryAlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */; };
@@ -100,7 +104,6 @@
 		3A36B0231BA96648000F4AED /* RealTimeReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A36B0221BA96648000F4AED /* RealTimeReport.swift */; };
 		3A3756201BCB589600182DE4 /* DialogFrame.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A37561F1BCB589600182DE4 /* DialogFrame.xib */; };
 		3A3756221BCB58F700182DE4 /* DialogFrameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3756211BCB58F700182DE4 /* DialogFrameController.swift */; };
-		3A3756241BCB5E7600182DE4 /* SleepCareDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3756231BCB5E7600182DE4 /* SleepCareDetail.swift */; };
 		3A3756261BCB5E9600182DE4 /* SleepcareList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3756251BCB5E9600182DE4 /* SleepcareList.xib */; };
 		3A376E421BABB3B700D70953 /* EMString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A376E411BABB3B700D70953 /* EMString.swift */; };
 		3A376E441BABB81100D70953 /* EMProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A376E431BABB81100D70953 /* EMProperties.swift */; };
@@ -186,7 +189,6 @@
 		3AB43E8D1BD4E1B9005023D3 /* DayCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB43E7F1BD4E1B9005023D3 /* DayCounter.swift */; };
 		3AB43E911BD4E1B9005023D3 /* Term.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB43E831BD4E1B9005023D3 /* Term.swift */; };
 		3AC7B10D1BF464D2002DE94C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC7B10C1BF464D2002DE94C /* Foundation.framework */; };
-		3ADA58431BD5FC7C0066D23A /* SleepcareDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3C37711BD48BC000080D03 /* SleepcareDetail.xib */; };
 		3ADA58441BD5FE550066D23A /* sleepofThisWeek.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A3C37731BD48F0A00080D03 /* sleepofThisWeek.png */; };
 		3AFB938F1BCF96F200042AF1 /* default_loginBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB93881BCF96F200042AF1 /* default_loginBack.png */; };
 		3AFB93901BCF96F200042AF1 /* loginBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFB93891BCF96F200042AF1 /* loginBtn.png */; };
@@ -220,6 +222,7 @@
 		0D336D0D1C92596D0049883F /* RemoteNoticeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNoticeHelper.swift; sourceTree = "<group>"; };
 		0D35D5F51C488CDE009F8EB2 /* MessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
 		0D35D5F91C4CC3D8009F8EB2 /* Message.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Message.plist; sourceTree = "<group>"; };
+		0D3E68C81CE1843F003D24DA /* SleepQualityPandectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepQualityPandectController.swift; sourceTree = "<group>"; };
 		0D9160AF1CAE3CA600AECFAF /* partandmainInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = partandmainInfo.swift; sourceTree = "<group>"; };
 		0D978D7B1C3E09D600E0CB9B /* 29pt-@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "29pt-@2x.png"; sourceTree = "<group>"; };
 		0D978D7D1C3E09DF00E0CB9B /* 29pt-@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "29pt-@3x.png"; sourceTree = "<group>"; };
@@ -239,7 +242,6 @@
 		0D978DAD1C3E200700E0CB9B /* 1024X748@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1024X748@2x.png"; sourceTree = "<group>"; };
 		0D9AE0781C8E7FB800625D5E /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		0D9F872B1CA4E484008E5F3E /* libKNSemiModalViewController.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKNSemiModalViewController.a; path = "Pods/../build/Debug-iphoneos/libKNSemiModalViewController.a"; sourceTree = "<group>"; };
-		0D9F87371CA92187008E5F3E /* SleepQualityPandect.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SleepQualityPandect.xib; sourceTree = "<group>"; };
 		0D9F87431CABA57A008E5F3E /* MainAndPartInfoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAndPartInfoHelper.swift; sourceTree = "<group>"; };
 		0D9F87451CACC9DE008E5F3E /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		0D9F87471CACFFD2008E5F3E /* RoleTreeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoleTreeList.swift; sourceTree = "<group>"; };
@@ -262,6 +264,11 @@
 		0DE1D21E1C910A5600F820DB /* black_loginBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_loginBack.png; sourceTree = "<group>"; };
 		0DE1D2201C910A5E00F820DB /* black_sleepcareblock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black_sleepcareblock.png; sourceTree = "<group>"; };
 		0DEC18FF1C97DF54007BDF5D /* OpenFireServerInfoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenFireServerInfoHelper.swift; sourceTree = "<group>"; };
+		0DF032571CE0526000629BA1 /* DetailTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTabbarController.swift; sourceTree = "<group>"; };
+		0DF0325B1CE06EFD00629BA1 /* SleepDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepDetailController.swift; sourceTree = "<group>"; };
+		0DF032631CE08FB800629BA1 /* 总览.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "总览.png"; sourceTree = "<group>"; };
+		0DF032651CE0A92700629BA1 /* 明细.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "明细.png"; sourceTree = "<group>"; };
+		0DF032671CE0A92D00629BA1 /* 监护.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "监护.png"; sourceTree = "<group>"; };
 		0DF6BD7F1C599FEC007BF0A9 /* LoadImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadImageHelper.swift; sourceTree = "<group>"; };
 		0DF6BD811C59AB26007BF0A9 /* DateFormatterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterHelper.swift; sourceTree = "<group>"; };
 		2C28CA131BE87D3D000C46C4 /* ServerResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerResult.swift; sourceTree = "<group>"; };
@@ -277,7 +284,6 @@
 		2C3BAF121BCBA387003A2F48 /* AlarmViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
 		2C3BAF141BCBA481003A2F48 /* AlarmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmView.xib; sourceTree = "<group>"; };
 		2C3BAF161BCBA4C3003A2F48 /* AlarmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
-		2C4911BC1BD0A15400A167A9 /* SleepQualityPandectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepQualityPandectView.swift; sourceTree = "<group>"; };
 		2C555B461BE31763008A3AC9 /* QueryAlarmViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryAlarmViewModel.swift; sourceTree = "<group>"; };
 		2C555B481BE341A0008A3AC9 /* QueryAlarmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueryAlarmView.xib; sourceTree = "<group>"; };
 		2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryAlarmController.swift; sourceTree = "<group>"; };
@@ -303,7 +309,6 @@
 		3A36B0221BA96648000F4AED /* RealTimeReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealTimeReport.swift; sourceTree = "<group>"; };
 		3A37561F1BCB589600182DE4 /* DialogFrame.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DialogFrame.xib; sourceTree = "<group>"; };
 		3A3756211BCB58F700182DE4 /* DialogFrameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogFrameController.swift; sourceTree = "<group>"; };
-		3A3756231BCB5E7600182DE4 /* SleepCareDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepCareDetail.swift; sourceTree = "<group>"; };
 		3A3756251BCB5E9600182DE4 /* SleepcareList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SleepcareList.xib; sourceTree = "<group>"; };
 		3A376E411BABB3B700D70953 /* EMString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMString.swift; sourceTree = "<group>"; };
 		3A376E431BABB81100D70953 /* EMProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMProperties.swift; sourceTree = "<group>"; };
@@ -312,7 +317,6 @@
 		3A376E491BABD9F400D70953 /* PartInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartInfo.swift; sourceTree = "<group>"; };
 		3A376E4B1BABDA3B00D70953 /* Bed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bed.swift; sourceTree = "<group>"; };
 		3A376E4D1BABDE3500D70953 /* SignReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignReport.swift; sourceTree = "<group>"; };
-		3A3C37711BD48BC000080D03 /* SleepcareDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SleepcareDetail.xib; sourceTree = "<group>"; };
 		3A3C37731BD48F0A00080D03 /* sleepofThisWeek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sleepofThisWeek.png; sourceTree = "<group>"; };
 		3A3C37741BD48F0B00080D03 /* trunrecord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trunrecord.png; sourceTree = "<group>"; };
 		3A3C37751BD48F0B00080D03 /* leaverecord.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaverecord.png; sourceTree = "<group>"; };
@@ -491,8 +495,8 @@
 			isa = PBXGroup;
 			children = (
 				2C3BAF161BCBA4C3003A2F48 /* AlarmView.swift */,
-				3A3756231BCB5E7600182DE4 /* SleepCareDetail.swift */,
-				2C4911BC1BD0A15400A167A9 /* SleepQualityPandectView.swift */,
+				2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */,
+				3A3756211BCB58F700182DE4 /* DialogFrameController.swift */,
 			);
 			name = ipad;
 			sourceTree = "<group>";
@@ -535,8 +539,9 @@
 				3A41ADE61BA7B425000C109B /* LoginController.swift */,
 				3A6360281BB2900300F7F953 /* SleepcareMainController.swift */,
 				0DAC753D1C76FCE700EF3260 /* ChooseMainhouseController.swift */,
-				3A3756211BCB58F700182DE4 /* DialogFrameController.swift */,
-				2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */,
+				0DF032571CE0526000629BA1 /* DetailTabbarController.swift */,
+				0DF0325B1CE06EFD00629BA1 /* SleepDetailController.swift */,
+				0D3E68C81CE1843F003D24DA /* SleepQualityPandectController.swift */,
 			);
 			name = ipad;
 			sourceTree = "<group>";
@@ -755,8 +760,6 @@
 			children = (
 				3A37561F1BCB589600182DE4 /* DialogFrame.xib */,
 				3A3756251BCB5E9600182DE4 /* SleepcareList.xib */,
-				0D9F87371CA92187008E5F3E /* SleepQualityPandect.xib */,
-				3A3C37711BD48BC000080D03 /* SleepcareDetail.xib */,
 				2C555B481BE341A0008A3AC9 /* QueryAlarmView.xib */,
 				2C3BAF141BCBA481003A2F48 /* AlarmView.xib */,
 			);
@@ -792,6 +795,9 @@
 				0DAC751E1C74092400EF3260 /* default */,
 				3A2BD8A41BD8AE78007BBD01 /* 29pt@1x.png */,
 				0DAC75271C76C0CF00EF3260 /* carat-open.png */,
+				0DF032631CE08FB800629BA1 /* 总览.png */,
+				0DF032671CE0A92D00629BA1 /* 监护.png */,
+				0DF032651CE0A92700629BA1 /* 明细.png */,
 				3A2BD8A51BD8AE78007BBD01 /* 50pt@1x.png */,
 				0D1F6F9D1CB5EAF80016719C /* viewbox_border.png */,
 				0D1F6F9E1CB5EAF80016719C /* viewbox_topBg.png */,
@@ -968,7 +974,7 @@
 				0D978D7F1C3E09DF00E0CB9B /* 29pt-@3x.png in Resources */,
 				0DE1D21F1C910A5600F820DB /* black_loginBack.png in Resources */,
 				3ADA58441BD5FE550066D23A /* sleepofThisWeek.png in Resources */,
-				3ADA58431BD5FC7C0066D23A /* SleepcareDetail.xib in Resources */,
+				0DF032641CE08FB800629BA1 /* 总览.png in Resources */,
 				3AFB93941BCF96F200042AF1 /* pwdIcon.png in Resources */,
 				3A9C12FC1BC789C6008EC314 /* BedFrame.png in Resources */,
 				3A3C377E1BD48F0B00080D03 /* hrrr.png in Resources */,
@@ -1016,6 +1022,7 @@
 				3A9C12F21BC789C6008EC314 /* emptyBed.png in Resources */,
 				3A3C377A1BD48F0B00080D03 /* trunrecord.png in Resources */,
 				2C2F83851BD5DE2F008CD92B /* back.png in Resources */,
+				0DF032681CE0A92D00629BA1 /* 监护.png in Resources */,
 				0D1F6F981CB3B5A20016719C /* emptybedView.png in Resources */,
 				2C555B491BE341A0008A3AC9 /* QueryAlarmView.xib in Resources */,
 				3AFB938F1BCF96F200042AF1 /* default_loginBack.png in Resources */,
@@ -1031,6 +1038,7 @@
 				3AFB93921BCF96F200042AF1 /* loginTitle.png in Resources */,
 				3AA3161D1BD0DD8500FC3C40 /* sleepcare.plist in Resources */,
 				0D978DAA1C3E144900E0CB9B /* 1024X748.png in Resources */,
+				0DF032661CE0A92700629BA1 /* 明细.png in Resources */,
 				3A2BD8AA1BD8AE78007BBD01 /* 72pt@1x.png in Resources */,
 				3A9C13011BC789C6008EC314 /* transbg.png in Resources */,
 				3A9C12F71BC789C6008EC314 /* search.png in Resources */,
@@ -1049,7 +1057,6 @@
 				3A2F02781BCBA4E4000B16B5 /* infoHeadred.png in Resources */,
 				3A3C377D1BD48F0B00080D03 /* default_sleepcareblock.png in Resources */,
 				0D978DAE1C3E200700E0CB9B /* 1024X748@2x.png in Resources */,
-				0D9F87381CA92187008E5F3E /* SleepQualityPandect.xib in Resources */,
 				0DE1D2211C910A5E00F820DB /* black_sleepcareblock.png in Resources */,
 				2C2F83911BD63A19008CD92B /* previewBtnNormal.png in Resources */,
 				3A9C12F81BC789C6008EC314 /* dropdown.png in Resources */,
@@ -1150,6 +1157,7 @@
 				2C555B471BE31763008A3AC9 /* QueryAlarmViewModel.swift in Sources */,
 				0DAC752C1C76C76800EF3260 /* PartNameCell.swift in Sources */,
 				0DC2280E1C1FD65F00AF4737 /* JHSpinnerView.swift in Sources */,
+				0D3E68C91CE1843F003D24DA /* SleepQualityPandectController.swift in Sources */,
 				2C37F1391BD093280034D9F1 /* SleepQualityPandectViewModel.swift in Sources */,
 				3A3C37801BD4987800080D03 /* SleepcareDetailViewModel.swift in Sources */,
 				3A3756221BCB58F700182DE4 /* DialogFrameController.swift in Sources */,
@@ -1159,6 +1167,7 @@
 				3A35AB671BCCECF000ED3293 /* Session.swift in Sources */,
 				3A4D17F11BAFB07400E0B862 /* BedUser.swift in Sources */,
 				3A376E4C1BABDA3B00D70953 /* Bed.swift in Sources */,
+				0DF0325C1CE06EFD00629BA1 /* SleepDetailController.swift in Sources */,
 				0DAC753E1C76FCE700EF3260 /* ChooseMainhouseController.swift in Sources */,
 				3A325A341BD08B7B00DE4E78 /* BaseViewModel.swift in Sources */,
 				3A3262E01BB912180002687B /* OSSExceptionHelper.m in Sources */,
@@ -1202,17 +1211,16 @@
 				3A346BF81BCCD36200E75E4E /* SleepcareMainViewModel.swift in Sources */,
 				2C555B4B1BE341B8008A3AC9 /* QueryAlarmController.swift in Sources */,
 				3A4B85C81BB14DFD006E4CF1 /* Worktask.swift in Sources */,
+				0DF032581CE0526000629BA1 /* DetailTabbarController.swift in Sources */,
 				3A3EF7C11BDE05A800CDDAED /* TodoList.swift in Sources */,
 				3AB3CB171BD762FE0067F9D4 /* AlarmTableViewCell.swift in Sources */,
 				2C3BAF131BCBA387003A2F48 /* AlarmViewModel.swift in Sources */,
 				0DAC75341C76DF7B00EF3260 /* SectionHeaderView.swift in Sources */,
 				3AB3CB271BD763690067F9D4 /* BackgroundCommon.swift in Sources */,
-				3A3756241BCB5E7600182DE4 /* SleepCareDetail.swift in Sources */,
 				3A376E461BABBB1200D70953 /* User.swift in Sources */,
 				3A376E481BABD54200D70953 /* Role.swift in Sources */,
 				3AB3CB1E1BD762FE0067F9D4 /* SleepCareCollectionViewCell.swift in Sources */,
 				2C3150A71BCDFB4500EC749E /* LeaveBedReport.swift in Sources */,
-				2C4911BD1BD0A15400A167A9 /* SleepQualityPandectView.swift in Sources */,
 				3A376E4A1BABD9F400D70953 /* PartInfo.swift in Sources */,
 				2C5AEC481BB397130096DF3F /* RoleList.swift in Sources */,
 			);
@@ -1256,7 +1264,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1301,7 +1309,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1330,7 +1338,6 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1364,6 +1371,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ewell.sleepcareforpad/ewell.sleepcareforpad-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1378,7 +1386,6 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1411,6 +1418,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ewell.sleepcareforpad/ewell.sleepcareforpad-Bridging-Header.h";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

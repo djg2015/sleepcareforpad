@@ -35,6 +35,20 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     //切换养老院
     @IBOutlet weak var btnChoose: UIButton!
     
+    
+    @IBAction func UnwindToMainController(segue:UIStoryboardSegue){
+        
+        
+    }
+    @IBAction func UnwindToMainController2(segue:UIStoryboardSegue){
+        
+        
+    }
+    @IBAction func UnwindToMainController3(segue:UIStoryboardSegue){
+        
+        
+    }
+    
     //类字段
     var mainScroll:UIScrollView!
     var popDownList:PopDownList?
@@ -42,14 +56,14 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     var sleepcareMainViewModel:SleepcareMainViewModel?
     var choosepart:ChooseMainhouseController?
     var spinner:JHSpinnerView?
-    var thread:NSThread?
+    var thread:NSThread!
     //支线程完成true
     var threadFlag:Bool = false
     
     //要显示的床位信息
     var ShowBedViews:Array<BedModel> = Array<BedModel>()
     
-    //实时数据变化引起的主页面床位刷新标志
+    //在离床状态变化引起的主页面床位刷新标志
     var RefreshFlag:Bool = false{
         didSet{
             if RefreshFlag{
@@ -111,12 +125,14 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         
         self.mainScroll = UIScrollView()
         self.mainScroll.frame = UIScreen.mainScreen().bounds
-        self.mainScroll.frame.origin.y = 200
-        self.mainScroll.frame.size.height = UIScreen.mainScreen().bounds.height - 250
+        self.mainScroll.frame.origin.y = 190
+        self.mainScroll.frame.size.height = UIScreen.mainScreen().bounds.height - 260
         self.mainScroll.pagingEnabled = true
         self.mainScroll.showsHorizontalScrollIndicator = false
         self.mainScroll.delegate = self
         self.mainScroll.bounces = false
+        
+        
         self.view.addSubview(self.mainScroll)
         
         self.curPager.frame.size.width = UIScreen.mainScreen().bounds.width
@@ -158,6 +174,12 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             ({
                 //正常业务处理
              //   self.presentViewController(DialogFrameController(nibName: "DialogFrame", userCode: bedModel.UserCode!), animated: true, completion: nil)
+                
+                if bedModel.UserCode != nil{
+                Session.GetSession().CurUserCode = bedModel.UserCode!
+                
+                self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
+                }
                 },
                 catch: { ex in
                     //异常处理
@@ -196,12 +218,10 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
                 //关闭报警和通知
                 self.sleepcareMainViewModel?.CloseWaringAttention()
                  CloseNotice()
-                //关闭openfire，置空session
-                var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-                xmppMsgManager?.Close()
+                //置空session，恢复登录前配置
+                
                 Session.ClearSession()
                  LOGINFLAG = false
-                
                 TodoList.sharedInstance.removeItemAll()
                 //关闭页面，退回到login页面
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -317,29 +337,33 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     //定时器，检查支线程是否完成，完成后关闭spinner
     var realtimer:NSTimer!
     func setTimer(){
-        realtimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "SpnnerTimerFireMethod:", userInfo: nil, repeats:true);
+        realtimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "SpnnerTimerFireMethod:", userInfo: nil, repeats:true);
         realtimer.fire()
     }
     
     func SpnnerTimerFireMethod(timer: NSTimer) {
         if (self.threadFlag && self.spinner != nil){
+            if self.thread != nil{
+            self.thread!.cancel()
+            }
+             realtimer.invalidate()
+            
+            self.ReloadMainScrollView()
+            
             self.mainScroll.userInteractionEnabled = true
             self.spinner!.dismiss()
             self.spinner = nil
             self.threadFlag = false
-            realtimer.invalidate()
+           
             
-            self.ReloadMainScrollView()
         }
     }
     
     func ResetCheckbox(){
-       
-           
             self.checkEmptyBed.selected = true
             self.checkOnBed.selected = true
          self.checkLeaveBed.selected = true
-         self.checkEmptyBed.selected = true
+         self.checkUnnormal.selected = true
         self.checkOffDuty.selected = true
         
     }
@@ -354,21 +378,22 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         if (self.BedViews != nil && self.sleepcareMainViewModel != nil){
             //通过bedviews做删选，放入ShowBedViews数组
             self.ShowBedViews = Array<BedModel>()
-            let onbedViews =  self.checkOnBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.onbed}) : Array<BedModel>()
-            let leavebedViews = self.checkLeaveBed.selected ?  self.BedViews!.filter({$0.BedStatus == BedStatusType.leavebed}) : Array<BedModel>()
-            let emptybedViews = self.checkEmptyBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.emptybed}) : Array<BedModel>()
-            let offdutyViews = self.checkOffDuty.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.offduty}) : Array<BedModel>()
-            let unnormalViews = self.checkUnnormal.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.unnormal}) : Array<BedModel>()
+            let onbedViews:Array<BedModel> = self.checkOnBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.onbed}) : Array<BedModel>()
+            let leavebedViews:Array<BedModel> = self.checkLeaveBed.selected ?  self.BedViews!.filter({$0.BedStatus == BedStatusType.leavebed}) : Array<BedModel>()
+            let emptybedViews:Array<BedModel> = self.checkEmptyBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.emptybed}) : Array<BedModel>()
+            let offdutyViews:Array<BedModel> = self.checkOffDuty.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.offduty}) : Array<BedModel>()
+            let unnormalViews:Array<BedModel> = self.checkUnnormal.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.unnormal}) : Array<BedModel>()
             self.ShowBedViews = onbedViews + leavebedViews + emptybedViews + offdutyViews + unnormalViews
             
             //放入主页面中，实现分页
-            let pageCount = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
+            let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
             
             //pagercount发生变化时才赋值给viewmodel，这样通知到pager进行更新
-            if (pageCount != self.sleepcareMainViewModel?.PageCount){
+         //   if (pageCount != self.sleepcareMainViewModel?.PageCount){
               
             self.sleepcareMainViewModel?.PageCount = pageCount
-            }
+              
+           // }
             
             
             self.mainScroll.contentSize = CGSize(width: self.mainScroll.bounds.size.width * CGFloat(pageCount), height: self.mainScroll.bounds.size.height)
@@ -420,6 +445,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     
     //点击查询类型
     func imageViewTouch(){
+        
         self.popDownList!.Show(150, height: 80, uiElement: self.imgSearch)
     }
     

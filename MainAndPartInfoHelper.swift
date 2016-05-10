@@ -12,13 +12,7 @@ import Foundation
 func GetMainAndPartInfo(){
     try {
         ({
-            //connect测试
-            var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-            let isLogin = xmppMsgManager!.RegistConnect()
-            if(!isLogin){
-                showDialogMsg(ShowMessage(MessageEnum.ConnectFail))
-            }
-            else{
+           
                 var playe:Array<Play> = Array<Play>()
                 
                 var playDictionariesArray:Array<RoleTree>?
@@ -78,7 +72,7 @@ func GetMainAndPartInfo(){
                 }
                 
                 
-            }//else
+            
             },
             catch: { ex in
                 //异常处理

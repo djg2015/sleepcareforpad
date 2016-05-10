@@ -124,13 +124,7 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
                 //获取openfire信息
                 self.BeforeLogin()
                 
-               //看是否能用默认账户连接openfire
-                var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-                let isLogin = xmppMsgManager!.RegistConnect()
-                if(!isLogin){
-                    showDialogMsg(ShowMessage(MessageEnum.ConnectOpenfireFail))
-                }
-                else{
+            
                     //从服务器获取user信息，并设置当前session
                     let testBLL = SleepCareBussiness()
                     var user:User = testBLL.GetLoginInfo(self.UserName!, LoginPassword: self.UserPwd!)
@@ -188,14 +182,12 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
                             }
                         }
                     }
-                    
-                   
-                    
+
                  //跳转主页面
                     if self.controller != nil{
                  self.controller.performSegueWithIdentifier("MainView", sender: self.controller)
                     }
-                    }
+                
                 },
                 catch: { ex in
                     //异常处理

@@ -66,6 +66,16 @@ class Session {
         }
     }
     
+    //当前选中查看的病人usercode
+    private var _curUserCode:String = ""
+    var CurUserCode:String{
+        get{
+            return self._curUserCode
+        }
+        set(value){
+            self._curUserCode=value
+        }
+    }
     
 //每个partcode对应的mainname，partname字典
     private var _partcodeDictionary:Dictionary<String,partandmainInfo> = Dictionary<String,partandmainInfo>()
@@ -92,6 +102,7 @@ class Session {
         }
     }
 
+    
     
     private static var instance:Session? = nil
     

@@ -35,7 +35,7 @@ class DialogFrameController: BaseViewController,UIScrollViewDelegate,JumpPageDel
         self._userCode = userCode
     }
     
-    var sleepCareDetail:SleepCareDetail?
+   
     //界面初始设置
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,51 +57,6 @@ class DialogFrameController: BaseViewController,UIScrollViewDelegate,JumpPageDel
         
         
         
-        //睡眠质量列表
-        let mainview1 = NSBundle.mainBundle().loadNibNamed("SleepcareDetail", owner: self, options: nil).first as! SleepCareDetail
-        mainview1.frame = CGRectMake(0, 0, self.mainScroll.frame.size.width, self.mainScroll.frame.size.height)
-        mainview1.viewInit(self._userCode)
-        
-        //若是iphone，第一页中的sleepdetail放在scrollview中
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone{
-            var scrollViewForPhone1 = UIScrollView()
-            scrollViewForPhone1.frame = CGRectMake(0,0,self.mainScroll.frame.size.width,self.mainScroll.frame.size.height)
-            self.mainScroll.addSubview(scrollViewForPhone1)
-            self.mainScroll.bringSubviewToFront(scrollViewForPhone1)
-            scrollViewForPhone1.contentSize = CGSize(width: 1024,height: 600)
-            scrollViewForPhone1.addSubview(mainview1)
-            scrollViewForPhone1.bringSubviewToFront(mainview1)
-        }
-        else{
-            self.mainScroll.addSubview(mainview1)
-            self.mainScroll.bringSubviewToFront(mainview1)
-            
-        }
-        sleepCareDetail = mainview1
-        
-        //睡眠质量总览
-        let mainview2 = NSBundle.mainBundle().loadNibNamed("SleepQualityPandect", owner: self, options: nil).first as! SleepQualityPandectView
-        mainview2.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 0.5)
-        
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad{
-            mainview2.frame = CGRectMake(self.mainScroll.frame.size.width, 0, self.mainScroll.frame.size.width, self.mainScroll.frame.size.height)
-            mainview2.viewInit(self._userCode)
-            self.mainScroll.addSubview(mainview2)
-            self.mainScroll.bringSubviewToFront(mainview2)
-        }
-           //若是iphone，第二页中的sleepdetail放在scrollview中
-        else if UIDevice.currentDevice().userInterfaceIdiom == .Phone{
-            var scrollViewForPhone2 = UIScrollView()
-            scrollViewForPhone2.frame = CGRectMake(self.mainScroll.frame.size.width,0,self.mainScroll.frame.size.width,self.mainScroll.frame.size.height)
-            scrollViewForPhone2.contentSize = CGSize(width: 1024,height: 600)
-            self.mainScroll.addSubview(scrollViewForPhone2)
-            self.mainScroll.bringSubviewToFront(scrollViewForPhone2)
-            mainview2.frame = CGRectMake(0, 0, self.mainScroll.frame.size.width, self.mainScroll.frame.size.height)
-            mainview2.viewInit(self._userCode)
-            scrollViewForPhone2.addSubview(mainview2)
-            scrollViewForPhone2.bringSubviewToFront(mainview2)
-            
-        }
         
         //监测日志
         let mainview3 = NSBundle.mainBundle().loadNibNamed("AlarmView", owner: self, options: nil).first as! AlarmView
@@ -138,7 +93,7 @@ class DialogFrameController: BaseViewController,UIScrollViewDelegate,JumpPageDel
     func SelectDateEnd(sender:UIView,dateString:String)
     {
         self.lblDate.text = dateString
-        self.sleepCareDetail!.ReloadView(dateString)
+    //    self.sleepCareDetail!.ReloadView(dateString)
     }
     
     override func didReceiveMemoryWarning() {

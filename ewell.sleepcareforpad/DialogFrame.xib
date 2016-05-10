@@ -104,6 +104,6 @@
     <resources>
         <image name="back.png" width="27" height="30"/>
         <image name="dateIcon.png" width="52" height="50"/>
-        <image name="maintop.png" width="1600" height="110"/>
+        <image name="maintop.png" width="1300" height="60"/>
     </resources>
 </document>

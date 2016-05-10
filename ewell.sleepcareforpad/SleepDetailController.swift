@@ -1,19 +1,15 @@
 //
-//  SleepCareListController.swift
-//  ewell.sleepcareforpad
+//  SleepDetailController.swift
+//  
 //
-//  Created by djg on 15/10/12.
-//  Copyright (c) 2015年 djg. All rights reserved.
+//  Created by Qinyuan Liu on 5/9/16.
+//
 //
 
 import UIKit
 
-public let PNGreenColor = UIColor(red: 77.0 / 255.0 , green: 196.0 / 255.0, blue: 122.0 / 255.0, alpha: 1.0)
-public let PNGreyColor = UIColor(red: 186.0 / 255.0 , green: 186.0 / 255.0, blue: 186.0 / 255.0, alpha: 1.0)
-public let PNLightGreyColor = UIColor(red: 246.0 / 255.0 , green: 246.0 / 255.0, blue: 246.0 / 255.0, alpha: 1.0)
+class SleepDetailController: UIViewController {
 
-class SleepCareDetail: UIView {
-    
     @IBOutlet weak var lblDeepSleepSpan: UILabel!
     @IBOutlet weak var lblLightSleepSpan: UILabel!
     @IBOutlet weak var lblOnBedSpan: UILabel!
@@ -30,6 +26,42 @@ class SleepCareDetail: UIView {
     @IBOutlet weak var uiTrun: UIView!
     @IBOutlet weak var uiSleep: UIView!
     
+    var sleepcareDetailViewModel:SleepcareDetailViewModel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+                var d = Date(string: getCurrentTime("yyyy-MM-dd"))
+                d = d.addDays(-1)
+                let curdate = d.description(format: "yyyy-MM-dd")
+            let usercode = Session.GetSession().CurUserCode
+        
+            sleepcareDetailViewModel = SleepcareDetailViewModel(userCode: usercode, date: curdate)
+        
+            RACObserve(self.sleepcareDetailViewModel, "SignReports") ~> RAC(self, "SignReports")
+            RACObserve(self.sleepcareDetailViewModel, "SleepCareReports") ~> RAC(self, "SleepCareReports")
+            RACObserve(self.sleepcareDetailViewModel, "DeepSleepSpan") ~> RAC(self.lblDeepSleepSpan, "text")
+            RACObserve(self.sleepcareDetailViewModel, "LightSleepSpan") ~> RAC(self.lblLightSleepSpan, "text")
+            RACObserve(self.sleepcareDetailViewModel, "OnbedSpan") ~> RAC(self.lblOnBedSpan, "text")
+            RACObserve(self.sleepcareDetailViewModel, "HR") ~> RAC(self.lblHR, "text")
+            RACObserve(self.sleepcareDetailViewModel, "AvgHR") ~> RAC(self.lblAvgHR, "text")
+            RACObserve(self.sleepcareDetailViewModel, "RR") ~> RAC(self.lblRR, "text")
+            RACObserve(self.sleepcareDetailViewModel, "AvgRR") ~> RAC(self.lblAvgRR, "text")
+            RACObserve(self.sleepcareDetailViewModel, "LeaveBedTimes") ~> RAC(self.lblLeaveBedTimes, "text")
+            RACObserve(self.sleepcareDetailViewModel, "MaxLeaveBedSpan") ~> RAC(self.lblMaxLeaveSpan, "text")
+            RACObserve(self.sleepcareDetailViewModel, "LeaveSuggest") ~> RAC(self.lblLeaveSugest, "text")
+            RACObserve(self.sleepcareDetailViewModel, "TrunTimes") ~> RAC(self.lblTurnTimes, "text")
+            RACObserve(self.sleepcareDetailViewModel, "TurnOverRate") ~> RAC(self.lblTrunRate, "text")
+        
+
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
     var _signReports:Array<SignReport>?
     dynamic var SignReports:Array<SignReport>?{
         didSet{
@@ -153,7 +185,7 @@ class SleepCareDetail: UIView {
                 self.uiTrun.addSubview(trunlineChart)
                 
                 trunlineChart.legendStyle = PNLegendItemStyle.Stacked
-//                trunlineChart.legendFont.fontWithSize(12)
+                //                trunlineChart.legendFont.fontWithSize(12)
                 let trunlegend = trunlineChart.getLegendWithMaxWidth(self.uiTrun.frame.width)
                 trunlegend.frame = CGRectMake(self.uiTrun.frame.width - 90, 5, self.uiTrun.frame.width, self.uiTrun.frame.height)
                 self.uiTrun.addSubview(trunlegend)
@@ -227,7 +259,7 @@ class SleepCareDetail: UIView {
                 
                 
                 lineChart.legendStyle = PNLegendItemStyle.Serial
-//                lineChart.legendFont.fontWithSize(12)
+                //                lineChart.legendFont.fontWithSize(12)
                 let legend = lineChart.getLegendWithMaxWidth(self.uiSleep.frame.width)
                 legend.frame = CGRectMake(65, 5, self.uiSleep.frame.width, self.uiSleep.frame.height)
                 self.uiSleep.addSubview(legend)
@@ -238,36 +270,12 @@ class SleepCareDetail: UIView {
         }
     }
     
-    var sleepcareDetailViewModel:SleepcareDetailViewModel?
-    //界面初始化
-    func viewInit(userCode:String,date:String = ""){
-        var curdate = date
-        if(date == ""){
-            var d = Date(string: getCurrentTime("yyyy-MM-dd"))
-            d = d.addDays(-1)
-            curdate = d.description(format: "yyyy-MM-dd")
-        }
-        
-        sleepcareDetailViewModel = SleepcareDetailViewModel(userCode: userCode, date: curdate)
-        RACObserve(self.sleepcareDetailViewModel, "SignReports") ~> RAC(self, "SignReports")
-        RACObserve(self.sleepcareDetailViewModel, "SleepCareReports") ~> RAC(self, "SleepCareReports")
-        RACObserve(self.sleepcareDetailViewModel, "DeepSleepSpan") ~> RAC(self.lblDeepSleepSpan, "text")
-        RACObserve(self.sleepcareDetailViewModel, "LightSleepSpan") ~> RAC(self.lblLightSleepSpan, "text")
-        RACObserve(self.sleepcareDetailViewModel, "OnbedSpan") ~> RAC(self.lblOnBedSpan, "text")
-        RACObserve(self.sleepcareDetailViewModel, "HR") ~> RAC(self.lblHR, "text")
-        RACObserve(self.sleepcareDetailViewModel, "AvgHR") ~> RAC(self.lblAvgHR, "text")
-        RACObserve(self.sleepcareDetailViewModel, "RR") ~> RAC(self.lblRR, "text")
-        RACObserve(self.sleepcareDetailViewModel, "AvgRR") ~> RAC(self.lblAvgRR, "text")
-        RACObserve(self.sleepcareDetailViewModel, "LeaveBedTimes") ~> RAC(self.lblLeaveBedTimes, "text")
-        RACObserve(self.sleepcareDetailViewModel, "MaxLeaveBedSpan") ~> RAC(self.lblMaxLeaveSpan, "text")
-        RACObserve(self.sleepcareDetailViewModel, "LeaveSuggest") ~> RAC(self.lblLeaveSugest, "text")
-        RACObserve(self.sleepcareDetailViewModel, "TrunTimes") ~> RAC(self.lblTurnTimes, "text")
-        RACObserve(self.sleepcareDetailViewModel, "TurnOverRate") ~> RAC(self.lblTrunRate, "text")
-    }
+   
     
     //根据查询条件重新加载界面
     func ReloadView(date:String){
         self.sleepcareDetailViewModel!.loadData(sleepcareDetailViewModel!.userCode, date: date)
     }
-    
+
+
 }

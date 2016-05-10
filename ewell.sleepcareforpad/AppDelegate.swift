@@ -38,14 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
          
         CheckRemoteNotice()
     
-            var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-            if(xmppMsgManager?.isInstance == true){
-                let isLogin = xmppMsgManager!.RegistConnect()
-                if(!isLogin){
-                    //无法连接，弹窗提示是否重连
-                    NSNotificationCenter.defaultCenter().postNotificationName("ReConnectInternetForPad", object: self)
-                }
-            }
+           
         
         self.isBackRun = false
     }

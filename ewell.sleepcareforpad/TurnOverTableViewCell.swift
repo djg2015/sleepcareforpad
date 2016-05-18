@@ -19,7 +19,7 @@ class TurnOverTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.frame.size.width =  UIScreen.mainScreen().bounds.width - 40
+        self.frame.size.width =  UIScreen.mainScreen().bounds.width - 70
 
     }
     override func awakeFromNib() {

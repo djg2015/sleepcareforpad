@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SleepDetailController: UIViewController {
+class SleepDetailController: UIViewController,SelectDateEndDelegate {
 
     @IBOutlet weak var lblDeepSleepSpan: UILabel!
     @IBOutlet weak var lblLightSleepSpan: UILabel!
@@ -26,17 +26,24 @@ class SleepDetailController: UIViewController {
     @IBOutlet weak var uiTrun: UIView!
     @IBOutlet weak var uiSleep: UIView!
     
+    @IBOutlet weak var imgDate: UIImageView!
+    @IBOutlet weak var lblDate: UILabel!
+    
     var sleepcareDetailViewModel:SleepcareDetailViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-                var d = Date(string: getCurrentTime("yyyy-MM-dd"))
-                d = d.addDays(-1)
-                let curdate = d.description(format: "yyyy-MM-dd")
-            let usercode = Session.GetSession().CurUserCode
         
-            sleepcareDetailViewModel = SleepcareDetailViewModel(userCode: usercode, date: curdate)
+        self.imgDate.userInteractionEnabled = true
+        var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch")
+        self.imgDate .addGestureRecognizer(singleTap)
+        
+        sleepcareDetailViewModel = SleepcareDetailViewModel()
+        var d = Date(string: getCurrentTime("yyyy-MM-dd"))
+        d = d.addDays(-1)
+        let curdate = d.description(format: "yyyy-MM-dd")
+        self.lblDate.text = curdate
+        sleepcareDetailViewModel.LoadData(curdate)
         
             RACObserve(self.sleepcareDetailViewModel, "SignReports") ~> RAC(self, "SignReports")
             RACObserve(self.sleepcareDetailViewModel, "SleepCareReports") ~> RAC(self, "SleepCareReports")
@@ -53,7 +60,7 @@ class SleepDetailController: UIViewController {
             RACObserve(self.sleepcareDetailViewModel, "TrunTimes") ~> RAC(self.lblTurnTimes, "text")
             RACObserve(self.sleepcareDetailViewModel, "TurnOverRate") ~> RAC(self.lblTrunRate, "text")
         
-
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -269,13 +276,29 @@ class SleepDetailController: UIViewController {
             }
         }
     }
+     var alertView:DatePickerView!
     
-   
-    
-    //根据查询条件重新加载界面
-    func ReloadView(date:String){
-        self.sleepcareDetailViewModel!.loadData(sleepcareDetailViewModel!.userCode, date: date)
+    //点击日历查询
+    func imageViewTouch(){
+        if alertView != nil{
+        alertView.removeFromSuperview()
+        }
+        //设置日期弹出窗口
+        alertView = DatePickerView(frame:UIScreen.mainScreen().bounds)
+        alertView.detegate = self
+        self.view.addSubview(alertView)
     }
-
+    
+//根据查询条件重新加载界面
+    func SelectDateEnd(sender:UIView,dateString:String)
+    {
+        self.lblDate.text = dateString
+        
+        if self.sleepcareDetailViewModel != nil{
+            self.sleepcareDetailViewModel.LoadData(dateString)
+           
+        }
+        
+    }
 
 }

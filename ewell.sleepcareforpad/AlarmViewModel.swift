@@ -36,13 +36,15 @@ class AlarmViewModel:BaseViewModel{
             try {
                 ({
                     var sleepCareBLL = SleepCareBussiness()
+                    var session = Session.GetSession()
                     // 返回在离床报警
-                    var reportList:LeaveBedReportList = sleepCareBLL.GetLeaveBedReport(Session.GetSession().CurPartCode, userCode: self.UserCode, userNameLike: "", bedNumberLike: "", leaveBedTimeBegin: "", leaveBedTimeEnd: "", from: 1, max: 20)
+                    if session != nil{
+                    var reportList:LeaveBedReportList = sleepCareBLL.GetLeaveBedReport(session!.CurPartCode, userCode: self.UserCode, userNameLike: "", bedNumberLike: "", leaveBedTimeBegin: "", leaveBedTimeEnd: "", from: 1, max: 20)
                     for report in reportList.reportList
                     {
-                        var alarmVM:OnBedAlarmViewModel = OnBedAlarmViewModel();
-                        alarmVM.LeaveBedTime = report.StartTime;
-                        alarmVM.LeaveBedTimeSpan = report.LeaveBedTimespan;
+                        var alarmVM:OnBedAlarmViewModel = OnBedAlarmViewModel()
+                        alarmVM.LeaveBedTime = report.StartTime + " —— " + report.EndTime
+                        alarmVM.LeaveBedTimeSpan = report.LeaveBedTimespan
                         self.AlarmInfoList.append(alarmVM)
                     }
                     // 返回体动/翻身
@@ -50,11 +52,12 @@ class AlarmViewModel:BaseViewModel{
                     
                     for report in turnList.turnOverAnalysReportList
                     {
-                        var turnOverVM:TurnOverViewModel = TurnOverViewModel();
+                        var turnOverVM:TurnOverViewModel = TurnOverViewModel()
                         turnOverVM.Date = report.ReportDate;
-                        turnOverVM.TurnOverTimes = report.TurnOverTime;
-                        turnOverVM.TurnOverRate = report.TurnOverRate;
+                        turnOverVM.TurnOverTimes = report.TurnOverTime
+                        turnOverVM.TurnOverRate = report.TurnOverRate
                         self.TurnOverList.append(turnOverVM)
+                    }
                     }
                     },
                     catch: { ex in

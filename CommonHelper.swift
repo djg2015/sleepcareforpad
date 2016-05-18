@@ -62,6 +62,8 @@ func handleException(ex:NSObject, showDialog:Bool = false,msg:String = ""){
         else{
             showDialogMsg(msg)
         }
+       
+        
     }
 }
 

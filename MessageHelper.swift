@@ -40,4 +40,5 @@ enum MessageEnum:Int{
     case NeedCheckProtol
     case NoMainNameInfo
 case NeedChoosePart
+    case DateOverrange
 }

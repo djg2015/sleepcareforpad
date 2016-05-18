@@ -24,7 +24,7 @@ protocol SleepCareBussinessManager{
     //      searchContent->房间号或者床位号
     //      from->查询记录起始序号
     //      max->查询的最大记录条数
-    func GetPartInfoByPartCode(partCode:String,searchType:String,searchContent:String,from:Int32?,max:Int32?)->PartInfo
+    func GetPartInfoByPartCode(partCode:String,loginName:String,searchType:String,searchContent:String,from:Int32?,max:Int32?)->PartInfo
     
     // 根据床位编码获取当前床位用户的信息
     // 参数：partCode->科室/楼层编码
@@ -63,7 +63,7 @@ protocol SleepCareBussinessManager{
     //      alarmTimeEnd->报警结束时间
     //      from->查询记录起始序号
     //      max->查询的最大记录条数
-    func GetAlarmByUser(partCode:String,userCode:String,userNameLike:String,bedNumberLike:String,schemaCode:String,alarmTimeBegin:String,alarmTimeEnd:String, from:Int32?,max:Int32?)-> AlarmList
+    func GetAlarmByUser(partCode:String,loginName:String,userCode:String,userNameLike:String,bedNumberLike:String,schemaCode:String,alarmTimeBegin:String,alarmTimeEnd:String, from:Int32?,max:Int32?)-> AlarmList
     
     // 根据科室/楼层编号、用户编码、用户姓名模糊查找、床位号模糊查找、离床时间段等多条件获取离床异常信息
     // 参数：partCode->科室/楼层编码
@@ -79,7 +79,7 @@ protocol SleepCareBussinessManager{
     // 处理报警信息
     // 参数：alarmCode-> 报警编号
     //      transferType-> 处理类型 002:处理 003:误警报
-    func HandleAlarm(alarmCode:String,transferType:String)
+    func HandleAlarm(alarmCode:String,transferType:String,loginName:String,transferResult:String,remark:String)
     
     //根据当前登录用户、报警类型、报警时间段、报警处理状态等多条件获取关注老人的报警信息
     func GetAlarmByLoginUser(mainCode:String,loginName:String,schemaCode:String,alarmTimeBegin:String,alarmTimeEnd:String,transferTypeCode:String,from:String?,max:String?)-> AlarmList
@@ -95,4 +95,11 @@ protocol SleepCareBussinessManager{
     
     //获取养老院和其下科室信息
     func TreeRolesByRoleCode(rolecode:String)->RoleTreeList
+    
+    //扫描设备二维码获取报警明细（场景是护工处理任意报警点击扫描，扫描二维码后进行验证并返回相关报警信息）
+    // 如果处理成功则返回报警信息,处理失败则会抛出异常Message
+    func GetAlarmInfoByScancode(alarmCode:String,qrCode:String,loginName:String)->AlarmInfoByScanQR
+    
+    
+    
 }

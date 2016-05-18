@@ -1,6 +1,6 @@
 //
 //  SleepQualityPandectController.swift
-//  
+//
 //
 //  Created by Qinyuan Liu on 5/10/16.
 //
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITableViewDataSource,SelectDateEndDelegate {
-
-    @IBOutlet weak var lblTimeBegin:UILabel!
+class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITableViewDataSource,SelectDateEndDelegate,SelectDateDelegate {
+    
+    
     
     @IBOutlet weak var lblAnalysTimeBegin: UILabel!
     // 分析起始时间
-   
+    
     // 分析结束时间
     @IBOutlet weak var lblAnalysTimeEnd: UILabel!
     // 查询按钮
@@ -29,29 +29,21 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
     @IBOutlet weak var lblTotalPageCount: UILabel!
     // 睡眠质量总览View
     @IBOutlet weak var viewSleepQuality: UIView!
-    @IBOutlet weak var rightViewPad: UIView!
-    @IBOutlet weak var rightViewPhone: UIView!
     
+   
     
-    
-    @IBAction func NextForPhone(sender:AnyObject){
-        self.qualityViewModel.Next()
-    }
-    
-    @IBAction func LastForPhone(sender:AnyObject){
-        self.qualityViewModel.Preview()
-    }
-    
-    // 属性
+    var tabViewSleepQuality: UITableView!
+
     var qualityViewModel:SleepcareQualityPandectViewModel!
     
     let identifier = "CellIdentifier"
-    var tabViewSleepQuality: UITableView!
+    
     var tableWidth:CGFloat!
     
     var _previewBtnEnable:Bool = false
     // 分析结束时间
     var PreviewBtnEnable:Bool{
+        
         get
         {
             return self._previewBtnEnable
@@ -65,7 +57,7 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
     
     var _nextBtnEnable:Bool = false
     // 分析结束时间
-    var NextBtnEnable:Bool{
+    var NextBtnEnable:Bool {
         get
         {
             return self._nextBtnEnable
@@ -75,12 +67,19 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
             self._nextBtnEnable=value
             self.btnNext.enabled = value
         }
+        
+        
     }
+    
+    
+   var alertview:DatePickerView=DatePickerView(frame:UIScreen.mainScreen().bounds)
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userCode = Session.GetSession().CurUserCode
+        let userCode = Session.GetSession()!.CurUserCode
         self.qualityViewModel = SleepcareQualityPandectViewModel(userCode: userCode)
         // 按钮定义
         self.btnSearch.rac_command = qualityViewModel.searchCommand
@@ -117,22 +116,26 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
         self.lblAnalysTimeEnd.layer.borderColor = UIColor.blackColor().CGColor
         self.lblAnalysTimeEnd.layer.borderWidth = 1
         
-       
+        
         
         let _tablewidth = self.viewSleepQuality.frame.size.width
         self.tableWidth = _tablewidth
         // 实例当前的睡眠质量总览tableView
-        self.tabViewSleepQuality = UITableView(frame: CGRectMake(0, 0, _tablewidth, self.viewSleepQuality.frame.size.height), style: UITableViewStyle.Plain)
-        // 设置tableView默认的行分隔符为空
-        self.tabViewSleepQuality!.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.tabViewSleepQuality!.delegate = self
-        self.tabViewSleepQuality!.dataSource = self
-        self.tabViewSleepQuality!.tag = 1
-        self.tabViewSleepQuality!.backgroundColor = UIColor.clearColor()
-        // 注册自定义的TableCell
-        //        self.tabViewSleepQuality!.registerNib(UINib(nibName: "AlarmTableViewCell", bundle:nil), forCellReuseIdentifier: identifier)
-        self.viewSleepQuality.addSubview(self.tabViewSleepQuality)
-        self.qualityViewModel.tableView = self.tabViewSleepQuality
+        
+        tabViewSleepQuality = UITableView(frame: CGRectMake(0, 0, _tablewidth, self.viewSleepQuality.frame.size.height), style: UITableViewStyle.Plain)
+        tabViewSleepQuality.separatorStyle = UITableViewCellSeparatorStyle.None
+        
+        tabViewSleepQuality.tag = 1
+        tabViewSleepQuality.backgroundColor = UIColor.clearColor()
+        tabViewSleepQuality.delegate = self
+        tabViewSleepQuality.dataSource = self
+        self.viewSleepQuality.addSubview(tabViewSleepQuality)
+        self.qualityViewModel.tableView = tabViewSleepQuality
+        
+        
+        alertview.detegate = self
+        alertview.hidden = true
+        self.view.addSubview(alertview)
     }
     
     override func didReceiveMemoryWarning() {
@@ -140,22 +143,18 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
         // Dispose of any resources that can be recreated.
     }
     
-   
-    
     // 返回Table的行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(section != 0)
+        if(section != 0 && self.qualityViewModel != nil)
         {
             return qualityViewModel.SleepQualityList.count
         }
-        else
-        {
-            return 12
-        }
+        return 12
+        
     }
     // 返回Table的分组
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -217,6 +216,7 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
         var cell :UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(identifier) as? UITableViewCell
         
         cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+        
         cell?.userInteractionEnabled = false
         
         var lblNumber = UILabel(frame: CGRectMake(0, 0,  100, 44))
@@ -283,29 +283,37 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
         self.initDatePicker(2)
     }
     
-    
+   
     func initDatePicker(timeTag:Int)
     {
+//        if alertview != nil{
+//            alertview.removeFromSuperview()
+//        }
+
+       
+       alertview.hidden = false
+    
         
-        let devicebounds:CGRect = self.view.frame
-        
-        //设置日期弹出窗口
-        var alertview:DatePickerView = DatePickerView(frame:devicebounds)
-        alertview.detegate = self
-        alertview.tag = timeTag
-        self.view.addSubview(alertview)
     }
     
     func SelectDateEnd(sender:UIView,dateString:String)
     {
-        if(sender.tag == 1)
-        {
-            self.qualityViewModel.AnalysisTimeBegin = dateString
-        }
-        else
-        {
-            self.qualityViewModel.AnalysisTimeEnd = dateString
+        if self.qualityViewModel != nil{
+           
+        
+                self.qualityViewModel.AnalysisTimeEnd = dateString
+            
+           
         }
     }
+    
+    func SelectDate(sender:UIView,dateString:String)
+    {
+        if self.qualityViewModel != nil{
+            
+                self.qualityViewModel.AnalysisTimeBegin = dateString
+               }
+    }
 
+    
 }

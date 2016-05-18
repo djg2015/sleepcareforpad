@@ -9,7 +9,7 @@
 import UIKit
 
 
-class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchBarDelegate,JumpPageDelegate,ChoosePartDelegate {
+class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchBarDelegate,JumpPageDelegate,ChoosePartDelegate,SetAlarmWarningLabelDelegate {
     //界面控件
     @IBOutlet weak var curPager: Pager!
     @IBOutlet weak var search: UISearchBar!
@@ -41,10 +41,16 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         
     }
     @IBAction func UnwindToMainController2(segue:UIStoryboardSegue){
+       
+  
+     
+    }
+    
+    @IBAction func UnwindToMainController3(segue:UIStoryboardSegue){
         
         
     }
-    @IBAction func UnwindToMainController3(segue:UIStoryboardSegue){
+    @IBAction func UnwindAlarmQuery(segue:UIStoryboardSegue){
         
         
     }
@@ -57,6 +63,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     var choosepart:ChooseMainhouseController?
     var spinner:JHSpinnerView?
     var thread:NSThread!
+    var isOpenAlarm:Bool = false
     //支线程完成true
     var threadFlag:Bool = false
     
@@ -120,6 +127,12 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     var clearlogininfoDelegate:ClearLoginInfoDelegate?
     
     
+    override func viewDidAppear(animated: Bool) {
+        //刷新页面报警数
+        self.WarningSet = AlarmHelper.GetAlarmInstance().WarningList.count
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,15 +165,22 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         }
         
         //若curpartcode为空，则弹窗让用户选择
-        if Session.GetSession().CurPartCode == ""{
+        if Session.GetSession() != nil{
+        if (Session.GetSession()!.CurPartCode == ""){
             self.mainNameTouch()
         }
         else{
             //远程通知
             OpenNotice()
+            //开启报警
+            AlarmHelper.GetAlarmInstance().setalarmlabelDelegate = self
+            AlarmHelper.GetAlarmInstance().BeginWaringAttention()
+            self.isOpenAlarm = true
         }
         
+        
         rac_setting()
+        }
     }
     
     //查询按钮事件
@@ -172,11 +192,9 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     func BedSelected(bedModel:BedModel){
         try {
             ({
-                //正常业务处理
-             //   self.presentViewController(DialogFrameController(nibName: "DialogFrame", userCode: bedModel.UserCode!), animated: true, completion: nil)
-                
+            
                 if bedModel.UserCode != nil{
-                Session.GetSession().CurUserCode = bedModel.UserCode!
+                Session.GetSession()!.CurUserCode = bedModel.UserCode!
                 
                 self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
                 }
@@ -216,12 +234,11 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
                 _ in
                 self.clearlogininfoDelegate = nil
                 //关闭报警和通知
-                self.sleepcareMainViewModel?.CloseWaringAttention()
+                AlarmHelper.GetAlarmInstance().CloseWaringAttention()
                  CloseNotice()
                 //置空session，恢复登录前配置
-                
+                LOGINFLAG = false
                 Session.ClearSession()
-                 LOGINFLAG = false
                 TodoList.sharedInstance.removeItemAll()
                 //关闭页面，退回到login页面
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -261,8 +278,8 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         
         //查看报警明细
         self.lblWarining.userInteractionEnabled = true
-        var showWarining:UITapGestureRecognizer = UITapGestureRecognizer(target: self.sleepcareMainViewModel!, action: "showWarining")
-        self.lblWarining .addGestureRecognizer(showWarining)
+        var showalarmQuery:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "ShowAlarmQuery")
+        self.lblWarining .addGestureRecognizer(showalarmQuery)
         
         //选择科室
         self.choosepart = ChooseMainhouseController(nibName: "ChoosePartName", bundle: nil)
@@ -293,7 +310,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     
     //刷新
     @IBAction func Refresh(){
-        if Session.GetSession().CurPartCode != ""{
+        if Session.GetSession()!.CurPartCode != ""{
             if self.spinner == nil{
                 self.spinner  = JHSpinnerView.showOnView(self.view, spinnerColor:UIColor.whiteColor(), overlay:.Custom(CGRect(x:0,y:0,width:Int(UIScreen.mainScreen().bounds.width),height:Int(UIScreen.mainScreen().bounds.height)), CGFloat(0.0)), overlayColor:UIColor.blackColor().colorWithAlphaComponent(0.9))
                 
@@ -462,18 +479,28 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         }
     }
     
+    
     //选择某科室代理
     func ChoosePart(partcode:String,partname:String,mainname:String) {
         //恢复全选
         self.ResetCheckbox()
-        //加载报警
-        self.sleepcareMainViewModel?.ReloadAlarmInfo()
         //curpartcode改变，重开远程通知
         OpenNotice()
+        //开启报警
+        if !self.isOpenAlarm{
+            AlarmHelper.GetAlarmInstance().setalarmlabelDelegate = self
+        AlarmHelper.GetAlarmInstance().BeginWaringAttention()
+        }
         //更新标题
         self.lblMainName.text = mainname + "—" + partname
         //刷新床位信息
         self.sleepcareMainViewModel?.SearchByBedOrRoom("")
+    }
+    
+    //点击报警信息提示
+    func ShowAlarmQuery(){
+    self.performSegueWithIdentifier("AlarmQuery", sender: self)
+        
     }
     
     //左右滑动
@@ -493,13 +520,20 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         self.sleepcareMainViewModel?.ChoosedSearchType = downListModel.value
     }
     
+    //设置alarmlabel代理
+    func SetAlarmWarningLabel(count: Int) {
+        self.WarningSet = count
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
     
 }
+
+
 
 protocol ClearLoginInfoDelegate{
     func ClearLoginInfo()

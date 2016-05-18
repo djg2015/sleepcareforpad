@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-@IBDesignable class DatePickerView: UIView {
+@IBDesignable  class DatePickerView: UIView {
 
     var detegate:SelectDateEndDelegate!
     var datedelegate:SelectDateDelegate!
     
     var datePicker:UIDatePicker = UIDatePicker()
-    var dateButton : UIButton = UIButton()
+  //  var dateButton : UIButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,13 +42,13 @@ import UIKit
         
          if (UIDevice.currentDevice().userInterfaceIdiom == .Phone){
         datePicker.frame = CGRect(x:deviceWidth/2-150,y:deviceHeight/2-80,width:300,height:140)
-            selectedButton = li_common.Li_createButton("确定",x:deviceWidth/2-150,y:deviceHeight/2+60,width:150,height:35,target:self, action: Selector("selectedAction"))
-            cancelButton = li_common.Li_createButton("取消",x:deviceWidth/2 ,y:deviceHeight/2+60,width:150,height:35,target:self, action: Selector("cancelAction"))
+            selectedButton = li_common.Li_createButton("确定",x:deviceWidth/2-150,y:deviceHeight/2+60,width:150,height:35,target:self, action: "selectedAction")
+            cancelButton = li_common.Li_createButton("取消",x:deviceWidth/2 ,y:deviceHeight/2+60,width:150,height:35,target:self, action: "cancelAction")
         }
          else{
          datePicker.frame = CGRect(x:(deviceWidth - 300)/2,y:150,width:300,height:200)
-           selectedButton =  li_common.Li_createButton("确定",x:(deviceWidth - 300)/2,y:300,width:150,height:35,target:self, action: Selector("selectedAction"))
-             cancelButton = li_common.Li_createButton("取消",x:(deviceWidth - 300)/2 + 150,y:300,width:150,height:35,target:self, action: Selector("cancelAction"))
+           selectedButton =  li_common.Li_createButton("确定",x:(deviceWidth - 300)/2,y:300,width:150,height:35,target:self, action: "selectedAction")
+             cancelButton = li_common.Li_createButton("取消",x:(deviceWidth - 300)/2 + 150,y:300,width:150,height:35,target:self, action:"cancelAction")
         }
         
       
@@ -59,14 +59,17 @@ import UIKit
     }
 
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
+
+   
+ 
     
     //选择日期
     func selectedAction(){
         var dateString:String = self.dateString(datePicker.date)
-        dateButton.setTitle(dateString, forState: UIControlState.Normal)
-        removeAlertview()
+    //    dateButton.setTitle(dateString, forState: UIControlState.Normal)
+        
         if(self.detegate != nil){
             self.detegate.SelectDateEnd(self,dateString: dateString)
         }
@@ -74,6 +77,7 @@ import UIKit
         self.datedelegate.SelectDate(self, dateString: dateString)
         
         }
+        removeAlertview()
     }
     
     func cancelAction(){
@@ -83,6 +87,8 @@ import UIKit
     
     func removeAlertview(){
         self.hidden = true
+       
+  
     }
 
     //返回2014-06-19格式的日期

@@ -9,18 +9,14 @@
 import UIKit
 
 class SleepcareDetailViewModel: BaseViewModel {
-    //初始化
-    required init(userCode:String,date:String) {
-        super.init()
-        self.userCode = userCode
-        loadData(userCode,date: date)
-    }
+    
     
     override init() {
         super.init()
     }
     //属性定义
-    var userCode:String = ""
+    var userCode:String=""
+    
     //深睡时长
     var _deepSleepSpan:String?
     dynamic var DeepSleepSpan:String?{
@@ -196,11 +192,20 @@ class SleepcareDetailViewModel: BaseViewModel {
     }
     //自定义方法
     //加载初始数据
-    func loadData(userCode:String, date:String){
+    func LoadData( date:String){
         try {
             ({
+              var session = Session.GetSession()
+                if session != nil{
+                self.userCode = session!.CurUserCode
                 let sleepCareBussiness = SleepCareBussiness()
-                var sleepCareReport:SleepCareReport = sleepCareBussiness.QuerySleepQulityDetail(userCode, analysDate: date)
+                //获取查询日期对应的自然周开始日期
+                let begin = self.GetStartOfWeekForDate(date)
+                let end  = begin.addDays(6)
+               
+                
+                
+                var sleepCareReport:SleepCareReport = sleepCareBussiness.QuerySleepQulityDetail(self.userCode, analysDate: date)
                 self.DeepSleepSpan = sleepCareReport.DeepSleepTimeSpan
                 self.LightSleepSpan = sleepCareReport.LightSleepTimeSpan
                 self.OnbedSpan = sleepCareReport.OnBedTimeSpan.subString(0, length: 5)
@@ -214,13 +219,13 @@ class SleepcareDetailViewModel: BaseViewModel {
                 self.TrunTimes = sleepCareReport.TurnOverTime
                 self.TurnOverRate = sleepCareReport.TurnOverRate
                 self.SignReports = sleepCareReport.SignReports
-                //获取查询日期对应的自然周开始日期
-                let begin = self.GetStartOfWeekForDate(date)
-                let end  = begin.addDays(6)
-                var session = Session.GetSession()
-                var sleepcareList = sleepCareBussiness.GetSleepCareReportByUser(session.CurPartCode, userCode: userCode, analysTimeBegin: begin.description(format: "yyyy-MM-dd"), analysTimeEnd: end.description(format: "yyyy-MM-dd"), from: 1, max: 7)
-                self.SleepCareReports = Array<SleepCareReport>()
+                
+                
+                
+                var sleepcareList = sleepCareBussiness.GetSleepCareReportByUser(session!.CurPartCode, userCode: self.userCode, analysTimeBegin: begin.description(format: "yyyy-MM-dd"), analysTimeEnd: end.description(format: "yyyy-MM-dd"), from: 1, max: 7)
+                
                 if(sleepcareList.sleepCareReportList.count > 0){
+                    self.SleepCareReports = Array<SleepCareReport>()
                     var curSleepCareReports = sleepcareList.sleepCareReportList
                     for i in 0...(curSleepCareReports.count - 1){
                         curSleepCareReports[i].ReportDate = self.GetChineseWeekDay(curSleepCareReports[i].ReportDate)
@@ -234,10 +239,12 @@ class SleepcareDetailViewModel: BaseViewModel {
                     }
                     self.SleepCareReports = curSleepCareReports
                 }
+                }
                 },
                 catch: { ex in
                     //异常处理
-                 //   handleException(ex,showDialog: true)
+                    handleException(ex,showDialog: true)
+                 
                 },
                 finally: {
                     
@@ -246,48 +253,50 @@ class SleepcareDetailViewModel: BaseViewModel {
         
     }
     
-    //获取查询日期对应的自然周开始日期
-    func GetStartOfWeekForDate(date:String) -> Date{
-        var curDate = Date(string: date)
-        var curindexofWeek = curDate.weekday()
-        var span:Int = 0
-        switch curindexofWeek{
-        case Weekday.Sunday:
-            span = 0
-        case Weekday.Monday:
-            span = 1
-        case Weekday.Tuesday:
-            span = 2
-        case Weekday.Wednesday:
-            span = 3
-        case Weekday.Thursday:
-            span = 4
-        case Weekday.Friday:
-            span = 5
-        case Weekday.Saturday:
-            span = 6
-        }
-        return curDate.addDays(-1 * span)
+
+
+//获取查询日期对应的自然周开始日期
+func GetStartOfWeekForDate(date:String) -> Date{
+    var curDate = Date(string: date)
+    var curindexofWeek = curDate.weekday()
+    var span:Int = 0
+    switch curindexofWeek{
+    case Weekday.Sunday:
+        span = 0
+    case Weekday.Monday:
+        span = 1
+    case Weekday.Tuesday:
+        span = 2
+    case Weekday.Wednesday:
+        span = 3
+    case Weekday.Thursday:
+        span = 4
+    case Weekday.Friday:
+        span = 5
+    case Weekday.Saturday:
+        span = 6
     }
-    
-    func GetChineseWeekDay(date:String) -> String{
-        var curDate = Date(string: date)
-        var curindexofWeek = curDate.weekday()
-        switch curindexofWeek{
-        case Weekday.Sunday:
-            return "日"
-        case Weekday.Monday:
-            return "一"
-        case Weekday.Tuesday:
-            return "二"
-        case Weekday.Wednesday:
-            return "三"
-        case Weekday.Thursday:
-            return "四"
-        case Weekday.Friday:
-            return "五"
-        case Weekday.Saturday:
-            return "六"
-        }
+    return curDate.addDays(-1 * span)
+}
+
+func GetChineseWeekDay(date:String) -> String{
+    var curDate = Date(string: date)
+    var curindexofWeek = curDate.weekday()
+    switch curindexofWeek{
+    case Weekday.Sunday:
+        return "日"
+    case Weekday.Monday:
+        return "一"
+    case Weekday.Tuesday:
+        return "二"
+    case Weekday.Wednesday:
+        return "三"
+    case Weekday.Thursday:
+        return "四"
+    case Weekday.Friday:
+        return "五"
+    case Weekday.Saturday:
+        return "六"
     }
+}
 }

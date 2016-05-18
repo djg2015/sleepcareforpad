@@ -44,10 +44,11 @@ class SleepCareBussiness: SleepCareBussinessManager {
     //      searchContent->房间号或者床位号
     //      from->查询记录起始序号
     //      max->查询的最大记录条数
-    func GetPartInfoByPartCode(partCode:String,searchType:String,searchContent:String,from:Int32?,max:Int32?)->PartInfo{
+    func GetPartInfoByPartCode(partCode:String,loginName:String,searchType:String,searchContent:String,from:Int32?,max:Int32?)->PartInfo{
         var subject = MessageSubject(opera: "GetPartInfoByPartCode")
         var post = EMProperties(messageSubject: subject)
         post.AddKeyValue("partCode", value: partCode)
+        post.AddKeyValue("loginName", value: loginName)
         post.AddKeyValue("searchType", value: searchType)
         post.AddKeyValue("searchContent", value: searchContent)
         if(from != nil)
@@ -176,11 +177,12 @@ class SleepCareBussiness: SleepCareBussinessManager {
     //      alarmTimeEnd->报警结束时间
     //      from->查询记录起始序号
     //      max->查询的最大记录条数
-    func GetAlarmByUser(partCode:String,userCode:String,userNameLike:String,bedNumberLike:String,schemaCode:String,alarmTimeBegin:String,alarmTimeEnd:String, from:Int32?,max:Int32?)-> AlarmList
+    func GetAlarmByUser(partCode:String,loginName:String,userCode:String,userNameLike:String,bedNumberLike:String,schemaCode:String,alarmTimeBegin:String,alarmTimeEnd:String, from:Int32?,max:Int32?)-> AlarmList
     {
         var subject = MessageSubject(opera: "GetAlarmByUser")
         var post = EMProperties(messageSubject: subject)
         post.AddKeyValue("partCode", value: partCode)
+        post.AddKeyValue("loginName", value: loginName)
         post.AddKeyValue("userCode", value: userCode)
         post.AddKeyValue("userNameLike", value: userNameLike)
         post.AddKeyValue("bedNumberLike", value: bedNumberLike)
@@ -242,15 +244,22 @@ class SleepCareBussiness: SleepCareBussinessManager {
         return message as! LeaveBedReportList
     }
     
-    // 处理报警信息
+    // 处理报警信息:如果处理成功则无返回值，如果处理过程中发生异常则返回异常信息
     // 参数：alarmCode-> 报警编号
     //      transferType-> 处理类型 002:处理 003:误警报
-    func HandleAlarm(alarmCode:String,transferType:String)
+    //      loginName->登录用户名
+    //      transferResult->处理结果
+    //      remark->备注
+    func HandleAlarm(alarmCode:String,transferType:String,loginName:String,transferResult:String,remark:String)
     {
         var subject = MessageSubject(opera: "TransferAlarmMessage")
         var post = EMProperties(messageSubject: subject)
         post.AddKeyValue("alarmCode", value: alarmCode)
         post.AddKeyValue("transferType", value: transferType)
+         post.AddKeyValue("loginName", value: loginName)
+         post.AddKeyValue("transferResult", value: transferResult)
+         post.AddKeyValue("remark", value: remark)
+        
         
         var xmpp = XmppMsgManager.GetInstance(timeout: xmpp_Timeout)
         var message = xmpp?.SendData(post)
@@ -349,4 +358,21 @@ class SleepCareBussiness: SleepCareBussinessManager {
         }
         return message as! RoleTreeList
     }
+    func GetAlarmInfoByScancode(alarmCode:String,qrCode:String,loginName:String)->AlarmInfoByScanQR{
+            var subject = MessageSubject(opera:"GetAlarmInfoByScancode")
+            var post = EMProperties(messageSubject: subject)
+            post.AddKeyValue("alarmCode", value: alarmCode)
+            post.AddKeyValue("qrCode", value: qrCode)
+            post.AddKeyValue("loginName", value: loginName)
+   
+            
+            var xmpp = XmppMsgManager.GetInstance(timeout: xmpp_Timeout)
+            var message = xmpp?.SendData(post)
+            if(message is EMServiceException)
+            {
+                throw((message as! EMServiceException).code, (message as! EMServiceException).message)
+            }
+    return message as! AlarmInfoByScanQR
+}
+
 }

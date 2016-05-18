@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDelegate,ReloadAlarmCountDelegate {
+class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
     //初始化
     override init() {
         super.init()
@@ -20,7 +20,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
         try {
             ({
                 var session = Session.GetSession()
-                let loginUser = session.LoginUser
+                let loginUser = session!.LoginUser
                 //获取title名称
                 var partname = GetValueFromPlist("curPartname","sleepcare.plist")
                 var mainname = GetValueFromPlist("curMainname","sleepcare.plist")
@@ -32,8 +32,8 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
                 }
                 
                 //获取床位信息
-                if session.CurPartCode != ""{
-                    self.PartBedsSearch(session.CurPartCode, searchType: "", searchContent: "")
+                if session!.CurPartCode != ""{
+                    self.PartBedsSearch(session!.CurPartCode, searchType: "", searchContent: "")
                 }
                 
                 
@@ -50,14 +50,10 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
         //实时数据处理代理设置
         var xmppMsgManager = XmppMsgManager.GetInstance()
         xmppMsgManager?._realTimeDelegate = self
-        xmppMsgManager?._waringAttentionDelegate = self
         self.realTimeCaches = Dictionary<String,RealTimeReport>()
-        self.setRealTimer()
-        //开启警告信息
-        self.wariningCaches = Array<AlarmInfo>()
         self.lock = NSLock()
+        self.setRealTimer()
         
-        self.BeginWaringAttention()
     }
     
     //属性定义
@@ -395,18 +391,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
         }
     }
     
-    //开始报警提醒,刷新报警列表和报警通知
-    private var IsOpen:Bool = false
-    func BeginWaringAttention(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showWarining", name: "TodoListShouldRefresh", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "CloseWaringAttention", name: "WarningClose", object: nil)
-//        NSNotificationCenter.defaultCenter().addObserver(self,selector:"ReConnect", name:"ReConnectInternetForPad", object: nil)
-        
-        self.ReloadAlarmInfo()
-        
-        self.IsOpen = true
-        self.setWarningTimer()
-    }
+    
     
 //    //弹窗提示：重新连接或退出登录
 //    func ReConnect(){
@@ -432,92 +417,9 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
 //        }
 //    }
     
-    // 获取未处理的报警信息，刷新todolist
-    func ReloadAlarmInfo(){
-        try {
-            ({
-                
-                //获取最新在离床报警，从2016/1/1至今的所有未处理信息
-                
-                var sleepCareBLL = SleepCareBussiness()
-                var curDateString = DateFormatterHelper.GetInstance().GetStringDateFromCurrent("yyyy-MM-dd")
-                if Session.GetSession().CurPartCode != ""{
-                    var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(Session.GetSession().CurPartCode, userCode: "", userNameLike:"", bedNumberLike: "", schemaCode: ""
-                        , alarmTimeBegin:"2016-01-01", alarmTimeEnd: curDateString, from: nil, max: nil)
-                    
-                    TodoList.sharedInstance.removeItemAll()
-                    
-                    for alarmItem in alarmList.alarmInfoList
-                    {
-                        
-                        //放入todolist
-                        let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmItem.UserName + alarmItem.SchemaContent, UUID: alarmItem.AlarmCode)
-                        TodoList.sharedInstance.addItem(todoItem)
-                        
-                    }
-                    self.WariningCount = TodoList.sharedInstance.allItems().count
-                    TodoList.sharedInstance.SetBadgeNumber(self.WariningCount)
-                }
-                },
-                catch: { ex in
-                    //异常处理
-                    handleException(ex,showDialog: true)
-                },
-                finally: {
-                    
-                }
-            )}
-        
-    }
+  
     
-    
-    //关闭报警提醒
-    func CloseWaringAttention(){
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-        self.IsOpen = false
-        TodoList.sharedInstance.removeItemAll()
-    }
-    
-    //实时报警处理线程
-    func setWarningTimer(){
-        var realtimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "warningTimerFireMethod:", userInfo: nil, repeats:true);
-        realtimer.fire()
-    }
-    
-    //线程获取当前养老院科室下的实时报警信息：放入todolist通知，报警数刷新
-    func warningTimerFireMethod(timer: NSTimer) {
-        if(self.wariningCaches.count > 0){
-            let alarmInfo:AlarmInfo = self.wariningCaches[0] as AlarmInfo
-            var session = Session.GetSession()
-            if(session.CurPartCode == alarmInfo.PartCode){
-                
-                
-                let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmInfo.UserName + alarmInfo.SchemaContent, UUID: alarmInfo.AlarmCode)
-                TodoList.sharedInstance.addItem(todoItem)
-                
-                
-                self.WariningCount = TodoList.sharedInstance.allItems().count
-                //  self.WariningCount = self.WariningCount + 1
-            }
-            self.wariningCaches.removeAtIndex(0)
-        }
-    }
-    
-    //点击报警通知直接打开报警界面
-    func showWarining() {
-        let controller:QueryAlarmController!
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone{
-            controller = QueryAlarmController(nibName:"IQueryAlarmView", bundle:nil)
-        }
-        else{
-            controller = QueryAlarmController(nibName:"QueryAlarmView", bundle:nil)
-        }
-        controller.alarmcountDelegate = self
-        self.JumpPage(controller)
-        self.WariningCount = TodoList.sharedInstance.allItems().count
-        
-    }
+   
     
     //实时数据处理
     func GetRealTimeDelegate(realTimeReport:RealTimeReport){
@@ -541,26 +443,17 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
         self.lock!.unlock()
     }
     
-    //报警数据处理
-    func GetWaringAttentionDelegate(alarmList:AlarmList){
-        if(self.IsOpen){
-            for(var i = 0;i < alarmList.alarmInfoList.count;i++){
-                self.wariningCaches.append(alarmList.alarmInfoList[i])
-            }
-            
-        }
-        
-    }
-    
+  
+     var session = Session.GetSession()
     //按房间号或床位号搜索，参数为“”则查找全部
     func SearchByBedOrRoom(searchContent:String){
-        var session = Session.GetSession()
+       
         var searcgType = "2"
         if(self.ChoosedSearchType == SearchType.byRoomNum){
             searcgType = "1"
         }
-        if session.CurPartCode != ""{
-            self.PartBedsSearch(session.CurPartCode, searchType: searcgType, searchContent: searchContent)
+        if session!.CurPartCode != ""{
+            self.PartBedsSearch(session!.CurPartCode, searchType: searcgType, searchContent: searchContent)
         }
     }
     
@@ -569,7 +462,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
         // self.BedModelList = Array<BedModel>()
         let sleepCareBussiness = SleepCareBussiness()
         //获取医院下的床位信息
-        var partInfo:PartInfo = sleepCareBussiness.GetPartInfoByPartCode(partCode, searchType: searchType, searchContent: searchContent, from: nil, max: nil)
+        var partInfo:PartInfo = sleepCareBussiness.GetPartInfoByPartCode(partCode, loginName:session!.LoginUser!.LoginName,searchType: searchType, searchContent: searchContent, from: nil, max: nil)
         
         self.PartCode = partInfo.PartCode
         self.BedCount = partInfo.BedCount
@@ -630,10 +523,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate,WaringAttentionDeleg
         
     }
     
-    //在报警页面查询了之后，在主页面刷新报警数
-    func ReloadAlarmCount() {
-        self.WariningCount = TodoList.sharedInstance.allItems().count
-    }
+  
 }
 
 struct SearchType{

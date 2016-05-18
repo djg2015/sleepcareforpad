@@ -69,7 +69,7 @@
         
         var _userCode:String = ""
         // 用户编码
-        var UserCode:String{
+         dynamic var UserCode:String{
             get
             {
                 return self._userCode
@@ -82,7 +82,7 @@
         
         // 一页显示的条数
         let _pageSize:Int32 = 12
-        var _totalNum:Int32 = 0;
+        var _totalNum:Int32 = 0
         
         var _totalPageCount:String = "共0页"
         // 一共多少页
@@ -165,13 +165,15 @@
             try {
                 ({
                     var sleepCareBLL = SleepCareBussiness()
+                    var session = Session.GetSession()
+                    if session != nil{
                     
-                    var sleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(Session.GetSession().CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:(Int32(self.CurrentPageIndex.toInt()!) - 1) * self._pageSize + 1 , max: self._pageSize)
+                    var sleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(session!.CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:(Int32(self.CurrentPageIndex.toInt()!) - 1) * self._pageSize + 1 , max: self._pageSize)
                     
-                    var totalSleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(Session.GetSession().CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:nil, max: nil)
+                    var totalSleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(session!.CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:nil, max: nil)
                     self._totalNum = Int32(totalSleepCareReportList.sleepCareReportList.count)
                     
-                    var index:Int = 1;
+                    var index:Int = 1
                     for sleepCare in sleepCareReportList.sleepCareReportList
                     {
                         var itemVM:SleepPandectItemViewModel = SleepPandectItemViewModel()
@@ -204,6 +206,7 @@
                         self.NextBtnEnable = true
                     }
                     self.tableView.reloadData()
+                    }
                     },
                     catch: { ex in
                         //异常处理
@@ -228,8 +231,8 @@
                         
                         var sleepCareBLL = SleepCareBussiness()
                         
-                        var sleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(Session.GetSession().CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:(Int32(self.CurrentPageIndex.toInt()!) - 1) * self._pageSize + 1 , max: self._pageSize)
-                        var index:Int = 1;
+                        var sleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(Session.GetSession()!.CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:(Int32(self.CurrentPageIndex.toInt()!) - 1) * self._pageSize + 1 , max: self._pageSize)
+                        var index:Int = 1
                         for sleepCare in sleepCareReportList.sleepCareReportList
                         {
                             var itemVM:SleepPandectItemViewModel = SleepPandectItemViewModel()
@@ -289,14 +292,15 @@
                     {
                         pageCount = Int32(self._totalNum)/self._pageSize
                     }
+                    
                     if(Int32(self.CurrentPageIndex.toInt()!) < pageCount)
                     {
                         self.CurrentPageIndex = String(Int32(self.CurrentPageIndex.toInt()!) + 1)
                         
                         var sleepCareBLL = SleepCareBussiness()
                         
-                        var sleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(Session.GetSession().CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:(Int32(self.CurrentPageIndex.toInt()!) - 1) * self._pageSize + 1 , max: self._pageSize)
-                        var index:Int = 1;
+                        var sleepCareReportList:SleepCareReportList = sleepCareBLL.GetSleepCareReportByUser(Session.GetSession()!.CurPartCode, userCode: self.UserCode, analysTimeBegin: self.AnalysisTimeBegin, analysTimeEnd: self.AnalysisTimeEnd, from:(Int32(self.CurrentPageIndex.toInt()!) - 1) * self._pageSize + 1 , max: self._pageSize)
+                        var index:Int = 1
                         for sleepCare in sleepCareReportList.sleepCareReportList
                         {
                             var itemVM:SleepPandectItemViewModel = SleepPandectItemViewModel()
@@ -309,16 +313,9 @@
                             self.SleepQualityList.append(itemVM)
                         }
                         
-                        if(Int32(self._totalNum) % self._pageSize != 0)
-                        {
-                            self.TotalPageCount = "共" + String(Int32(self._totalNum)/self._pageSize + 1) + "页"
-                        }
-                        else
-                        {
-                            self.TotalPageCount = "共" + String(Int32(self._totalNum)/self._pageSize) + "页"
-                        }
-                        
+                        self.TotalPageCount = "共" + String(pageCount) + "页"
                         self.PreviewBtnEnable = true
+                        
                         if(Int32(self.CurrentPageIndex.toInt()!) == pageCount)
                         {
                             self.NextBtnEnable = false

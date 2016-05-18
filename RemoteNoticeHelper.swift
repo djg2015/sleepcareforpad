@@ -50,12 +50,12 @@ func OpenNotice(){
         ({
             var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
             let isconnect = xmppMsgManager!.RegistConnect()
-            
+            var session = Session.GetSession()
             if(isconnect){
-                if LOGINFLAG{
+                if (LOGINFLAG && session != nil){
                     var token = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") as? String
                     if token != nil{
-                        SleepCareBussiness().OpenNotification(token!, loginName: Session.GetSession().LoginUser!.LoginName,password:Session.GetSession().LoginUser!.LoginPassword,partCode:Session.GetSession().CurPartCode)
+                        SleepCareBussiness().OpenNotification(token!, loginName: session!.LoginUser!.LoginName,password:session!.LoginUser!.LoginPassword,partCode:session!.CurPartCode)
                     }
                 }
             }
@@ -79,10 +79,10 @@ func CloseNotice(){
             let isconnect = xmppMsgManager!.RegistConnect()
             
             if(isconnect){
-                if LOGINFLAG{
+                if (LOGINFLAG && Session.GetSession() != nil){
                     var token = NSUserDefaults.standardUserDefaults().objectForKey("DeviceToken") as? String
                     if token != nil{
-                    SleepCareBussiness().CloseNotification(token!, loginName: Session.GetSession().LoginUser!.LoginName)
+                    SleepCareBussiness().CloseNotification(token!, loginName: Session.GetSession()!.LoginUser!.LoginName)
                     }
                 }
             }

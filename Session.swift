@@ -118,7 +118,12 @@ class Session {
         self.instance = nil
     }
     
-    class func GetSession() -> Session {
+    class func GetSession() -> Session? {
+        if self.instance == nil{
+            print("session is nil")
+            return nil
+        }
         return self.instance!
+     
     }
 }

@@ -18,7 +18,6 @@ class QueryAlarmViewModel:BaseViewModel
         super.init()
         
         // 初始化时间
-      //  self.AlarmDateBeginCondition = Date.today().addDays(-7).description(format: "yyyy-MM-dd")
         self.AlarmDateBeginCondition = "2016-01-01"
         self.AlarmDateEndCondition = Date.today().description(format: "yyyy-MM-dd")
         
@@ -27,9 +26,6 @@ class QueryAlarmViewModel:BaseViewModel
             (any:AnyObject!) -> RACSignal in
             return self.SearchAlarm()
         }
-        // 初始加载数据
-        TodoList.sharedInstance.removeItemAll()
-        self.SearchAlarm()
     }
     
     //点击搜索按钮获取报警信息,默认2016/1/1至今的未处理信息
@@ -37,12 +33,17 @@ class QueryAlarmViewModel:BaseViewModel
     func SearchAlarm() -> RACSignal{
         try {
             ({
+                TodoList.sharedInstance.removeItemAll()
+                let session = Session.GetSession()
+                if session != nil{
                 //清空报警列表
                 self.AlarmInfoList.removeAll(keepCapacity: true)
                 //获取最新在离床报警
                 var sleepCareBLL = SleepCareBussiness()
-                
-                var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(Session.GetSession().CurPartCode, userCode: "", userNameLike: self.UserNameCondition, bedNumberLike: self.BedNumberCondition, schemaCode: self.SelectedAlarmTypeCode, alarmTimeBegin:self.AlarmDateBeginCondition, alarmTimeEnd: self.AlarmDateEndCondition, from: nil, max: nil)
+                var curpartcode = session!.CurPartCode
+                var loginName = session!.LoginUser!.LoginName
+                  
+                var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(curpartcode,loginName:loginName, userCode: "", userNameLike: self.UserNameCondition, bedNumberLike: self.BedNumberCondition, schemaCode: self.SelectedAlarmTypeCode, alarmTimeBegin:self.AlarmDateBeginCondition, alarmTimeEnd: self.AlarmDateEndCondition, from: nil, max: nil)
                 
                 var index:Int = 0
                 for alarmItem in alarmList.alarmInfoList
@@ -63,6 +64,7 @@ class QueryAlarmViewModel:BaseViewModel
                     TodoList.sharedInstance.addItem(todoItem)
                 }
                 self.tableView.reloadData()
+                }
                 },
                 catch: { ex in
                     //异常处理
@@ -75,28 +77,7 @@ class QueryAlarmViewModel:BaseViewModel
         return RACSignal.empty()
     }
     
-    //处理报警：删除对应的todoitem，删除服务端的这条报警信息，从alarmlist中删除
-    func HandleAlarm(alarmCode:String,handType:String)
-    {
-        try {
-            ({
-                TodoList.sharedInstance.removeItemByID(alarmCode)
-                
-                var sleepCareBLL = SleepCareBussiness()
-                sleepCareBLL.HandleAlarm(alarmCode, transferType: handType)
-
-                self.SearchAlarm()
-                },
-                catch: { ex in
-                    //异常处理
-                    handleException(ex,showDialog: true)
-                },
-                finally: {
-                    
-                }
-            )}
-    }
-    
+        
     var _userNameCondition:String = ""
     // 用户姓名查询条件
     dynamic var UserNameCondition:String{
@@ -227,6 +208,11 @@ class QueryAlarmViewModel:BaseViewModel
             item = DownListModel()
             item.key = "ALM_BEDSORE"
             item.value = "褥疮风险报警"
+            _alarmTypeList.append(item)
+            
+            item = DownListModel()
+            item.key = "ALM_CALL"
+            item.value = "呼叫报警"
             _alarmTypeList.append(item)
             
             return _alarmTypeList

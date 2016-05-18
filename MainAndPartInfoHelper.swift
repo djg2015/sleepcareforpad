@@ -14,13 +14,13 @@ func GetMainAndPartInfo(){
         ({
            
                 var playe:Array<Play> = Array<Play>()
-                
                 var playDictionariesArray:Array<RoleTree>?
                 var partcodeDictionary = Dictionary<String,partandmainInfo>()
-                
-                if Session.GetSession().LoginUser!.role!.RoleCode != ""{
+                var session = Session.GetSession()
+            
+                if (session != nil && session!.LoginUser!.role!.RoleCode != ""){
                     //获取养老院和科室信息
-                    var  roletree = SleepCareBussiness().TreeRolesByRoleCode(Session.GetSession().LoginUser!.role!.RoleCode)
+                    var  roletree = SleepCareBussiness().TreeRolesByRoleCode(session!.LoginUser!.role!.RoleCode)
                     
                     //为session里的mainandpartArraylist赋值
                     if roletree.RoleTrees.count > 0{
@@ -66,8 +66,8 @@ func GetMainAndPartInfo(){
                             }
                         }//end for
                         
-                        Session.GetSession().MainAndPartArrayList = playe
-                        Session.GetSession().PartcodeDictionary = partcodeDictionary
+                        session!.MainAndPartArrayList = playe
+                        session!.PartcodeDictionary = partcodeDictionary
                     }
                 }
                 

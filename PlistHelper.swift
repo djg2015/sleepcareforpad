@@ -31,7 +31,7 @@ func InitPlistFile(){
     }
     else {
         println("sleepcare.plist already exits.")
-      //  fileManager.removeItemAtPath(path, error: nil)
+     //   fileManager.removeItemAtPath(path, error: nil)
     }
     sleepcareResultDictionary = NSMutableDictionary(contentsOfFile: path)
 }

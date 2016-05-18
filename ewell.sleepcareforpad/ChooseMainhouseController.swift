@@ -64,12 +64,9 @@ class ChooseMainhouseController: BaseViewController,SectionHeaderViewDelegate,UI
         
         let sectionHeaderNib: UINib = UINib(nibName: "SectionHeaderView", bundle: nil)
         self.mainhouseTableView.registerNib(sectionHeaderNib, forHeaderFooterViewReuseIdentifier: SectionHeaderViewIdentifier)
-        
-        
-
-        
     }
     
+       
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -116,10 +113,10 @@ class ChooseMainhouseController: BaseViewController,SectionHeaderViewDelegate,UI
     
     func GetMainInfo(){
         GetMainAndPartInfo()
-        
-        if Session.GetSession().MainAndPartArrayList.count > 0{
+        var session = Session.GetSession()
+        if (session != nil && session!.MainAndPartArrayList.count > 0){
             // plays = played()
-            plays = Session.GetSession().MainAndPartArrayList
+            plays = session!.MainAndPartArrayList
             
         }
         else{
@@ -157,20 +154,21 @@ class ChooseMainhouseController: BaseViewController,SectionHeaderViewDelegate,UI
         var cell:PartNameCell = tableView.cellForRowAtIndexPath(indexPath) as! PartNameCell
         var Partcode = cell.quotation.partcode
         var Partname = cell.quotation.partname
+        var session = Session.GetSession()
         //更新session的curPartCode，并写入本地sleepcare。plist。调用代理刷新mainview
-        if self.parentController != nil{
-            var session = Session.GetSession()
-            session.CurPartCode = Partcode
-            session.CurPartName = Partname
+        if (self.parentController != nil && session != nil){
+            
+            session!.CurPartCode = Partcode
+            session!.CurPartName = Partname
             SetValueIntoPlist("curPartcode", Partcode)
             SetValueIntoPlist("curPartname", Partname)
             //mainname在选择科室前已记录在session中
-            SetValueIntoPlist("curMainname", session.CurMainName)
+            SetValueIntoPlist("curMainname", session!.CurMainName)
             
             TodoList.sharedInstance.removeItemAll()
             
             if self.choosepartDelegate != nil{
-                self.choosepartDelegate.ChoosePart(Partcode,partname:Partname,mainname:session.CurMainName)
+                self.choosepartDelegate.ChoosePart(Partcode,partname:Partname,mainname:session!.CurMainName)
             }
             
             
@@ -230,9 +228,9 @@ class ChooseMainhouseController: BaseViewController,SectionHeaderViewDelegate,UI
         var sectionInfo: SectionInfo = self.sectionInfoArray[sectionOpened] as! SectionInfo
         
         sectionInfo.open = true
-        
-        Session.GetSession().CurMainName = sectionInfo.play.name
-        
+        if Session.GetSession() != nil{
+        Session.GetSession()!.CurMainName = sectionInfo.play.name
+        }
         //创建一个包含单元格索引路径的数组来实现插入单元格的操作：这些路径对应当前节的每个单元格
         
         var countOfRowsToInsert = sectionInfo.play.partnames.count

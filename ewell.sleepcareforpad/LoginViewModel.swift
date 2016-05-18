@@ -152,23 +152,25 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
                     //                       否，plist中curpartcode是否为空：空，不做操作
                     //                                                    2非空：验证curpartcode是否符合权限：符合，不做操作
                     //                                                                                  3不符合，清空plist里的值
-                    let mainandpartInfo = session.MainAndPartArrayList
+                
+                if session != nil{
+                let mainandpartInfo = session!.MainAndPartArrayList
                     if mainandpartInfo.count == 1{
                         let mainandpartDic = mainandpartInfo[0]
                         let partnames = mainandpartDic.partnames
                         if partnames.count == 1{
-                            session.CurMainName = mainandpartDic.name
-                            session.CurPartName = partnames[0].partname
-                            session.CurPartCode = partnames[0].partcode
-                            SetValueIntoPlist("curPartcode",session.CurPartCode)
-                            SetValueIntoPlist("curPartname",session.CurPartName)
-                            SetValueIntoPlist("curMainname",session.CurMainName)
+                            session!.CurMainName = mainandpartDic.name
+                            session!.CurPartName = partnames[0].partname
+                            session!.CurPartCode = partnames[0].partcode
+                            SetValueIntoPlist("curPartcode",session!.CurPartCode)
+                            SetValueIntoPlist("curPartname",session!.CurPartName)
+                            SetValueIntoPlist("curMainname",session!.CurMainName)
                         }
                     }
                     else{
                     let temppartcode = GetValueFromPlist("curPartcode","sleepcare.plist")
                         if temppartcode != ""{
-                        let partcodes = session.PartcodeDictionary.keys
+                        let partcodes = session!.PartcodeDictionary.keys
                             let codes = partcodes.filter({$0 == temppartcode})
                             if codes.array.count == 0{
                                 SetValueIntoPlist("curPartcode","")
@@ -176,13 +178,13 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
                                 SetValueIntoPlist("curMainname","")
                             }
                             else{
-                                session.CurPartCode = temppartcode
-                                session.CurMainName = GetValueFromPlist("curMainname","sleepcare.plist")
-                                session.CurPartName = GetValueFromPlist("curPartname","sleepcare.plist")
+                                session!.CurPartCode = temppartcode
+                                session!.CurMainName = GetValueFromPlist("curMainname","sleepcare.plist")
+                                session!.CurPartName = GetValueFromPlist("curPartname","sleepcare.plist")
                             }
                         }
                     }
-
+                }
                  //跳转主页面
                     if self.controller != nil{
                  self.controller.performSegueWithIdentifier("MainView", sender: self.controller)

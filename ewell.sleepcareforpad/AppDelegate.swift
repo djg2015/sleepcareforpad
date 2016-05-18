@@ -35,10 +35,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
     
     //2由inactive状态切换到active状态
     func applicationDidBecomeActive(application: UIApplication) {
-         
+        
         CheckRemoteNotice()
-    
-           
+        
+        //检查更新，每日一次
+        var curUpdate = DateFormatterHelper.GetInstance().GetStringDateFromCurrent("yyyy-MM-dd")
+        var updateflag = UpdateHelper.GetUpdateInstance().CheckLocalUpdateDate(curUpdate)
+        //更新本地sleepcare.plist文件里updatedate
+        SetValueIntoPlist("updatedate",curUpdate)
+        if updateflag{
+            UpdateHelper.GetUpdateInstance().PrepareConnection()
+            //本地version对比store里最新的version大小
+            UpdateHelper.GetUpdateInstance().CheckUpdate()
+        }
         
         self.isBackRun = false
     }
@@ -89,15 +98,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("WarningClose", object: self)
     }
     
-    //接收本地通知
-    func application(application: UIApplication,
-        didReceiveLocalNotification notification: UILocalNotification) {
-            if(self.isBackRun){
-                //判断是否接收推送
-                NSNotificationCenter.defaultCenter().postNotificationName("TodoListShouldRefresh", object: self)
-                self.isBackRun = false
-            }
-    }
+//    //接收本地通知
+//    func application(application: UIApplication,
+//        didReceiveLocalNotification notification: UILocalNotification) {
+//            if(self.isBackRun){
+//                //判断是否接收推送
+//                NSNotificationCenter.defaultCenter().postNotificationName("TodoListShouldRefresh", object: self)
+//                self.isBackRun = false
+//            }
+//    }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void){
         
@@ -105,8 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
     
     //接收远程推送通知
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-//        //设置budge数＋1
-//        TodoList.sharedInstance.SetBadgeByNumber(1)
+
+        
     }
     
     //成功注册通知后，获取device token

@@ -20,15 +20,8 @@ class AlarmTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
     
-        self.frame.size.width =  UIScreen.mainScreen().bounds.width - 40
-        
-//        self.lblCellLeaveTimespan.layer.borderWidth = 1
-//        self.lblCellLeaveTimespan.layer.borderColor = UIColor.lightGrayColor().CGColor
-//        self.lblCellLeaveTimespan.frame.size = CGSize(width: self.frame.width/2 + 1, height: self.frame.height)
-//        
-//        self.lblCellLeaveTime.layer.borderWidth = 1
-//        self.lblCellLeaveTime.layer.borderColor = UIColor.lightGrayColor().CGColor
-//        self.lblCellLeaveTime.frame.size = CGSize(width: self.frame.width/2, height: self.frame.height)
+        self.frame.size.width =  UIScreen.mainScreen().bounds.width - 70
+
     }
     
     override func awakeFromNib() {

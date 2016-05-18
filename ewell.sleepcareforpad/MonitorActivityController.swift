@@ -1,41 +1,42 @@
 //
-//  AlarmController.swift
-//  ewell.sleepcareforpad
+//  MonitorActivityController.swift
+//  
 //
-//  Created by zhaoyin on 15/10/8.
-//  Copyright (c) 2015年 djg. All rights reserved.
+//  Created by Qinyuan Liu on 5/10/16.
+//
 //
 
 import UIKit
 
-
-class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
-{
-    // 控件定义
+class MonitorActivityController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var tabAlarm: UISegmentedControl!
-    // 内容显示的View
     @IBOutlet weak var viewAlarm: UIView!
     
     
     // 属性定义
-    var alarmViewModel = AlarmViewModel()
+    var alarmViewModel:AlarmViewModel!
     
     let identifier = "CellIdentifier"
     var tabViewAlarm: UITableView!
     var tabViewTurnOver: UITableView!
-    var screenWidth:CGFloat = 0.0
-    var screenHeight:CGFloat = 0.0
+    var tableWidth:CGFloat = 0.0
+    var tableHeight:CGFloat = 0.0
+
     
-    func viewLoaded(userCode:String)
-    {
-       
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
         
-        self.screenWidth = UIScreen.mainScreen().bounds.width
-        self.screenHeight = UIScreen.mainScreen().bounds.height - 80
-        self.viewAlarm.frame = CGRectMake(0, 80, self.screenWidth, self.screenHeight)
+        self.viewAlarm.frame = CGRectMake(35, 120, UIScreen.mainScreen().bounds.width-70, UIScreen.mainScreen().bounds.height-185)
+       
+        self.tableWidth = self.viewAlarm.frame.size.width
+        self.tableHeight = self.viewAlarm.frame.size.height
+        
+        
         
         // 实例当前的报警tableView
-        self.tabViewAlarm = UITableView(frame: CGRectMake(20, 10, self.screenWidth - 40, self.screenHeight - 30), style: UITableViewStyle.Plain)
+        self.tabViewAlarm = UITableView(frame: CGRectMake(0,0,self.tableWidth,self.tableHeight), style: UITableViewStyle.Plain)
         // 设置tableView默认的行分隔符为空
         self.tabViewAlarm!.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tabViewAlarm!.delegate = self
@@ -44,7 +45,7 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
         // 注册自定义的TableCell
         self.tabViewAlarm!.registerNib(UINib(nibName: "AlarmTableViewCell", bundle:nil), forCellReuseIdentifier: identifier)
         
-        self.tabViewTurnOver = UITableView(frame: CGRectMake(20, 10, self.screenWidth - 40, self.screenHeight - 30), style: UITableViewStyle.Plain)
+        self.tabViewTurnOver = UITableView(frame: CGRectMake(0,0,self.tableWidth,self.tableHeight), style: UITableViewStyle.Plain)
         // 设置tableView默认的行分隔符为空
         self.tabViewTurnOver!.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tabViewTurnOver!.delegate = self
@@ -59,14 +60,27 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
         self.viewAlarm.addSubview(self.tabViewTurnOver)
         
         // 加载数据
-        self.alarmViewModel.UserCode = userCode
-        self.rac_settings();
+        self.alarmViewModel = AlarmViewModel()
+        if Session.GetSession() != nil{
+        self.alarmViewModel.UserCode = Session.GetSession()!.CurUserCode
+        }
+        else{
+         self.alarmViewModel.UserCode = ""
+        }
+        self.rac_settings()
         
         self.tabViewAlarm.hidden = false
         self.tabViewTurnOver.hidden = true
         
-        
     }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
     
     // 返回Table的行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,7 +95,7 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
     }
     // 返回Table的分组
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -92,8 +106,8 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
         if(tableView.tag == 1)
         {
             // 创建报警tableView的列头
-            var headViewAlarm:UIView = UIView(frame: CGRectMake(20, 0, UIScreen.mainScreen().bounds.size.width, 40))
-            var lblLeaveTimespan = UILabel(frame: CGRectMake(0, 0,  (self.screenWidth - 40)/2 + 1, 40))
+            var headViewAlarm:UIView = UIView(frame: CGRectMake(0, 0, self.tableWidth, 40))
+            var lblLeaveTimespan = UILabel(frame: CGRectMake(0, 0,  self.tableWidth/2 , 40))
             lblLeaveTimespan.text = "离床时长"
             lblLeaveTimespan.font = UIFont.boldSystemFontOfSize(18)
             lblLeaveTimespan.textAlignment = .Center
@@ -101,7 +115,7 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
             lblLeaveTimespan.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
             lblLeaveTimespan.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
             
-            var lblLeaveTime = UILabel(frame: CGRectMake((self.screenWidth - 40)/2, 0, (self.screenWidth - 40)/2, 40))
+            var lblLeaveTime = UILabel(frame: CGRectMake(self.tableWidth/2, 0, self.tableWidth/2, 40))
             lblLeaveTime.text = "离床时间"
             lblLeaveTime.font = UIFont.boldSystemFontOfSize(18)
             lblLeaveTime.textAlignment = .Center
@@ -111,12 +125,14 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
             
             headViewAlarm.addSubview(lblLeaveTimespan)
             headViewAlarm.addSubview(lblLeaveTime)
+            
+           
             return headViewAlarm
         }
         else
         {
-            var headViewTurnOver:UIView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 40))
-            var lblDate = UILabel(frame: CGRectMake(0, 0,  (self.screenWidth - 40) / 3, 40))
+            var headViewTurnOver:UIView = UIView(frame: CGRectMake(0, 0, self.tableWidth, 40))
+            var lblDate = UILabel(frame: CGRectMake(0, 0,  self.tableWidth / 3, 40))
             lblDate.text = "日期"
             lblDate.font = UIFont.boldSystemFontOfSize(18)
             lblDate.textAlignment = .Center
@@ -124,7 +140,7 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
             lblDate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
             lblDate.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
             
-            var lblCount = UILabel(frame: CGRectMake((self.screenWidth - 40)/3, 0, (self.screenWidth - 40)/3, 40))
+            var lblCount = UILabel(frame: CGRectMake(self.tableWidth / 3, 0,self.tableWidth/3, 40))
             lblCount.text = "翻身次数"
             lblCount.font = UIFont.boldSystemFontOfSize(18)
             lblCount.textAlignment = .Center
@@ -132,7 +148,7 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
             lblCount.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
             lblCount.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
             
-            var lblRate = UILabel(frame: CGRectMake(((self.screenWidth - 40)/3) * 2 - 1, 0, (self.screenWidth - 40)/3 + 1, 40))
+            var lblRate = UILabel(frame: CGRectMake(self.tableWidth / 3 * 2 , 0, self.tableWidth/3 + 1, 40))
             lblRate.text = "翻身频率"
             lblRate.font = UIFont.boldSystemFontOfSize(18)
             lblRate.textAlignment = .Center
@@ -153,7 +169,7 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
         {
             var alarmTableCell:AlarmTableViewCell? = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as? AlarmTableViewCell
             // 表示选择的是报警信息
-           
+            
             alarmTableCell!.lblCellLeaveTimespan.layer.borderWidth = 1
             alarmTableCell!.lblCellLeaveTimespan.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
             
@@ -171,9 +187,9 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
                 alarmTableCell!.lblCellLeaveTime.layer.backgroundColor = UIColor.whiteColor().CGColor
             }
             
-            var tempView:UIView = UIView()
-            tempView.backgroundColor = UIColor.grayColor()
-            alarmTableCell!.selectedBackgroundView = tempView
+//            var tempView:UIView = UIView()
+//            tempView.backgroundColor = UIColor.grayColor()
+//            alarmTableCell!.selectedBackgroundView = tempView
             alarmTableCell!.lblCellLeaveTimespan.text = self.alarmViewModel.AlarmInfoList[indexPath.row].LeaveBedTimeSpan
             alarmTableCell!.lblCellLeaveTimespan.font = UIFont.systemFontOfSize(14)
             alarmTableCell!.lblCellLeaveTime.text = self.alarmViewModel.AlarmInfoList[indexPath.row].LeaveBedTime
@@ -206,9 +222,9 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
                 turnOverTableCell!.lblTurnOverRate.layer.backgroundColor = UIColor.whiteColor().CGColor
             }
             
-            var tempView:UIView = UIView()
-            tempView.backgroundColor = UIColor.grayColor()
-            turnOverTableCell!.selectedBackgroundView = tempView
+//            var tempView:UIView = UIView()
+//            tempView.backgroundColor = UIColor.grayColor()
+//            turnOverTableCell!.selectedBackgroundView = tempView
             
             turnOverTableCell!.lblDate.text = self.alarmViewModel.TurnOverList[indexPath.row].Date
             turnOverTableCell!.lblDate.font = UIFont.systemFontOfSize(14)
@@ -220,17 +236,7 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //        if(indexPath.row != 0)
-        //        {
-        //
-        //
-        //            var alert = UIAlertController(title: "Alert", message: "You have selected \(indexPath.row) Row ", preferredStyle: UIAlertControllerStyle.Alert)
-        //            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        //        }
-        
-        
-    }
+   
     
     //-------------自定义方法处理---------------
     func rac_settings(){
@@ -251,4 +257,6 @@ class AlarmView:UIView,UITableViewDelegate,UITableViewDataSource
             }
         }
     }
+    
+    
 }

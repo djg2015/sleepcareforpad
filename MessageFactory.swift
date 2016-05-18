@@ -31,6 +31,7 @@ let tag_IP_equipmentInfo:String="<EquipmentInfo"
 let tag_IP_mainInfoList:String="<EPMainInfoList"
 let tag_IP_weekReport:String="<WeekReport"
 let tag_roleTreeList:String="<EPRoleTree"
+let tag_alarmInfoByScanQR:String = "<AlarmInfo"
 
 class MessageFactory {
     //xmpp字符串节点
@@ -84,7 +85,12 @@ class MessageFactory {
            
             return RoleTreeList.XmlToMessage(message.subject, bodyXMl: message.content)
         }
-               else
+        else if(message.content.hasPrefix(tag_alarmInfoByScanQR))
+        {
+            
+            return AlarmInfoByScanQR.XmlToMessage(message.subject, bodyXMl: message.content)
+        }
+        else
         {
             throw("-1", "请求发生错误，请重试！")
         }

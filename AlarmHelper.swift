@@ -7,14 +7,15 @@
 //
 import Foundation
 import ObjectiveC
+import AudioToolbox
 
 class AlarmHelper:NSObject, WaringAttentionDelegate {
     
     private static var alarmInstance: AlarmHelper? = nil
     private var _wariningCaches:Array<AlarmInfo>!
     var setalarmlabelDelegate:SetAlarmWarningLabelDelegate!
-     private var IsOpen:Bool = false
-      //-------------------类字段--------------------------
+    private var IsOpen:Bool = false
+    //-------------------类字段--------------------------
     //未处理报警总数
     var _warningcouts:Int = 0
     dynamic var Warningcouts:Int{
@@ -75,16 +76,16 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
     //------------------------------------开始／结束报警器-------------------------------------
     //开始报警提醒
     func BeginWaringAttention(){
-       
+        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "CloseWaringAttention", name: "WarningClose", object: nil)
         
-//        //清除已经overdue的todoitem
-//        for item in TodoList.sharedInstance.allItems(){
-//            if item.isOverdue {
-//                TodoList.sharedInstance.removeItemByID(item.UUID)
-//            }
-//        }
+        //        //清除已经overdue的todoitem
+        //        for item in TodoList.sharedInstance.allItems(){
+        //            if item.isOverdue {
+        //                TodoList.sharedInstance.removeItemByID(item.UUID)
+        //            }
+        //        }
         
         
         self.IsOpen = true
@@ -93,7 +94,7 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
         
         //初始化定时器,获取实时报警
         self.setAlarmTimer()
-       
+        
     }
     
     //关闭报警提醒
@@ -115,58 +116,47 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
             ({
                 var session = Session.GetSession()
                 if (session != nil && session!.CurPartCode != ""){
-                var curDateString = DateFormatterHelper.GetInstance().GetStringDateFromCurrent("yyyy-MM-dd")
-               //获取报警信息
-                var alarmList:AlarmList = SleepCareBussiness().GetAlarmByUser(session!.CurPartCode,loginName: session!.LoginUser!.LoginName, userCode: "", userNameLike: "", bedNumberLike: "", schemaCode: "", alarmTimeBegin:"2016-01-01", alarmTimeEnd: curDateString, from: nil, max: nil)
-                
-                var index:Int = 0
-                self.WarningList = Array<QueryAlarmItem>()
-                self.Codes = Array<String>()
-                TodoList.sharedInstance.removeItemAll()
-                
-                
-                for alarmItem in alarmList.alarmInfoList
-                {
-                    //放入报警列表
-                    var item:QueryAlarmItem = QueryAlarmItem()
-                    item.UserName = alarmItem.UserName
-                    item.BedNumber = alarmItem.BedNumber
-                    item.Number = index
-                    item.SchemaCode = alarmItem.SchemaCode
-                    item.AlarmTime = (alarmItem.AlarmTime as NSString).substringFromIndex(5)
-                    item.AlarmContent = alarmItem.SchemaContent
-                    item.AlarmCode = alarmItem.AlarmCode
-                    index++
-                   self.WarningList.append(item)
-                    //放入todolist
-                    let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmItem.UserName + alarmItem.SchemaContent, UUID: alarmItem.AlarmCode)
-                    TodoList.sharedInstance.addItem(todoItem)
-                    //放入codes
-                    self.Codes.append(alarmItem.AlarmCode)
-                }
-                self.Warningcouts = self.WarningList.count
-                //外部图标上的badge number
-                TodoList.sharedInstance.SetBadgeNumber(self.Warningcouts)
+                    var curDateString = DateFormatterHelper.GetInstance().GetStringDateFromCurrent("yyyy-MM-dd")
+                    //获取报警信息
+                    var alarmList:AlarmList = SleepCareBussiness().GetAlarmByUser(session!.CurPartCode,loginName: session!.LoginUser!.LoginName, userCode: "", userNameLike: "", bedNumberLike: "", schemaCode: "", alarmTimeBegin:"2016-01-01", alarmTimeEnd: curDateString, from: nil, max: nil)
                     
-//                    //测试数据
-//                    let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: "测试报警数据", UUID: "0000000001")
-//                    TodoList.sharedInstance.addItem(todoItem)
-//                    self.Codes.append("0000000001")
-//                     TodoList.sharedInstance.SetBadgeNumber(1)
-//                    var item:QueryAlarmItem = QueryAlarmItem()
-//                    item.UserName = "测试"
-//                    item.BedNumber = "001"
-//                    item.Number = 1
-//                    item.SchemaCode = "001"
-//                    item.AlarmTime = "12:12:12"
-//                    item.AlarmContent = "测试数据"
-//                    item.AlarmCode = "0000000001"
-//                    self.WarningList.append(item)
+                    var index:Int = 0
+                    self.WarningList = Array<QueryAlarmItem>()
+                    self.Codes = Array<String>()
+                    TodoList.sharedInstance.removeItemAll()
                     
                     
+                    for alarmItem in alarmList.alarmInfoList
+                    {
+                        //放入报警列表
+                        var item:QueryAlarmItem = QueryAlarmItem()
+                        item.UserName = alarmItem.UserName
+                        item.BedNumber = alarmItem.BedNumber
+                        item.Number = index
+                        item.SchemaCode = alarmItem.SchemaCode
+                        item.AlarmTime = (alarmItem.AlarmTime as NSString).substringFromIndex(5)
+                        item.AlarmContent = alarmItem.SchemaContent
+                        item.AlarmCode = alarmItem.AlarmCode
+                        index++
+                        self.WarningList.append(item)
+                        //放入todolist
+                        let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmItem.UserName + alarmItem.SchemaContent, UUID: alarmItem.AlarmCode)
+                        TodoList.sharedInstance.addItem(todoItem)
+                        //放入codes
+                        self.Codes.append(alarmItem.AlarmCode)
+                    }
+                    self.Warningcouts = self.WarningList.count
+                    //外部图标上的badge number
+                    TodoList.sharedInstance.SetBadgeNumber(self.Warningcouts)
+                    
+                    
+                    if self.Warningcouts > 0{
+                        self.AlertSound()
+                        
+                    }
                     
                     if self.setalarmlabelDelegate != nil{
-                    self.setalarmlabelDelegate.SetAlarmWarningLabel(self.Warningcouts)
+                        self.setalarmlabelDelegate.SetAlarmWarningLabel(self.Warningcouts)
                     }
                 }
                 },
@@ -178,30 +168,44 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                     
                 }
             )}
-
-       
+        
+        
     }
     
+    //有新报警的提示音：静音则震动提醒
+    func AlertSound(){
+        //建立的SystemSoundID对象
+        var soundID:SystemSoundID = 1007
+        //                        //获取声音地址
+        //                        let path = NSBundle.mainBundle().pathForResource("msg", ofType: "wav")
+        //                        //地址转换
+        //                        let baseURL = NSURL(fileURLWithPath: path!)
+        //赋值
+        //  AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //播放声音
+        AudioServicesPlayAlertSound(soundID)
+        
+    }
     
     //根据alarmcode删除一条报警信息
     func DeleteAlarmByCode(alarmcode:String){
-    TodoList.sharedInstance.removeItemByID(alarmcode)
+        TodoList.sharedInstance.removeItemByID(alarmcode)
         //codes,warninglist更新
-    
+        
     }
     
     
-//    func ReloadTodoList(){
-//        var items:[TodoItem] = TodoList.sharedInstance.allItems()
-//        for(var i = 0; i < items.count; i++){
-//            //查看该todoitem的code是否在报警信息codes里，不在，则从tidolist里删去这个item
-//            if !contains(self._codes, items[i].UUID) {
-//                TodoList.sharedInstance.removeItemByID(items[i].UUID)
-//            }
-//        }
-//    }
+    //    func ReloadTodoList(){
+    //        var items:[TodoItem] = TodoList.sharedInstance.allItems()
+    //        for(var i = 0; i < items.count; i++){
+    //            //查看该todoitem的code是否在报警信息codes里，不在，则从tidolist里删去这个item
+    //            if !contains(self._codes, items[i].UUID) {
+    //                TodoList.sharedInstance.removeItemByID(items[i].UUID)
+    //            }
+    //        }
+    //    }
     //--------------------------------------定时器--------------------------------------------
-
+    
     
     //实时报警处理线程
     func setAlarmTimer(){
@@ -213,12 +217,12 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
     func alarmTimerFireMethod(timer: NSTimer) {
         if(self._wariningCaches.count > 0){
             let alarmInfo:AlarmInfo = self._wariningCaches[0] as AlarmInfo
-           var session = Session.GetSession()
+            var session = Session.GetSession()
             
             if(session != nil && session!.CurPartCode == alarmInfo.PartCode){
-            let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmInfo.SchemaContent, UUID: alarmInfo.AlarmCode)
-            
-            var item:QueryAlarmItem = QueryAlarmItem()
+                let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmInfo.SchemaContent, UUID: alarmInfo.AlarmCode)
+                
+                var item:QueryAlarmItem = QueryAlarmItem()
                 item.UserName = alarmInfo.UserName
                 item.BedNumber = alarmInfo.BedNumber
                 item.Number = self.WarningList.count
@@ -227,66 +231,68 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                 item.AlarmContent = alarmInfo.SchemaContent
                 item.AlarmCode = alarmInfo.AlarmCode
                 
-            
-            //往todolist／warninglist/codes里加
-            self.WarningList.append(item)
-            self.Warningcouts = self.WarningList.count
+                
+                //往todolist／warninglist/codes里加
+                self.WarningList.append(item)
+                self.Warningcouts = self.WarningList.count
                 if !self.IsCodeExist(item.AlarmCode){
                     self.Codes.append(item.AlarmCode)
                 }
-
-            TodoList.sharedInstance.addItem(todoItem)
+                
+                TodoList.sharedInstance.addItem(todoItem)
                 
                 if self.setalarmlabelDelegate != nil{
-                self.setalarmlabelDelegate.SetAlarmWarningLabel(self.Warningcouts)
+                    self.setalarmlabelDelegate.SetAlarmWarningLabel(self.Warningcouts)
                 }
                 
-            self._wariningCaches.removeAtIndex(0)
+                self._wariningCaches.removeAtIndex(0)
+                
+                self.AlertSound()
             }
         }
-
+        
     }
     
     
     
     
-       //----------------------------------报警delegate-------------------------------------
+    //----------------------------------报警delegate-------------------------------------
     //获取原始报警数据warningcaches,通过bedcode过滤为需要的报警信息
     func GetWaringAttentionDelegate(alarmList:AlarmList){
         if(self.IsOpen){
-        for(var i = 0;i < alarmList.alarmInfoList.count;i++){
-            //已处理，检查alarmcode是否在本地的codes，是则删掉这条报警
-            if alarmList.alarmInfoList[i].HandleFlag == "1"{
-                let code = alarmList.alarmInfoList[i].AlarmCode
-             if self.IsCodeExist(code){
-                var tempwarningList = self.WarningList
-                var codes = self.Codes
-                 TodoList.sharedInstance.removeItemByID(code)
-                for(var i = 0; i < tempwarningList.count; i++){
-                    if code == tempwarningList[i].AlarmCode{
-                        tempwarningList.removeAtIndex(i)
-                        self.WarningList = tempwarningList
-                        break
+            for(var i = 0;i < alarmList.alarmInfoList.count;i++){
+                //已处理，检查alarmcode是否在本地的codes，是则删掉这条报警
+                if alarmList.alarmInfoList[i].HandleFlag == "1"{
+                    let code = alarmList.alarmInfoList[i].AlarmCode
+                    if self.IsCodeExist(code){
+                        var tempwarningList = self.WarningList
+                        var codes = self.Codes
+                        TodoList.sharedInstance.removeItemByID(code)
+                        for(var i = 0; i < tempwarningList.count; i++){
+                            if code == tempwarningList[i].AlarmCode{
+                                tempwarningList.removeAtIndex(i)
+                                self.WarningList = tempwarningList
+                                break
+                            }
+                        }
+                        for (var i = 0; i < codes.count; i++){
+                            if code == codes[i]{
+                                codes.removeAtIndex(i)
+                                self.Codes = codes
+                                break
+                            }
+                        }
                     }
                 }
-                for (var i = 0; i < codes.count; i++){
-                    if code == codes[i]{
-                        codes.removeAtIndex(i)
-                        self.Codes = codes
-                        break
-                    }
-                }
+                    //新的报警信息，需加入到cashe
+                else if alarmList.alarmInfoList[i].HandleFlag == "0"{
+                    self._wariningCaches.append(alarmList.alarmInfoList[i])
                 }
             }
-            //新的报警信息，需加入到cashe
-            else if alarmList.alarmInfoList[i].HandleFlag == "0"{
-            self._wariningCaches.append(alarmList.alarmInfoList[i])
-            }
-        }
         }
     }
     
-
+    
     func IsCodeExist(code:String)->Bool{
         if !self._codes.isEmpty{
             for cc in self._codes{
@@ -301,7 +307,7 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
 }
 
 protocol SetAlarmWarningLabelDelegate{
-
+    
     func SetAlarmWarningLabel(count:Int)
 }
 

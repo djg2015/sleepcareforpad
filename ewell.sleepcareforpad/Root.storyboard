@@ -1367,7 +1367,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGf-Ms-B3c" userLabel="心率呼吸" customClass="BackgroundCommon" customModule="ewell_sleepcareforpad" customModuleProvider="target">
-                                        <rect key="frame" x="41" y="61" width="458" height="270"/>
+                                        <rect key="frame" x="41" y="61" width="458" height="280"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hrrr.png" translatesAutoresizingMaskIntoConstraints="NO" id="b9U-gU-EIS">
                                                 <rect key="frame" x="5" y="2" width="49" height="66"/>
@@ -1464,12 +1464,12 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d3E-l7-dRE">
-                                                <rect key="frame" x="70" y="62" width="358" height="200"/>
+                                                <rect key="frame" x="70" y="62" width="358" height="208"/>
                                                 <animations/>
                                                 <color key="backgroundColor" red="0.87516639324343437" green="0.53707107208079941" blue="0.50415647856595625" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="358" id="8Z6-o9-8I0"/>
-                                                    <constraint firstAttribute="height" constant="200" id="ier-M6-gIM"/>
+                                                    <constraint firstAttribute="height" constant="208" id="ier-M6-gIM"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -1481,7 +1481,7 @@
                                             <constraint firstItem="d3E-l7-dRE" firstAttribute="leading" secondItem="b9U-gU-EIS" secondAttribute="trailing" constant="16" id="El8-vd-5oI"/>
                                             <constraint firstItem="QNR-gg-wgX" firstAttribute="top" secondItem="iGf-Ms-B3c" secondAttribute="top" constant="10" id="JN1-Li-XUA"/>
                                             <constraint firstItem="QNR-gg-wgX" firstAttribute="leading" secondItem="nbK-3c-suC" secondAttribute="trailing" constant="12" id="LJe-mk-yVF"/>
-                                            <constraint firstAttribute="height" constant="270" id="MU5-VQ-scJ"/>
+                                            <constraint firstAttribute="height" constant="280" id="MU5-VQ-scJ"/>
                                             <constraint firstItem="nbK-3c-suC" firstAttribute="leading" secondItem="b9U-gU-EIS" secondAttribute="trailing" constant="16" id="Vc7-Xt-Kxu"/>
                                             <constraint firstItem="nbK-3c-suC" firstAttribute="top" secondItem="iGf-Ms-B3c" secondAttribute="top" constant="10" id="Wak-7H-Mad"/>
                                             <constraint firstItem="b9U-gU-EIS" firstAttribute="leading" secondItem="iGf-Ms-B3c" secondAttribute="leading" constant="5" id="vjP-li-M15"/>
@@ -1492,7 +1492,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0IK-0f-6A3" userLabel="离床记录" customClass="BackgroundCommon" customModule="ewell_sleepcareforpad" customModuleProvider="target">
-                                        <rect key="frame" x="526" y="61" width="458" height="270"/>
+                                        <rect key="frame" x="526" y="61" width="458" height="280"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="leaverecord.png" translatesAutoresizingMaskIntoConstraints="NO" id="dIW-Rb-JH9">
                                                 <rect key="frame" x="5" y="2" width="49" height="66"/>
@@ -1541,7 +1541,7 @@
                                                 <color key="backgroundColor" red="0.80000000000000004" green="0.92156862745098034" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BTY-VY-96U">
-                                                <rect key="frame" x="70" y="62" width="358" height="200"/>
+                                                <rect key="frame" x="70" y="62" width="358" height="208"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="离床建议:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnN-Po-Vy0">
                                                         <rect key="frame" x="12" y="8" width="64" height="21"/>
@@ -1569,7 +1569,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZVV-PB-6J7" userLabel="翻身记录" customClass="BackgroundCommon" customModule="ewell_sleepcareforpad" customModuleProvider="target">
-                                        <rect key="frame" x="41" y="370" width="458" height="270"/>
+                                        <rect key="frame" x="41" y="363" width="458" height="280"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="trunrecord.png" translatesAutoresizingMaskIntoConstraints="NO" id="GUK-tr-atF">
                                                 <rect key="frame" x="5" y="2" width="49" height="66"/>
@@ -1618,7 +1618,7 @@
                                                 <color key="backgroundColor" red="0.9759228312537136" green="0.71722067772597864" blue="0.38101020522278223" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cnS-qr-qez">
-                                                <rect key="frame" x="70" y="62" width="358" height="200"/>
+                                                <rect key="frame" x="70" y="62" width="358" height="208"/>
                                                 <animations/>
                                                 <color key="backgroundColor" red="0.9759228312537136" green="0.71722067772597864" blue="0.38101020522278223" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
@@ -1630,14 +1630,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ts1-mJ-u4P" userLabel="本周睡眠" customClass="BackgroundCommon" customModule="ewell_sleepcareforpad" customModuleProvider="target">
-                                        <rect key="frame" x="526" y="370" width="458" height="270"/>
+                                        <rect key="frame" x="526" y="363" width="458" height="280"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sleepofThisWeek.png" translatesAutoresizingMaskIntoConstraints="NO" id="Spd-QM-Tkv">
                                                 <rect key="frame" x="5" y="2" width="49" height="66"/>
                                                 <animations/>
                                             </imageView>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pMl-AN-5B4">
-                                                <rect key="frame" x="70" y="10" width="358" height="254"/>
+                                                <rect key="frame" x="70" y="10" width="358" height="260"/>
                                                 <animations/>
                                                 <color key="backgroundColor" red="0.53835282808255502" green="0.84666007501485441" blue="0.83736788659420747" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>

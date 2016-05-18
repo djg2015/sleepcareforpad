@@ -44,7 +44,8 @@ class AlarmViewModel:BaseViewModel{
                     {
                         var alarmVM:OnBedAlarmViewModel = OnBedAlarmViewModel()
                         alarmVM.LeaveBedTime = report.StartTime + " —— " + report.EndTime
-                        alarmVM.LeaveBedTimeSpan = report.LeaveBedTimespan
+                        alarmVM.LeaveBedTimeSpan = report.LeaveBedTimespan == "" ? "< 1分钟" : report.LeaveBedTimespan
+                        
                         self.AlarmInfoList.append(alarmVM)
                     }
                     // 返回体动/翻身

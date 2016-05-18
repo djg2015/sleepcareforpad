@@ -21,6 +21,7 @@ class AlarmTableViewCell: UITableViewCell {
         
     
         self.frame.size.width =  UIScreen.mainScreen().bounds.width - 70
+       
 
     }
     

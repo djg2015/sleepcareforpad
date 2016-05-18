@@ -42,13 +42,13 @@ import UIKit
         
          if (UIDevice.currentDevice().userInterfaceIdiom == .Phone){
         datePicker.frame = CGRect(x:deviceWidth/2-150,y:deviceHeight/2-80,width:300,height:140)
-            selectedButton = li_common.Li_createButton("确定",x:deviceWidth/2-150,y:deviceHeight/2+60,width:150,height:35,target:self, action: "selectedAction")
-            cancelButton = li_common.Li_createButton("取消",x:deviceWidth/2 ,y:deviceHeight/2+60,width:150,height:35,target:self, action: "cancelAction")
+            selectedButton = li_common.Li_createButton("确定",x:deviceWidth/2-150,y:deviceHeight/2+60,width:150,height:35,target:self, action: Selector("selectedAction"))
+            cancelButton = li_common.Li_createButton("取消",x:deviceWidth/2 ,y:deviceHeight/2+60,width:150,height:35,target:self, action: Selector("cancelAction"))
         }
          else{
          datePicker.frame = CGRect(x:(deviceWidth - 300)/2,y:150,width:300,height:200)
-           selectedButton =  li_common.Li_createButton("确定",x:(deviceWidth - 300)/2,y:300,width:150,height:35,target:self, action: "selectedAction")
-             cancelButton = li_common.Li_createButton("取消",x:(deviceWidth - 300)/2 + 150,y:300,width:150,height:35,target:self, action:"cancelAction")
+           selectedButton =  li_common.Li_createButton("确定",x:(deviceWidth - 300)/2,y:300,width:150,height:35,target:self, action: Selector("selectedAction"))
+             cancelButton = li_common.Li_createButton("取消",x:(deviceWidth - 300)/2 + 150,y:300,width:150,height:35,target:self, action:Selector("cancelAction"))
         }
         
       

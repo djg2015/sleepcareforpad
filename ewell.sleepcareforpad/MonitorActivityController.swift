@@ -43,7 +43,7 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
         self.tabViewAlarm!.dataSource = self
         self.tabViewAlarm!.tag = 1
         // 注册自定义的TableCell
-        self.tabViewAlarm!.registerNib(UINib(nibName: "AlarmTableViewCell", bundle:nil), forCellReuseIdentifier: identifier)
+       // self.tabViewAlarm!.registerNib(UINib(nibName: "AlarmTableViewCell", bundle:nil), forCellReuseIdentifier: identifier)
         
         self.tabViewTurnOver = UITableView(frame: CGRectMake(0,0,self.tableWidth,self.tableHeight), style: UITableViewStyle.Plain)
         // 设置tableView默认的行分隔符为空
@@ -51,7 +51,7 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
         self.tabViewTurnOver!.delegate = self
         self.tabViewTurnOver!.dataSource = self
         self.tabViewTurnOver!.tag = 2
-        self.tabViewTurnOver!.registerNib(UINib(nibName: "TurnOverTableViewCell", bundle:nil), forCellReuseIdentifier: identifier)
+      //  self.tabViewTurnOver!.registerNib(UINib(nibName: "TurnOverTableViewCell", bundle:nil), forCellReuseIdentifier: identifier)
         
         self.tabViewAlarm.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
         self.tabViewTurnOver.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
@@ -99,15 +99,16 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return 44
     }
+    
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if(tableView.tag == 1)
         {
             // 创建报警tableView的列头
-            var headViewAlarm:UIView = UIView(frame: CGRectMake(0, 0, self.tableWidth, 40))
-            var lblLeaveTimespan = UILabel(frame: CGRectMake(0, 0,  self.tableWidth/2 , 40))
+            var headViewAlarm:UIView = UIView(frame: CGRectMake(0, 0, self.tableWidth, 44))
+            var lblLeaveTimespan = UILabel(frame: CGRectMake(0, 0,  self.tableWidth/2 , 44))
             lblLeaveTimespan.text = "离床时长"
             lblLeaveTimespan.font = UIFont.boldSystemFontOfSize(18)
             lblLeaveTimespan.textAlignment = .Center
@@ -115,7 +116,7 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
             lblLeaveTimespan.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
             lblLeaveTimespan.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
             
-            var lblLeaveTime = UILabel(frame: CGRectMake(self.tableWidth/2, 0, self.tableWidth/2, 40))
+            var lblLeaveTime = UILabel(frame: CGRectMake(self.tableWidth/2, 0, self.tableWidth/2, 44))
             lblLeaveTime.text = "离床时间"
             lblLeaveTime.font = UIFont.boldSystemFontOfSize(18)
             lblLeaveTime.textAlignment = .Center
@@ -131,8 +132,8 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
         }
         else
         {
-            var headViewTurnOver:UIView = UIView(frame: CGRectMake(0, 0, self.tableWidth, 40))
-            var lblDate = UILabel(frame: CGRectMake(0, 0,  self.tableWidth / 3, 40))
+            var headViewTurnOver:UIView = UIView(frame: CGRectMake(0, 0, self.tableWidth, 44))
+            var lblDate = UILabel(frame: CGRectMake(0, 0,  self.tableWidth / 3, 44))
             lblDate.text = "日期"
             lblDate.font = UIFont.boldSystemFontOfSize(18)
             lblDate.textAlignment = .Center
@@ -140,7 +141,7 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
             lblDate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
             lblDate.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
             
-            var lblCount = UILabel(frame: CGRectMake(self.tableWidth / 3, 0,self.tableWidth/3, 40))
+            var lblCount = UILabel(frame: CGRectMake(self.tableWidth / 3, 0,self.tableWidth/3, 44))
             lblCount.text = "翻身次数"
             lblCount.font = UIFont.boldSystemFontOfSize(18)
             lblCount.textAlignment = .Center
@@ -148,7 +149,7 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
             lblCount.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
             lblCount.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
             
-            var lblRate = UILabel(frame: CGRectMake(self.tableWidth / 3 * 2 , 0, self.tableWidth/3 + 1, 40))
+            var lblRate = UILabel(frame: CGRectMake(self.tableWidth / 3 * 2 , 0, self.tableWidth/3 + 1, 44))
             lblRate.text = "翻身频率"
             lblRate.font = UIFont.boldSystemFontOfSize(18)
             lblRate.textAlignment = .Center
@@ -167,71 +168,94 @@ class MonitorActivityController: UIViewController,UITableViewDelegate,UITableVie
         // 显示离床报警
         if(tableView.tag == 1)
         {
-            var alarmTableCell:AlarmTableViewCell? = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as? AlarmTableViewCell
-            // 表示选择的是报警信息
+            var alarmTableCell = tableView.dequeueReusableCellWithIdentifier("alarmcell") as? UITableViewCell
+            alarmTableCell = UITableViewCell(style: .Default, reuseIdentifier: "alarmcell")
+           alarmTableCell?.userInteractionEnabled = false
             
-            alarmTableCell!.lblCellLeaveTimespan.layer.borderWidth = 1
-            alarmTableCell!.lblCellLeaveTimespan.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
+            var lblCellLeaveTimespan:UILabel = UILabel(frame:CGRectMake(0,0, self.tableWidth/2,44))
+            lblCellLeaveTimespan.layer.borderWidth = 1
+            lblCellLeaveTimespan.textAlignment = .Center
+            lblCellLeaveTimespan.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
             
-            alarmTableCell!.lblCellLeaveTime.layer.borderWidth = 1
-            alarmTableCell!.lblCellLeaveTime.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
+            var lblCellLeaveTime:UILabel = UILabel(frame:CGRectMake(self.tableWidth/2,0, self.tableWidth/2,44))
+            lblCellLeaveTime.layer.borderWidth = 1
+            lblCellLeaveTime.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
+            lblCellLeaveTime.textAlignment = .Center
             
             if(indexPath.row % 2 == 0)
             {
-                alarmTableCell!.lblCellLeaveTimespan.layer.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5).CGColor
-                alarmTableCell!.lblCellLeaveTime.layer.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5).CGColor
+               lblCellLeaveTimespan.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5)
+               lblCellLeaveTime.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5)
             }
             else
             {
-                alarmTableCell!.lblCellLeaveTimespan.layer.backgroundColor = UIColor.whiteColor().CGColor
-                alarmTableCell!.lblCellLeaveTime.layer.backgroundColor = UIColor.whiteColor().CGColor
+               lblCellLeaveTimespan.backgroundColor = UIColor.whiteColor()
+                lblCellLeaveTime.backgroundColor = UIColor.whiteColor()
             }
             
 //            var tempView:UIView = UIView()
 //            tempView.backgroundColor = UIColor.grayColor()
 //            alarmTableCell!.selectedBackgroundView = tempView
-            alarmTableCell!.lblCellLeaveTimespan.text = self.alarmViewModel.AlarmInfoList[indexPath.row].LeaveBedTimeSpan
-            alarmTableCell!.lblCellLeaveTimespan.font = UIFont.systemFontOfSize(14)
-            alarmTableCell!.lblCellLeaveTime.text = self.alarmViewModel.AlarmInfoList[indexPath.row].LeaveBedTime
-            alarmTableCell!.lblCellLeaveTime.font = UIFont.systemFontOfSize(14)
+           lblCellLeaveTimespan.text = self.alarmViewModel.AlarmInfoList[indexPath.row].LeaveBedTimeSpan
+            lblCellLeaveTimespan.font = UIFont.systemFontOfSize(16)
+            lblCellLeaveTime.text = self.alarmViewModel.AlarmInfoList[indexPath.row].LeaveBedTime
+            lblCellLeaveTime.font = UIFont.systemFontOfSize(16)
+            
+            alarmTableCell?.addSubview(lblCellLeaveTimespan)
+            alarmTableCell?.addSubview(lblCellLeaveTime)
+            
             return alarmTableCell!
         }
         else
         {
-            var turnOverTableCell:TurnOverTableViewCell? = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as? TurnOverTableViewCell
+            var turnOverTableCell = tableView.dequeueReusableCellWithIdentifier("turnovercell") as? UITableViewCell
+            turnOverTableCell = UITableViewCell(style: .Default, reuseIdentifier: "turnovercell")
+           turnOverTableCell?.userInteractionEnabled = false
             
-            turnOverTableCell!.lblDate.layer.borderWidth = 1
-            turnOverTableCell!.lblDate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
+            var lblDate:UILabel = UILabel(frame:CGRectMake(0, 0, self.tableWidth/3, 44))
+            lblDate.layer.borderWidth = 1
+            lblDate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
             
-            turnOverTableCell!.lblTurnOverTimes.layer.borderWidth = 1
-            turnOverTableCell!.lblTurnOverTimes.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
+           var lblTurnOverTimes:UILabel = UILabel(frame:CGRectMake(self.tableWidth/3, 0, self.tableWidth/3, 44))
+            lblTurnOverTimes.layer.borderWidth = 1
+            lblTurnOverTimes.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
             
-            turnOverTableCell!.lblTurnOverRate.layer.borderWidth = 1
-            turnOverTableCell!.lblTurnOverRate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
+            var lblTurnOverRate:UILabel = UILabel(frame:CGRectMake(self.tableWidth/3*2, 0, self.tableWidth/3, 44))
+            lblTurnOverRate.layer.borderWidth = 1
+            lblTurnOverRate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 0.5).CGColor
             
             if(indexPath.row % 2 == 0)
             {
-                turnOverTableCell!.lblDate.layer.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5).CGColor
-                turnOverTableCell!.lblTurnOverTimes.layer.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5).CGColor
-                turnOverTableCell!.lblTurnOverRate.layer.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5).CGColor
+                lblDate.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5)
+                lblTurnOverTimes.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5)
+               lblTurnOverRate.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 0.5)
             }
             else
             {
-                turnOverTableCell!.lblDate.layer.backgroundColor = UIColor.whiteColor().CGColor
-                turnOverTableCell!.lblTurnOverTimes.layer.backgroundColor = UIColor.whiteColor().CGColor
-                turnOverTableCell!.lblTurnOverRate.layer.backgroundColor = UIColor.whiteColor().CGColor
+               lblDate.backgroundColor = UIColor.whiteColor()
+                lblTurnOverTimes.backgroundColor = UIColor.whiteColor()
+                lblTurnOverRate.backgroundColor = UIColor.whiteColor()
             }
             
 //            var tempView:UIView = UIView()
 //            tempView.backgroundColor = UIColor.grayColor()
 //            turnOverTableCell!.selectedBackgroundView = tempView
             
-            turnOverTableCell!.lblDate.text = self.alarmViewModel.TurnOverList[indexPath.row].Date
-            turnOverTableCell!.lblDate.font = UIFont.systemFontOfSize(14)
-            turnOverTableCell!.lblTurnOverTimes.text = self.alarmViewModel.TurnOverList[indexPath.row].TurnOverTimes
-            turnOverTableCell!.lblTurnOverTimes.font = UIFont.systemFontOfSize(14)
-            turnOverTableCell!.lblTurnOverRate.text = self.alarmViewModel.TurnOverList[indexPath.row].TurnOverRate
-            turnOverTableCell!.lblTurnOverRate.font = UIFont.systemFontOfSize(14)
+           lblDate.text = self.alarmViewModel.TurnOverList[indexPath.row].Date
+            lblDate.textAlignment = .Center
+           lblDate.font = UIFont.systemFontOfSize(16)
+           lblTurnOverTimes.text = self.alarmViewModel.TurnOverList[indexPath.row].TurnOverTimes
+            lblTurnOverTimes.textAlignment = .Center
+            lblTurnOverTimes.font = UIFont.systemFontOfSize(16)
+           lblTurnOverRate.text = self.alarmViewModel.TurnOverList[indexPath.row].TurnOverRate
+            lblTurnOverRate.textAlignment = .Center
+          lblTurnOverRate.font = UIFont.systemFontOfSize(16)
+            
+            turnOverTableCell?.addSubview( lblDate)
+             turnOverTableCell?.addSubview( lblTurnOverTimes)
+             turnOverTableCell?.addSubview(  lblTurnOverRate)
+        
+            
             return turnOverTableCell!
         }
     }

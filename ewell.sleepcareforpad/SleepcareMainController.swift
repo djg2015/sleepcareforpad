@@ -41,9 +41,9 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         
     }
     @IBAction func UnwindToMainController2(segue:UIStoryboardSegue){
-       
-  
-     
+        
+        
+        
     }
     
     @IBAction func UnwindToMainController3(segue:UIStoryboardSegue){
@@ -74,7 +74,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     var RefreshFlag:Bool = false{
         didSet{
             if RefreshFlag{
-            self.ReloadMainScrollView()
+                self.ReloadMainScrollView()
             }
         }
     }
@@ -82,7 +82,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     //当前科室下所有床位信息
     var BedViews:Array<BedModel>?{
         didSet{
-
+            
             if !self.threadFlag{
                 self.ReloadMainScrollView()
             }
@@ -90,18 +90,18 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             if self.spinner != nil{
                 self.threadFlag = true
             }
-
+            
         }
     }
     
     var WarningSet:Int = 0{
         didSet{
             if(self.WarningSet > 0){
-               
+                
                 self.lblWarining.text = "有" + self.WarningSet.description + "条报警未处理,请点击查看"
             }
             else{
-               self.lblWarining.text = ""
+                self.lblWarining.text = ""
             }
         }
     }
@@ -131,7 +131,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         //刷新页面报警数
         self.WarningSet = AlarmHelper.GetAlarmInstance().WarningList.count
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,22 +164,25 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             self.clearlogininfoDelegate!.ClearLoginInfo()
         }
         
+        //页面元素绑定和创建
+        rac_setting()
+        
         //若curpartcode为空，则弹窗让用户选择
         if Session.GetSession() != nil{
-        if (Session.GetSession()!.CurPartCode == ""){
-            self.mainNameTouch()
-        }
-        else{
-            //远程通知
-            OpenNotice()
-            //开启报警
-            AlarmHelper.GetAlarmInstance().setalarmlabelDelegate = self
-            AlarmHelper.GetAlarmInstance().BeginWaringAttention()
-            self.isOpenAlarm = true
-        }
-        
-        
-        rac_setting()
+            if (Session.GetSession()!.CurPartCode == ""){
+                self.mainNameTouch()
+            }
+            else{
+                //远程通知
+                OpenNotice()
+                //开启报警
+                AlarmHelper.GetAlarmInstance().setalarmlabelDelegate = self
+                AlarmHelper.GetAlarmInstance().BeginWaringAttention()
+                self.isOpenAlarm = true
+            }
+            
+            
+            
         }
     }
     
@@ -192,11 +195,11 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     func BedSelected(bedModel:BedModel){
         try {
             ({
-            
-                if bedModel.UserCode != nil{
-                Session.GetSession()!.CurUserCode = bedModel.UserCode!
                 
-                self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
+                if bedModel.UserCode != nil{
+                    Session.GetSession()!.CurUserCode = bedModel.UserCode!
+                    
+                    self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
                 }
                 },
                 catch: { ex in
@@ -226,7 +229,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         RACObserve(self.sleepcareMainViewModel, "OnbedCount") ~> RAC(self, "OnbedLabel")
         RACObserve(self.sleepcareMainViewModel, "LeavebedCount") ~> RAC(self, "LeavebedLabel")
         RACObserve(self.sleepcareMainViewModel, "EmptybedCount") ~> RAC(self, "EmptybedLabel")
-       RACObserve(self.sleepcareMainViewModel, "RefreshFlag") ~> RAC(self, "RefreshFlag")
+        RACObserve(self.sleepcareMainViewModel, "RefreshFlag") ~> RAC(self, "RefreshFlag")
         
         //退出登录
         self.btnLogout!.rac_signalForControlEvents(UIControlEvents.TouchUpInside)
@@ -235,7 +238,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
                 self.clearlogininfoDelegate = nil
                 //关闭报警和通知
                 AlarmHelper.GetAlarmInstance().CloseWaringAttention()
-                 CloseNotice()
+                CloseNotice()
                 //置空session，恢复登录前配置
                 LOGINFLAG = false
                 Session.ClearSession()
@@ -252,7 +255,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         self.checkUnnormal.addTarget(self, action: "UnnormalTouch", forControlEvents: UIControlEvents.TouchUpInside)
         self.checkOffDuty.addTarget(self, action: "OffDutyTouch", forControlEvents: UIControlEvents.TouchUpInside)
         
-       
+        
         
         //设置选择查找类型
         self.imgSearch.userInteractionEnabled = true
@@ -288,10 +291,10 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         
         self.btnChoose.addTarget(self, action: "mainNameTouch", forControlEvents: UIControlEvents.TouchUpInside)
         
-    //筛选btn
+        //筛选btn
         self.checkUnnormal.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
         self.checkUnnormal.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
-
+        
         self.checkOnBed.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
         self.checkOnBed.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
         
@@ -304,7 +307,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         self.checkOffDuty.setImage(UIImage(named:"checkbox.png"), forState: UIControlState.Normal)
         self.checkOffDuty.setImage(UIImage(named:"checkboxchoosed.png"), forState: UIControlState.Selected)
         
-       
+        
     }
     
     
@@ -361,9 +364,9 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     func SpnnerTimerFireMethod(timer: NSTimer) {
         if (self.threadFlag && self.spinner != nil){
             if self.thread != nil{
-            self.thread!.cancel()
+                self.thread!.cancel()
             }
-             realtimer.invalidate()
+            realtimer.invalidate()
             
             self.ReloadMainScrollView()
             
@@ -371,16 +374,16 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             self.spinner!.dismiss()
             self.spinner = nil
             self.threadFlag = false
-           
+            
             
         }
     }
     
     func ResetCheckbox(){
-            self.checkEmptyBed.selected = true
-            self.checkOnBed.selected = true
-         self.checkLeaveBed.selected = true
-         self.checkUnnormal.selected = true
+        self.checkEmptyBed.selected = true
+        self.checkOnBed.selected = true
+        self.checkLeaveBed.selected = true
+        self.checkUnnormal.selected = true
         self.checkOffDuty.selected = true
         
     }
@@ -406,11 +409,11 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
             
             //pagercount发生变化时才赋值给viewmodel，这样通知到pager进行更新
-         //   if (pageCount != self.sleepcareMainViewModel?.PageCount){
-              
+            //   if (pageCount != self.sleepcareMainViewModel?.PageCount){
+            
             self.sleepcareMainViewModel?.PageCount = pageCount
-              
-           // }
+            
+            // }
             
             
             self.mainScroll.contentSize = CGSize(width: self.mainScroll.bounds.size.width * CGFloat(pageCount), height: self.mainScroll.bounds.size.height)
@@ -434,8 +437,8 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     
     
     func OnBedTouch(){
-       
-      self.checkOnBed.selected = !self.checkOnBed.selected
+        
+        self.checkOnBed.selected = !self.checkOnBed.selected
         self.ReloadMainScrollView()
     }
     
@@ -447,16 +450,16 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     
     func EmptyBedTouch(){
         self.checkEmptyBed.selected = !self.checkEmptyBed.selected
-       self.ReloadMainScrollView()
+        self.ReloadMainScrollView()
     }
     func OffDutyTouch(){
-       
-       self.checkOffDuty.selected = !self.checkOffDuty.selected
-       self.ReloadMainScrollView()
+        
+        self.checkOffDuty.selected = !self.checkOffDuty.selected
+        self.ReloadMainScrollView()
     }
     func UnnormalTouch(){
         self.checkUnnormal.selected = !self.checkUnnormal.selected
-       self.ReloadMainScrollView()
+        self.ReloadMainScrollView()
     }
     
     
@@ -489,7 +492,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         //开启报警
         if !self.isOpenAlarm{
             AlarmHelper.GetAlarmInstance().setalarmlabelDelegate = self
-        AlarmHelper.GetAlarmInstance().BeginWaringAttention()
+            AlarmHelper.GetAlarmInstance().BeginWaringAttention()
         }
         //更新标题
         self.lblMainName.text = mainname + "—" + partname
@@ -499,7 +502,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     
     //点击报警信息提示
     func ShowAlarmQuery(){
-    self.performSegueWithIdentifier("AlarmQuery", sender: self)
+        self.performSegueWithIdentifier("AlarmQuery", sender: self)
         
     }
     
@@ -529,7 +532,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     
 }
 

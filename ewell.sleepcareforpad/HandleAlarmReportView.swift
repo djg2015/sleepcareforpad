@@ -49,7 +49,7 @@ class HandleAlarmReportView: UIView,PopDownListItemChoosed {
         self.parentController.navigationController?.popViewControllerAnimated(true)
         }
         else{
-             SweetAlert(contentHeight: 300).showAlert("报警处理内容不能为空！请继续填写", subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:nil)
+             SweetAlert(contentHeight: 300).showAlert("报警处理操作失败！请再试一次", subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:nil)
         }
         }
     }
@@ -57,10 +57,10 @@ class HandleAlarmReportView: UIView,PopDownListItemChoosed {
     //提交误报警
     @IBAction func ClickFalseAlarm(){
         if self.handleResultText.text == ""{
-            
+          SweetAlert(contentHeight: 300).showAlert("报警处理内容不能为空！请继续填写", subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:nil)
         }
         else{
-    let resultFlag =  self.handleAlarmViewModel.HandleAlarmAction("003")
+        let resultFlag =  self.handleAlarmViewModel.HandleAlarmAction("003")
         if resultFlag{
             self.parentController.navigationController?.popViewControllerAnimated(true)
         }

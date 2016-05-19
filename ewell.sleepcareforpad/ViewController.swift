@@ -23,14 +23,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
   //  var qrCodeFrameView:UIView?
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "HandleAlarmSuccess" {
-           //删除处理完成的报警信息,alarmhelper中更新各个变量
-         
-        }
-        
-       
-    }
+ 
     
     
     override func viewDidLoad() {

@@ -130,7 +130,7 @@ class QueryAlarmViewModel:BaseViewModel
         }
     }
     
-    var _selectedAlarmType:String = ""
+    var _selectedAlarmType:String = "全部"
     // 选择的报警类型编号
     dynamic var SelectedAlarmType:String{
         get

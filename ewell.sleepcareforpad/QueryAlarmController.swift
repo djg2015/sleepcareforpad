@@ -68,11 +68,11 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         
         // 设置报警日期起始/结束时间控件属性
         self.lblAlarmDateBegin.userInteractionEnabled = true
-        var singleTap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "initDatePicker")
+        var singleTap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DatePickerBegin")
         self.lblAlarmDateBegin .addGestureRecognizer(singleTap1)
         
         self.lblAlarmDateEnd.userInteractionEnabled = true
-        var singleTap2:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "initDatePicker1")
+        var singleTap2:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DatePickerEnd")
         self.lblAlarmDateEnd .addGestureRecognizer(singleTap2)
         
         self.lblAlarmDateBegin.layer.borderColor = UIColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1).CGColor
@@ -99,7 +99,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         self._queryAlarmViewModel.tableView = self.tabViewAlarm
         self.viewAlarm.addSubview(self.tabViewAlarm)
        
-        
+      
         
         self.rac_setting()
     }
@@ -130,26 +130,34 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         self._queryAlarmViewModel.SelectedAlarmTypeCode = downListModel.key
     }
     
-    func initDatePicker()
+    
+    var alertviewBegin:DatePickerView!
+    var alertviewEnd:DatePickerView!
+    
+    func DatePickerBegin()
     {
-        self.initDatePicker(1)
+        if alertviewBegin == nil{
+            alertviewBegin = DatePickerView(frame:UIScreen.mainScreen().bounds)
+            alertviewBegin.detegate = self
+            alertviewBegin.tag = 1
+            
+        }
+        self.view.addSubview(alertviewBegin)
+
     }
     
-    func initDatePicker1()
+    func DatePickerEnd()
     {
-        self.initDatePicker(2)
+        if alertviewEnd == nil{
+            alertviewEnd = DatePickerView(frame:UIScreen.mainScreen().bounds)
+            alertviewEnd.detegate = self
+            alertviewEnd.tag = 2
+            
+        }
+        self.view.addSubview(alertviewEnd)
     }
     
-    
-    var alertview:DatePickerView!
-    func initDatePicker(timeTag:Int)
-    {
-        //设置日期弹出窗口
-        alertview = DatePickerView(frame:UIScreen.mainScreen().bounds)
-        alertview.detegate = self
-        alertview.tag = timeTag
-        self.view.addSubview(alertview)
-    }
+ 
     
     func SelectDateEnd(sender:UIView,dateString:String)
     {
@@ -278,11 +286,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         lblAlarmContent.layer.borderWidth = 1
         lblAlarmContent.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
         lblAlarmContent.backgroundColor = UIColor.whiteColor()
-        
-//        var lblOperate = UIView(frame: CGRectMake(self.screenWidth - 80, 0, 80, 44))
-//        lblOperate.layer.borderWidth = 1
-//        lblOperate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-//        lblOperate.backgroundColor = UIColor.whiteColor()
+
         var lblOperate:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         lblOperate.layer.borderWidth = 1
         lblOperate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
@@ -300,30 +304,6 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
             
             lblOperate.addTarget(self, action: "OpenHandleAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
             lblOperate.tag = indexPath.row
-//            var btnHandle = UIButton(frame: CGRectMake(5, 7, 50, 30))
-//            btnHandle.setTitle("处理", forState: UIControlState.Normal)
-//            btnHandle.setTitleColor(UIColor.blueColor(), forState: .Normal)
-//            btnHandle.titleLabel?.font = UIFont.systemFontOfSize(16)
-//            btnHandle.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
-//            btnHandle.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 1)
-//            btnHandle.userInteractionEnabled = true
-//            var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleAlarm:")
-//            btnHandle.addGestureRecognizer(singleTap)
-//            singleTap.view?.tag = indexPath.row
-//            
-//            var btnFalse = UIButton(frame: CGRectMake(60, 7, 55, 30))
-//            btnFalse.setTitle("误警报", forState: UIControlState.Normal)
-//            btnFalse.setTitleColor(UIColor.blueColor(), forState: .Normal)
-//            btnFalse.titleLabel?.font = UIFont.systemFontOfSize(16)
-//            btnFalse.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
-//            btnFalse.backgroundColor = UIColor(red: 211/255, green: 211/255, blue: 211/255, alpha: 1)
-//            btnFalse.userInteractionEnabled = true
-//            var singleTap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleFalseAlarm:")
-//            btnFalse.addGestureRecognizer(singleTap1)
-//            singleTap1.view?.tag = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].Number
-//            
-//            lblOperate.addSubview(btnHandle)
-//            lblOperate.addSubview(btnFalse)
             
         }
         
@@ -338,11 +318,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         
         return cell!
     }
-    
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//       
-//        self.selectAlarmCode = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].AlarmCode
-//    }
+
     
     
     func OpenHandleAlarm(sender:AnyObject){

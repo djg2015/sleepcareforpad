@@ -86,7 +86,7 @@ import UIKit
     }
     
     func removeAlertview(){
-        self.hidden = true
+    self.removeFromSuperview()
        
   
     }

@@ -276,17 +276,16 @@ class SleepDetailController: UIViewController,SelectDateEndDelegate {
             }
         }
     }
-     var alertView:DatePickerView!
+     var alertview:DatePickerView!
     
     //点击日历查询
     func imageViewTouch(){
-        if alertView != nil{
-        alertView.removeFromSuperview()
+        if alertview == nil{
+            alertview = DatePickerView(frame:UIScreen.mainScreen().bounds)
+            alertview.detegate = self
+            
         }
-        //设置日期弹出窗口
-        alertView = DatePickerView(frame:UIScreen.mainScreen().bounds)
-        alertView.detegate = self
-        self.view.addSubview(alertView)
+        self.view.addSubview(alertview)
     }
     
 //根据查询条件重新加载界面

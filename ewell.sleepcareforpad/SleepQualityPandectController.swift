@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITableViewDataSource,SelectDateEndDelegate,SelectDateDelegate {
+class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITableViewDataSource,SelectDateEndDelegate{
     
     
     
@@ -72,7 +72,8 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
     }
     
     
-   var alertview:DatePickerView=DatePickerView(frame:UIScreen.mainScreen().bounds)
+   var alertviewBegin:DatePickerView!
+    var alertviewEnd:DatePickerView!
     
     
     
@@ -104,11 +105,11 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
         RACObserve(self.qualityViewModel, "NextBtnEnable") ~> RAC(self, "NextBtnEnable")
         
         self.lblAnalysTimeBegin.userInteractionEnabled = true
-        var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "initDatePicker")
+        var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DatePickerBegin")
         self.lblAnalysTimeBegin .addGestureRecognizer(singleTap)
         
         self.lblAnalysTimeEnd.userInteractionEnabled = true
-        var singleTap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "initDatePicker1")
+        var singleTap1:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DatePickerEnd")
         self.lblAnalysTimeEnd .addGestureRecognizer(singleTap1)
         
         self.lblAnalysTimeBegin.layer.borderColor = UIColor.blackColor().CGColor
@@ -133,9 +134,7 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
         self.qualityViewModel.tableView = tabViewSleepQuality
         
         
-        alertview.detegate = self
-        alertview.hidden = true
-        self.view.addSubview(alertview)
+       
     }
     
     override func didReceiveMemoryWarning() {
@@ -273,47 +272,41 @@ class SleepQualityPandectController: UIViewController,UITableViewDelegate,UITabl
         return cell!
     }
     
-    func initDatePicker()
+    func DatePickerBegin()
     {
-        self.initDatePicker(1)
+        if alertviewBegin == nil{
+        alertviewBegin = DatePickerView(frame:UIScreen.mainScreen().bounds)
+        alertviewBegin.detegate = self
+        alertviewBegin.tag = 1
+        }
+        self.view.addSubview(alertviewBegin)
+
     }
     
-    func initDatePicker1()
+    func DatePickerEnd()
     {
-        self.initDatePicker(2)
+        if alertviewEnd == nil{
+            alertviewEnd = DatePickerView(frame:UIScreen.mainScreen().bounds)
+            alertviewEnd.detegate = self
+            alertviewEnd.tag = 2
+            
+        }
+        self.view.addSubview(alertviewEnd)
     }
     
    
-    func initDatePicker(timeTag:Int)
-    {
-//        if alertview != nil{
-//            alertview.removeFromSuperview()
-//        }
-
-       
-       alertview.hidden = false
-    
-        
-    }
+   
     
     func SelectDateEnd(sender:UIView,dateString:String)
     {
-        if self.qualityViewModel != nil{
-           
-        
-                self.qualityViewModel.AnalysisTimeEnd = dateString
-            
-           
+        if(sender.tag == 1)
+        {
+            self.qualityViewModel.AnalysisTimeBegin = dateString
+        }
+        else
+        {
+            self.qualityViewModel.AnalysisTimeEnd = dateString
         }
     }
-    
-    func SelectDate(sender:UIView,dateString:String)
-    {
-        if self.qualityViewModel != nil{
-            
-                self.qualityViewModel.AnalysisTimeBegin = dateString
-               }
-    }
-
     
 }

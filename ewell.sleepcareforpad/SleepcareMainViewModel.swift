@@ -207,7 +207,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
     }
     
     
-       var _onbedCount:Int=0
+    var _onbedCount:Int=0
     dynamic var OnbedCount:Int{
         get
         {
@@ -242,26 +242,26 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
     }
     
     
-//    var _showbedViews:Array<BedModel> = Array<BedModel>()
-//    dynamic var ShowBedViews:Array<BedModel>{
-//        get
-//        {
-//            return self._showbedViews
-//        }
-//        set(value)
-//        {
-//            self._showbedViews=value
-//        }
-//
-//    }
+    //    var _showbedViews:Array<BedModel> = Array<BedModel>()
+    //    dynamic var ShowBedViews:Array<BedModel>{
+    //        get
+    //        {
+    //            return self._showbedViews
+    //        }
+    //        set(value)
+    //        {
+    //            self._showbedViews=value
+    //        }
+    //
+    //    }
     
     //获取指定分页对应的床位集合
     func GetBedsOfPage(pageIndex:Int, count:NSInteger, list:Array<BedModel>, maxcount:Int) -> Array<BedModel> {
         var result = Array<BedModel>()
         for(var i = (pageIndex - 1) * count;(i < (pageIndex - 1) * count + count) && (i < maxcount); i++){
-//            if(list.count <= i){
-//                break
-//            }
+            //            if(list.count <= i){
+            //                break
+            //            }
             result.append(list[i])
         }
         return result
@@ -293,8 +293,8 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
                     if(bed.count > 0){
                         let curBed:BedModel = bed[0]
                         
-                        curBed.HR = realTimeReport.HR
-                        curBed.RR = realTimeReport.RR
+                        curBed.HR = realTimeReport.HR + "次/分"
+                        curBed.RR = realTimeReport.RR + "次/分"
                         curBed.UserName = realTimeReport.UserName
                         curBed.UserCode = realTimeReport.UserCode
                         curBed.BedNumber = realTimeReport.BedNumber
@@ -317,11 +317,11 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
                         }
                         else if(realTimeReport.OnBedStatus == "离床"){
                             
-                             //curBed.HiddenValue = true
+                            
                             if curBed.BedStatus != BedStatusType.leavebed{
                                 refreshFlag = true
                                 self.LeavebedCount++
-
+                                
                                 if curBed.BedStatus == BedStatusType.onbed{
                                     self.OnbedCount--
                                 }
@@ -351,7 +351,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
                             }
                             
                             if curBed.BedStatus == BedStatusType.leavebed{
-                            self.LeavebedCount--
+                                self.LeavebedCount--
                             }
                             else if curBed.BedStatus == BedStatusType.onbed{
                                 self.OnbedCount--
@@ -382,7 +382,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
                         
                         
                         if refreshFlag{
-                        self.RefreshFlag = true
+                            self.RefreshFlag = true
                         }
                         
                     }
@@ -393,33 +393,33 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
     
     
     
-//    //弹窗提示：重新连接或退出登录
-//    func ReConnect(){
-//        //弹窗提示是否重连网络
-//        SweetAlert(contentHeight: 300).showAlert(ShowMessage(MessageEnum.ConnectFail), subTitle:"提示", style: AlertStyle.None,buttonTitle:"退出登录",buttonColor: UIColor.colorFromRGB(0xAEDEF4),otherButtonTitle:"重新连接", otherButtonColor:UIColor.colorFromRGB(0xAEDEF4), action: self.ConnectAfterFail)
-//    }
-//    func ConnectAfterFail(isOtherButton: Bool){
-//        var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-//        if isOtherButton{
-//            self.CloseWaringAttention()
-//            xmppMsgManager?.Close()
-//            Session.ClearSession()
-//            
-//            let controller = LoginController(nibName:"LoginView", bundle:nil)
-//            self.JumpPage(controller)
-//        }
-//        else{
-//            var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
-//            let isLogin = xmppMsgManager!.RegistConnect()
-//            if(!isLogin){
-//                self.ReConnect()
-//            }
-//        }
-//    }
+    //    //弹窗提示：重新连接或退出登录
+    //    func ReConnect(){
+    //        //弹窗提示是否重连网络
+    //        SweetAlert(contentHeight: 300).showAlert(ShowMessage(MessageEnum.ConnectFail), subTitle:"提示", style: AlertStyle.None,buttonTitle:"退出登录",buttonColor: UIColor.colorFromRGB(0xAEDEF4),otherButtonTitle:"重新连接", otherButtonColor:UIColor.colorFromRGB(0xAEDEF4), action: self.ConnectAfterFail)
+    //    }
+    //    func ConnectAfterFail(isOtherButton: Bool){
+    //        var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
+    //        if isOtherButton{
+    //            self.CloseWaringAttention()
+    //            xmppMsgManager?.Close()
+    //            Session.ClearSession()
+    //
+    //            let controller = LoginController(nibName:"LoginView", bundle:nil)
+    //            self.JumpPage(controller)
+    //        }
+    //        else{
+    //            var xmppMsgManager:XmppMsgManager? = XmppMsgManager.GetInstance(timeout: XMPPStreamTimeoutNone)
+    //            let isLogin = xmppMsgManager!.RegistConnect()
+    //            if(!isLogin){
+    //                self.ReConnect()
+    //            }
+    //        }
+    //    }
     
-  
     
-   
+    
+    
     
     //实时数据处理
     func GetRealTimeDelegate(realTimeReport:RealTimeReport){
@@ -443,11 +443,11 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
         self.lock!.unlock()
     }
     
-  
-     var session = Session.GetSession()
+    
+    var session = Session.GetSession()
     //按房间号或床位号搜索，参数为“”则查找全部
     func SearchByBedOrRoom(searchContent:String){
-       
+        
         var searcgType = "2"
         if(self.ChoosedSearchType == SearchType.byRoomNum){
             searcgType = "1"
@@ -456,6 +456,41 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
             self.PartBedsSearch(session!.CurPartCode, searchType: searcgType, searchContent: searchContent)
         }
     }
+    
+    //根据关键字，搜索页面显示床位中符合条件的bedmodel
+    func SearchByBedOrRoomFromLocal(searchContent:String,localBedViews:Array<BedModel>)->Array<BedModel>{
+        var resultBeds = Array<BedModel>()
+        if searchContent == ""{
+            return localBedViews
+        }
+        else{
+            if self.ChoosedSearchType == SearchType.byRoomNum{
+                //                var tempBeds = localBedViews.filter({$0.RoomNumber == searchContent})
+                //根据输入的房间号，进行模糊查找
+                for bed in localBedViews{
+                    if bed.RoomNumber!.componentsSeparatedByString(searchContent).count > 1{
+                        resultBeds.append(bed)
+                    }
+                }
+                
+                
+            }
+            else if(self.ChoosedSearchType == SearchType.byBedNum){
+                //     var tempBeds = localBedViews.filter({$0.BedNumber == searchContent})
+                for bed in localBedViews{
+                    if bed.BedNumber!.componentsSeparatedByString(searchContent).count > 1{
+                        resultBeds.append(bed)
+                    }
+                }
+                
+                
+            }
+        }
+        
+        
+        return resultBeds
+    }
+    
     
     //房间床位查询设置
     private func PartBedsSearch(partCode:String,searchType:String,searchContent:String){
@@ -523,7 +558,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
         
     }
     
-  
+    
 }
 
 struct SearchType{

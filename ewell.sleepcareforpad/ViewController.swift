@@ -148,9 +148,10 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                 },
                 catch: {ex in
                     //异常处理
-                 //   handleException(ex,showDialog: true)
-                let aa = SweetAlert(contentHeight: 300).showAlert((ex as NSException).reason!, subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:self.StartScan)
-                
+                    handleException(ex,showDialog: true)
+                     self.navigationController?.popViewControllerAnimated(true)
+//                let aa = SweetAlert(contentHeight: 300).showAlert((ex as NSException).reason!, subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:self.StartScan)
+//                
                 },
                 finally: {
                 }
@@ -158,9 +159,9 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     }
 
-    func StartScan(isOtherButton: Bool){
-    captureSession?.startRunning()
-    }
+//    func StartScan(isOtherButton: Bool){
+//    captureSession?.startRunning()
+//    }
 
 }
 

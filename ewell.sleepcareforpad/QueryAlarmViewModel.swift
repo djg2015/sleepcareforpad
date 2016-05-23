@@ -45,7 +45,7 @@ class QueryAlarmViewModel:BaseViewModel
                   
                 var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(curpartcode,loginName:loginName, userCode: "", userNameLike: self.UserNameCondition, bedNumberLike: self.BedNumberCondition, schemaCode: self.SelectedAlarmTypeCode, alarmTimeBegin:self.AlarmDateBeginCondition, alarmTimeEnd: self.AlarmDateEndCondition, from: nil, max: nil)
                 
-                var index:Int = 0
+                var index:Int = 1
                 for alarmItem in alarmList.alarmInfoList
                 {
                     //放入报警列表

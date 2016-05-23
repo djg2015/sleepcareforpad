@@ -9,9 +9,9 @@
 import UIKit
 
 
-class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchBarDelegate,JumpPageDelegate,ChoosePartDelegate,SetAlarmWarningLabelDelegate {
+class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePartDelegate,SetAlarmWarningLabelDelegate,UICollectionViewDelegate, UICollectionViewDataSource {
     //界面控件
-    @IBOutlet weak var curPager: Pager!
+    //   @IBOutlet weak var curPager: Pager! JumpPageDelegate
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var lblMainName: UILabel!
     @IBOutlet weak var lblDateTime: UILabel!
@@ -34,29 +34,29 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     @IBOutlet weak var checkOffDuty: UIButton!
     //切换养老院
     @IBOutlet weak var btnChoose: UIButton!
+    //页数
+    @IBOutlet weak var lblCurrentPage: UILabel!
+    @IBOutlet weak var lblMaxPage: UILabel!
+    @IBOutlet weak var mainCollectionView: UICollectionView!
     
     
     @IBAction func UnwindToMainController(segue:UIStoryboardSegue){
         
-        
     }
     @IBAction func UnwindToMainController2(segue:UIStoryboardSegue){
-        
-        
         
     }
     
     @IBAction func UnwindToMainController3(segue:UIStoryboardSegue){
         
-        
     }
     @IBAction func UnwindAlarmQuery(segue:UIStoryboardSegue){
         
-        
     }
     
+    
     //类字段
-    var mainScroll:UIScrollView!
+    //  var mainScroll:UIScrollView!
     var popDownList:PopDownList?
     var partDownList:PopDownList?
     var sleepcareMainViewModel:SleepcareMainViewModel?
@@ -77,6 +77,21 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
                 self.ReloadMainScrollView()
             }
         }
+    }
+    
+    var MaxPageCount:Int=0{
+        didSet{
+            self.lblMaxPage.text = "共" + String(MaxPageCount) + "页"
+            
+        }
+        
+    }
+    
+    var CurrentPageCount:Int=0{
+        didSet{
+            self.lblCurrentPage.text = "第" + String(CurrentPageCount) + "页"
+        }
+        
     }
     
     //当前科室下所有床位信息
@@ -136,19 +151,16 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.mainScroll = UIScrollView()
-        self.mainScroll.frame = UIScreen.mainScreen().bounds
-        self.mainScroll.frame.origin.y = 190
-        self.mainScroll.frame.size.height = UIScreen.mainScreen().bounds.height - 260
-        self.mainScroll.pagingEnabled = true
-        self.mainScroll.showsHorizontalScrollIndicator = false
-        self.mainScroll.delegate = self
-        self.mainScroll.bounces = false
+        self.mainCollectionView.delegate = self
+        self.mainCollectionView.dataSource = self
+        self.mainCollectionView.backgroundColor = UIColor.clearColor()
+        var cellNib =  UINib(nibName: "SleepCareCollectionViewCell", bundle: nil)
+        self.mainCollectionView.registerNib(cellNib, forCellWithReuseIdentifier: "bedcell")
         
         
-        self.view.addSubview(self.mainScroll)
         
-        self.curPager.frame.size.width = UIScreen.mainScreen().bounds.width
+        
+        //  self.curPager.frame.size.width = UIScreen.mainScreen().bounds.width
         
         //去掉搜索按钮背景
         for(var i = 0 ; i < self.search.subviews[0].subviews.count; i++) {
@@ -157,7 +169,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             }
         }
         self.search.delegate = self
-        self.curPager.detegate = self
+        //   self.curPager.detegate = self
         
         //若没有选择记住密码，则清空登录页面里的输入信息
         if self.clearlogininfoDelegate != nil{
@@ -181,14 +193,29 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
                 self.isOpenAlarm = true
             }
             
-            
-            
         }
     }
     
-    //查询按钮事件
+    //查询按钮事件,根据本地的showbedlist进行查询，不掉用服务器接口
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
-        self.sleepcareMainViewModel?.SearchByBedOrRoom(searchText)
+        let searchResult:Array<BedModel> = self.sleepcareMainViewModel!.SearchByBedOrRoomFromLocal(searchText,localBedViews:self.FilterBedViews())
+        self.ShowBedViews = searchResult
+        
+        let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
+        //查询后可能总页数<当前页数,则需要更新当前页数
+        self.sleepcareMainViewModel?.PageCount = pageCount
+        if self.CurrentPageCount > pageCount{
+            self.CurrentPageCount = pageCount
+        }
+        //0页数的特殊情况
+        if pageCount == 0{
+            self.CurrentPageCount = 0
+        }
+        else if self.CurrentPageCount == 0{
+            self.CurrentPageCount = 1
+        }
+        
+        self.mainCollectionView.reloadData()
     }
     
     //床位点击事件
@@ -219,7 +246,9 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         sleepcareMainViewModel = SleepcareMainViewModel()
         sleepcareMainViewModel?.controller = self
         RACObserve(self.sleepcareMainViewModel, "BedModelList") ~> RAC(self, "BedViews")
-        RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self.curPager, "pageCount")
+        //    RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self.curPager, "pageCount")
+        RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self, "MaxPageCount")
+        
         RACObserve(self.sleepcareMainViewModel, "MainName") ~> RAC(self.lblMainName, "text")
         RACObserve(self.sleepcareMainViewModel, "CurTime") ~> RAC(self.lblDateTime, "text")
         RACObserve(self.sleepcareMainViewModel, "BedCount") ~> RAC(self.lblBedCount, "text")
@@ -317,7 +346,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             if self.spinner == nil{
                 self.spinner  = JHSpinnerView.showOnView(self.view, spinnerColor:UIColor.whiteColor(), overlay:.Custom(CGRect(x:0,y:0,width:Int(UIScreen.mainScreen().bounds.width),height:Int(UIScreen.mainScreen().bounds.height)), CGFloat(0.0)), overlayColor:UIColor.blackColor().colorWithAlphaComponent(0.9))
                 
-                self.mainScroll.userInteractionEnabled = false
+                self.mainCollectionView.userInteractionEnabled = false
             }
             
             
@@ -370,7 +399,7 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
             
             self.ReloadMainScrollView()
             
-            self.mainScroll.userInteractionEnabled = true
+            self.mainCollectionView.userInteractionEnabled = true
             self.spinner!.dismiss()
             self.spinner = nil
             self.threadFlag = false
@@ -389,49 +418,45 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     }
     
     
+    func FilterBedViews()-> Array<BedModel>{
+        var tempBedList = Array<BedModel>()
+        let onbedViews:Array<BedModel> = self.checkOnBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.onbed}) : Array<BedModel>()
+        let leavebedViews:Array<BedModel> = self.checkLeaveBed.selected ?  self.BedViews!.filter({$0.BedStatus == BedStatusType.leavebed}) : Array<BedModel>()
+        let emptybedViews:Array<BedModel> = self.checkEmptyBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.emptybed}) : Array<BedModel>()
+        let offdutyViews:Array<BedModel> = self.checkOffDuty.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.offduty}) : Array<BedModel>()
+        let unnormalViews:Array<BedModel> = self.checkUnnormal.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.unnormal}) : Array<BedModel>()
+        tempBedList = onbedViews + leavebedViews + emptybedViews + offdutyViews + unnormalViews
+        return tempBedList
+        
+    }
+    
     //将床位信息显示到主页面上
     func ReloadMainScrollView(){
-        while (self.mainScroll.subviews.count > 0 ){
-            self.mainScroll.subviews[0].removeFromSuperview()
-        }
-        
         if (self.BedViews != nil && self.sleepcareMainViewModel != nil){
             //通过bedviews做删选，放入ShowBedViews数组
-            self.ShowBedViews = Array<BedModel>()
-            let onbedViews:Array<BedModel> = self.checkOnBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.onbed}) : Array<BedModel>()
-            let leavebedViews:Array<BedModel> = self.checkLeaveBed.selected ?  self.BedViews!.filter({$0.BedStatus == BedStatusType.leavebed}) : Array<BedModel>()
-            let emptybedViews:Array<BedModel> = self.checkEmptyBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.emptybed}) : Array<BedModel>()
-            let offdutyViews:Array<BedModel> = self.checkOffDuty.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.offduty}) : Array<BedModel>()
-            let unnormalViews:Array<BedModel> = self.checkUnnormal.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.unnormal}) : Array<BedModel>()
-            self.ShowBedViews = onbedViews + leavebedViews + emptybedViews + offdutyViews + unnormalViews
+            self.ShowBedViews = self.FilterBedViews()
             
             //放入主页面中，实现分页
             let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
-            
-            //pagercount发生变化时才赋值给viewmodel，这样通知到pager进行更新
-            //   if (pageCount != self.sleepcareMainViewModel?.PageCount){
-            
             self.sleepcareMainViewModel?.PageCount = pageCount
-            
-            // }
-            
-            
-            self.mainScroll.contentSize = CGSize(width: self.mainScroll.bounds.size.width * CGFloat(pageCount), height: self.mainScroll.bounds.size.height)
-            self.mainScroll.contentOffset.x = 0
-            
-            if(pageCount > 0 ){
-                for i in 1...pageCount{
-                    let mainview1 = NSBundle.mainBundle().loadNibNamed("SleepCareCollectionView", owner: self, options: nil).first as! SleepCareCollectionView
-                    mainview1.frame = CGRectMake(CGFloat((i-1) * Int(self.mainScroll.frame.width)) + 10, 0, self.mainScroll.frame.width, self.mainScroll.frame.size.height)
-                    
-                    mainview1.didSelecteBedHandler = self.BedSelected
-                    var bedList = self.sleepcareMainViewModel?.GetBedsOfPage(i, count: 8,list:self.ShowBedViews, maxcount:self.ShowBedViews.count)
-                    mainview1.reloadData(bedList!)
-                    self.mainScroll.addSubview(mainview1)
-                    self.mainScroll.bringSubviewToFront(mainview1)
-                    
-                }
+            //查询后可能总页数<当前页数,则需要更新当前页数
+            if self.CurrentPageCount > pageCount{
+                self.CurrentPageCount = pageCount
             }
+            
+            //0
+            if pageCount == 0{
+                self.CurrentPageCount = 0
+            }
+            else if self.CurrentPageCount == 0{
+                self.CurrentPageCount = 1
+            }
+            
+            //          self.mainCollectionView.contentOffset.x = 0
+            
+            self.mainCollectionView.reloadData()
+            
+            
         }//bedviews非nil
     }
     
@@ -491,9 +516,11 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
         OpenNotice()
         //开启报警
         if !self.isOpenAlarm{
+            
             AlarmHelper.GetAlarmInstance().setalarmlabelDelegate = self
             AlarmHelper.GetAlarmInstance().BeginWaringAttention()
         }
+        
         //更新标题
         self.lblMainName.text = mainname + "—" + partname
         //刷新床位信息
@@ -508,15 +535,55 @@ class SleepcareMainController: BaseViewController,UIScrollViewDelegate,UISearchB
     
     //左右滑动
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        var page = Int(scrollView.contentOffset.x / self.mainScroll.frame.width) + 1
-        self.curPager.jump(page)
+        var page = Int(scrollView.contentOffset.x / (scrollView.frame.width)) + 1
+        if ((page == self.sleepcareMainViewModel!.PageCount - 1) && (scrollView.contentOffset.x % (scrollView.frame.width)>0)){
+            page += 1
+        }
+        
+        if self.CurrentPageCount != page{
+            self.CurrentPageCount = page
+        }
+        
+        //        print(scrollView.contentOffset.x )
+        //        print(self.mainCollectionView.contentSize)
+        //        print("\n")
+        
+        //     self.curPager.jump(page)
     }
     
-    //代理
-    func JumpPage(pageIndex:NSInteger){
-        self.mainScroll.contentOffset.x = CGFloat(pageIndex - 1) * self.mainScroll.frame.width
+    
+    
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+        return self.ShowBedViews.count
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
+        
+        
+        var cell:SleepCareCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("bedcell", forIndexPath: indexPath) as! SleepCareCollectionViewCell
+        
+        cell.rebuilderUserInterface(self.ShowBedViews[indexPath.item])
+        
+        return cell
         
     }
+    
+    func collectionView(collectionView:UICollectionView,shouldSelecItemAtIndexPath indexPath:NSIndexPath)->Bool{
+        return true
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        self.BedSelected(self.ShowBedViews[indexPath.item])
+        
+    }
+    
+    //    //代理
+    //    func JumpPage(pageIndex:NSInteger){
+    //        self.mainCollectionView.contentOffset.x = CGFloat(pageIndex - 1) * self.mainCollectionView.frame.width
+    //
+    //    }
     
     //选中查询类型
     func ChoosedItem(downListModel:DownListModel){

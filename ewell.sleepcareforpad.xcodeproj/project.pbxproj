@@ -182,8 +182,6 @@
 		3AB3CB191BD762FE0067F9D4 /* Pager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3CB0C1BD762FE0067F9D4 /* Pager.swift */; };
 		3AB3CB1A1BD762FE0067F9D4 /* PopDownList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3CB0D1BD762FE0067F9D4 /* PopDownList.swift */; };
 		3AB3CB1B1BD762FE0067F9D4 /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3CB0E1BD762FE0067F9D4 /* Popover.swift */; };
-		3AB3CB1C1BD762FE0067F9D4 /* SleepCareCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3CB0F1BD762FE0067F9D4 /* SleepCareCollectionView.swift */; };
-		3AB3CB1D1BD762FE0067F9D4 /* SleepCareCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB3CB101BD762FE0067F9D4 /* SleepCareCollectionView.xib */; };
 		3AB3CB1E1BD762FE0067F9D4 /* SleepCareCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3CB111BD762FE0067F9D4 /* SleepCareCollectionViewCell.swift */; };
 		3AB3CB1F1BD762FE0067F9D4 /* SleepCareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB3CB121BD762FE0067F9D4 /* SleepCareCollectionViewCell.xib */; };
 		3AB3CB221BD762FE0067F9D4 /* TurnOverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3CB151BD762FE0067F9D4 /* TurnOverTableViewCell.swift */; };
@@ -406,8 +404,6 @@
 		3AB3CB0C1BD762FE0067F9D4 /* Pager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager.swift; sourceTree = "<group>"; };
 		3AB3CB0D1BD762FE0067F9D4 /* PopDownList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopDownList.swift; sourceTree = "<group>"; };
 		3AB3CB0E1BD762FE0067F9D4 /* Popover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
-		3AB3CB0F1BD762FE0067F9D4 /* SleepCareCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepCareCollectionView.swift; sourceTree = "<group>"; };
-		3AB3CB101BD762FE0067F9D4 /* SleepCareCollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SleepCareCollectionView.xib; sourceTree = "<group>"; };
 		3AB3CB111BD762FE0067F9D4 /* SleepCareCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SleepCareCollectionViewCell.swift; sourceTree = "<group>"; };
 		3AB3CB121BD762FE0067F9D4 /* SleepCareCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SleepCareCollectionViewCell.xib; sourceTree = "<group>"; };
 		3AB3CB151BD762FE0067F9D4 /* TurnOverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnOverTableViewCell.swift; sourceTree = "<group>"; };
@@ -563,8 +559,6 @@
 				0DC523141CE9A6C400BEB124 /* popDownList */,
 				3AB3CB0A1BD762FE0067F9D4 /* AlarmTableViewCell.swift */,
 				3AB3CB0B1BD762FE0067F9D4 /* AlarmTableViewCell.xib */,
-				3AB3CB0F1BD762FE0067F9D4 /* SleepCareCollectionView.swift */,
-				3AB3CB101BD762FE0067F9D4 /* SleepCareCollectionView.xib */,
 				3AB3CB111BD762FE0067F9D4 /* SleepCareCollectionViewCell.swift */,
 				3AB3CB121BD762FE0067F9D4 /* SleepCareCollectionViewCell.xib */,
 				3AB3CB151BD762FE0067F9D4 /* TurnOverTableViewCell.swift */,
@@ -996,7 +990,6 @@
 				0D978D931C3E09EE00E0CB9B /* 40pt-@3x.png in Resources */,
 				0DC2280C1C1FD65600AF4737 /* JHSpinnerView.xib in Resources */,
 				3A9C12FD1BC789C6008EC314 /* pagerunselected.png in Resources */,
-				3AB3CB1D1BD762FE0067F9D4 /* SleepCareCollectionView.xib in Resources */,
 				0DC5231B1CE9A6CE00BEB124 /* fs_main_login_selected.png in Resources */,
 				0D978D921C3E09EE00E0CB9B /* 40pt-@2x.png in Resources */,
 				0D1F6F9C1CB4F7220016719C /* queryDetail.png in Resources */,
@@ -1196,7 +1189,6 @@
 				3A36B0211BA94E89000F4AED /* RealTimeDelegate.swift in Sources */,
 				0D9F87461CACC9DE008E5F3E /* Result.swift in Sources */,
 				3A33EF851BAA56D700D82A4D /* MessageSubject.swift in Sources */,
-				3AB3CB1C1BD762FE0067F9D4 /* SleepCareCollectionView.swift in Sources */,
 				3A376E421BABB3B700D70953 /* EMString.swift in Sources */,
 				3AA4A7781BB2BF3F00B214C7 /* SleepCareReportList.swift in Sources */,
 				3A4CD3FA1BA80536002C8A1A /* CommonHelper.swift in Sources */,

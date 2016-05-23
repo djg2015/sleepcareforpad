@@ -22,23 +22,49 @@ class SleepCareCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imgHeadView: UIImageView!
     
     //类字段
-    var _bindModel:BedModel?
+    var _bindModel:BedModel!
+    
     
     //汇至床位界面
     func rebuilderUserInterface(bedModel:BedModel){
-        self._bindModel = bedModel
+        if bedModel.HiddenValue {
+            self.hidden = true
+            self.userInteractionEnabled = false
+        }
+        else{
+            self._bindModel = BedModel()
+            self._bindModel.RoomNumber = bedModel.RoomNumber
+            self._bindModel.UserName = bedModel.UserName
+            self._bindModel.BedNumber = bedModel.BedNumber
+            self._bindModel.HR = bedModel.HR
+            self._bindModel.RR = bedModel.RR
+            self._bindModel.BedImageStatus = bedModel.BedImageStatus
+            self._bindModel.BedImage = bedModel.BedImage
+            self._bindModel.HeadImageView = bedModel.HeadImageView
+            self.backgroundColor = UIColor.clearColor()
+            
+            
+            
+            RACObserve(bedModel, "RoomNumber") ~> RAC(self._bindModel, "RoomNumber")
+            RACObserve(bedModel, "UserName") ~> RAC(self._bindModel, "UserName")
+            RACObserve(bedModel, "BedNumber") ~> RAC(self._bindModel, "BedNumber")
+            RACObserve(bedModel, "HR") ~> RAC(self._bindModel, "HR")
+            RACObserve(bedModel, "RR") ~> RAC(self._bindModel, "RR")
+            RACObserve(bedModel, "BedImageStatus") ~> RAC(self._bindModel, "BedImageStatus")
+            RACObserve(bedModel, "BedImage") ~> RAC(self._bindModel, "BedImage")
+            RACObserve(bedModel, "HeadImageView") ~> RAC(self._bindModel, "HeadImageView")
+            
+            RACObserve(self._bindModel, "RoomNumber") ~> RAC(self.lblRoomNumber, "text")
+            RACObserve(self._bindModel, "UserName") ~> RAC(self.lblUserName, "text")
+            RACObserve(self._bindModel, "BedNumber") ~> RAC(self.lblBedNumber, "text")
+            RACObserve(self._bindModel, "HR") ~> RAC(self.lblHR, "text")
+            RACObserve(self._bindModel, "RR") ~> RAC(self.lblRR, "text")
+            RACObserve(self._bindModel, "BedImageStatus") ~> RAC(self.imgBedStatus, "image")
+            RACObserve(self._bindModel, "BedImage") ~> RAC(self.imgBed, "image")
+            RACObserve(self._bindModel, "HeadImageView") ~> RAC(self.imgHeadView, "image")
+            
+        }
         
-        RACObserve(self._bindModel, "RoomNumber") ~> RAC(self.lblRoomNumber, "text")
-        RACObserve(self._bindModel, "UserName") ~> RAC(self.lblUserName, "text")
-        RACObserve(self._bindModel, "BedNumber") ~> RAC(self.lblBedNumber, "text")
-        RACObserve(self._bindModel, "HR") ~> RAC(self.lblHR, "text")
-        RACObserve(self._bindModel, "RR") ~> RAC(self.lblRR, "text")
-        RACObserve(self._bindModel, "BedImageStatus") ~> RAC(self.imgBedStatus, "image")
-        RACObserve(self._bindModel, "BedImage") ~> RAC(self.imgBed, "image")
-        RACObserve(self._bindModel, "HeadImageView") ~> RAC(self.imgHeadView, "image")
-        
-        RACObserve(self._bindModel, "HiddenValue") ~> RAC(self, "hidden")
-        self.backgroundColor = UIColor.clearColor()
     }
     
 }
@@ -54,9 +80,9 @@ class BedModel:NSObject{
         set(value)
         {
             if value == _hiddenValue{
-            return
+                return
             }
-        
+            
             self._hiddenValue=value
         }
     }
@@ -228,13 +254,13 @@ class BedModel:NSObject{
                 //请假
                 self.HeadImageView = UIImage(named: "infoHead.png")
                 self.BedImageStatus = UIImage(named: "offdutyView.png")
-            self.BedImage = UIImage(named: "emptyBed.png")
+                self.BedImage = UIImage(named: "emptyBed.png")
             }
             else if(value == BedStatusType.unline){
                 //离线
                 self.HeadImageView = UIImage(named: "infoHead.png")
                 self.BedImageStatus = UIImage(named: "unlineView.png")
-                  self.BedImage = UIImage(named: "emptyBed.png")
+                self.BedImage = UIImage(named: "emptyBed.png")
             }
             self._bedStatus=value
         }

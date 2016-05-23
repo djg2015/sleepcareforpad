@@ -66,6 +66,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     var isOpenAlarm:Bool = false
     //支线程完成true
     var threadFlag:Bool = false
+    var searchText:String = ""
     
     //要显示的床位信息
     var ShowBedViews:Array<BedModel> = Array<BedModel>()
@@ -73,7 +74,8 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     //在离床状态变化引起的主页面床位刷新标志
     var RefreshFlag:Bool = false{
         didSet{
-            if RefreshFlag{
+            if (RefreshFlag && self.searchText == "")
+            {
                 self.ReloadMainScrollView()
             }
         }
@@ -198,6 +200,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     
     //查询按钮事件,根据本地的showbedlist进行查询，不掉用服务器接口
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
+        self.searchText = searchText
         let searchResult:Array<BedModel> = self.sleepcareMainViewModel!.SearchByBedOrRoomFromLocal(searchText,localBedViews:self.FilterBedViews())
         self.ShowBedViews = searchResult
         
@@ -211,7 +214,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         if pageCount == 0{
             self.CurrentPageCount = 0
         }
-        else if self.CurrentPageCount == 0{
+         if (pageCount>0 && self.CurrentPageCount == 0){
             self.CurrentPageCount = 1
         }
         
@@ -448,7 +451,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             if pageCount == 0{
                 self.CurrentPageCount = 0
             }
-            else if self.CurrentPageCount == 0{
+           if (pageCount>0 && self.CurrentPageCount == 0){
                 self.CurrentPageCount = 1
             }
             

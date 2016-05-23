@@ -159,11 +159,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         var cellNib =  UINib(nibName: "SleepCareCollectionViewCell", bundle: nil)
         self.mainCollectionView.registerNib(cellNib, forCellWithReuseIdentifier: "bedcell")
         
-        
-        
-        
-        //  self.curPager.frame.size.width = UIScreen.mainScreen().bounds.width
-        
+    
         //去掉搜索按钮背景
         for(var i = 0 ; i < self.search.subviews[0].subviews.count; i++) {
             if(self.search.subviews[0].subviews[i].isKindOfClass(NSClassFromString("UISearchBarBackground"))){
@@ -206,7 +202,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         
         let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
         //查询后可能总页数<当前页数,则需要更新当前页数
-        self.sleepcareMainViewModel?.PageCount = pageCount
+        self.MaxPageCount = pageCount
         if self.CurrentPageCount > pageCount{
             self.CurrentPageCount = pageCount
         }
@@ -250,7 +246,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         sleepcareMainViewModel?.controller = self
         RACObserve(self.sleepcareMainViewModel, "BedModelList") ~> RAC(self, "BedViews")
         //    RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self.curPager, "pageCount")
-        RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self, "MaxPageCount")
+     //   RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self, "MaxPageCount")
         
         RACObserve(self.sleepcareMainViewModel, "MainName") ~> RAC(self.lblMainName, "text")
         RACObserve(self.sleepcareMainViewModel, "CurTime") ~> RAC(self.lblDateTime, "text")
@@ -441,7 +437,9 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             
             //放入主页面中，实现分页
             let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
-            self.sleepcareMainViewModel?.PageCount = pageCount
+            self.MaxPageCount = pageCount
+           
+          //  self.sleepcareMainViewModel?.PageCount = pageCount
             //查询后可能总页数<当前页数,则需要更新当前页数
             if self.CurrentPageCount > pageCount{
                 self.CurrentPageCount = pageCount
@@ -539,11 +537,14 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     //左右滑动
     func scrollViewDidScroll(scrollView: UIScrollView) {
         var page = Int(scrollView.contentOffset.x / (scrollView.frame.width)) + 1
-        if ((page == self.sleepcareMainViewModel!.PageCount - 1) && (scrollView.contentOffset.x % (scrollView.frame.width)>0)){
+        if ((page == self.MaxPageCount - 1) && (scrollView.contentOffset.x % (scrollView.frame.width)>0)){
             page += 1
         }
         
-        if self.CurrentPageCount != page{
+        if self.MaxPageCount == 0{
+        self.CurrentPageCount = 0
+        }
+        else if (self.CurrentPageCount != page ){
             self.CurrentPageCount = page
         }
         

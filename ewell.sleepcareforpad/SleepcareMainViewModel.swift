@@ -180,18 +180,18 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
         }
     }
     
-    //分页数
-    var _pageCount:Int = 0
-    dynamic var PageCount:Int{
-        get
-        {
-            return self._pageCount
-        }
-        set(value)
-        {
-            self._pageCount=value
-        }
-    }
+//    //分页数
+//    var _pageCount:Int = 0
+//    dynamic var PageCount:Int{
+//        get
+//        {
+//            return self._pageCount
+//        }
+//        set(value)
+//        {
+//            self._pageCount=value
+//        }
+//    }
     
     //警告数
     var _wariningCount:Int = 0

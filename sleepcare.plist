@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>loginusername</key>
-	<string>yuanzhang</string>
+	<string></string>
 	<key>loginuserpwd</key>
-	<string>123</string>
+	<string></string>
 	<key>serverjid</key>
 	<string>ewell@122.224.242.241</string>
 	<key>xmppserver</key>

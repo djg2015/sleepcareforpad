@@ -294,7 +294,7 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                 else if alarmList.alarmInfoList[i].HandleFlag == "0"{
                     self._wariningCaches.append(alarmList.alarmInfoList[i])
                 }
-            }
+            }//for
             if self.setalarmlabelDelegate != nil{
                 self.setalarmlabelDelegate.SetAlarmWarningLabel(self.WarningList.count)
             }

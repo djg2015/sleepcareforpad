@@ -52,13 +52,12 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         
     }
     @IBAction func UnwindAlarmQuery(segue:UIStoryboardSegue){
-       
-//       self.WarningSet = AlarmHelper.GetAlarmInstance().WarningList.count
+        
+        //       self.WarningSet = AlarmHelper.GetAlarmInstance().WarningList.count
     }
     
     
     //类字段
-    //  var mainScroll:UIScrollView!
     var popDownList:PopDownList?
     var partDownList:PopDownList?
     var sleepcareMainViewModel:SleepcareMainViewModel?
@@ -66,7 +65,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     var spinner:JHSpinnerView?
     var thread:NSThread!
     var isOpenAlarm:Bool = false
-    //支线程完成true
+    // 刷新按钮支线程运行结束标志：true运行结束，false未结束或未运行
     var threadFlag:Bool = false
     var searchText:String = ""
     
@@ -78,7 +77,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         didSet{
             if (RefreshFlag && self.searchText == "")
             {
-                self.ReloadMainScrollView()
+               self.ReloadMainScrollView()
             }
         }
     }
@@ -99,19 +98,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     }
     
     //当前科室下所有床位信息
-    var BedViews:Array<BedModel>?{
-        didSet{
-            
-            if !self.threadFlag{
-                self.ReloadMainScrollView()
-            }
-            
-            if self.spinner != nil{
-                self.threadFlag = true
-            }
-            
-        }
-    }
+    var BedViews:Array<BedModel>?
     
     var WarningSet:Int = 0{
         didSet{
@@ -122,7 +109,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             }
             else{
                 self.lblWarining.text = ""
-                 self.lblWarningLine.hidden = true
+                self.lblWarningLine.hidden = true
             }
         }
     }
@@ -147,7 +134,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     
     var clearlogininfoDelegate:ClearLoginInfoDelegate?
     
-    
+    //--------------------------初始化---------------------
     override func viewDidAppear(animated: Bool) {
         //刷新页面报警数
         self.WarningSet = AlarmHelper.GetAlarmInstance().WarningList.count
@@ -163,7 +150,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         var cellNib =  UINib(nibName: "SleepCareCollectionViewCell", bundle: nil)
         self.mainCollectionView.registerNib(cellNib, forCellWithReuseIdentifier: "bedcell")
         
-    
+        
         //去掉搜索按钮背景
         for(var i = 0 ; i < self.search.subviews[0].subviews.count; i++) {
             if(self.search.subviews[0].subviews[i].isKindOfClass(NSClassFromString("UISearchBarBackground"))){
@@ -171,7 +158,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             }
         }
         self.search.delegate = self
-       
+        
         
         //若没有选择记住密码，则清空登录页面里的输入信息
         if self.clearlogininfoDelegate != nil{
@@ -196,61 +183,17 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             }
             
         }
-    }
-    
-    //查询按钮事件,根据本地的showbedlist进行查询，不掉用服务器接口
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
-        self.searchText = searchText
-        let searchResult:Array<BedModel> = self.sleepcareMainViewModel!.SearchByBedOrRoomFromLocal(searchText,localBedViews:self.FilterBedViews())
-        self.ShowBedViews = searchResult
         
-        let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
-        //查询后可能总页数<当前页数,则需要更新当前页数
-        self.MaxPageCount = pageCount
-        if self.CurrentPageCount > pageCount{
-            self.CurrentPageCount = pageCount
-        }
-        //0页数的特殊情况
-        if pageCount == 0{
-            self.CurrentPageCount = 0
-        }
-         if (pageCount>0 && self.CurrentPageCount == 0){
-            self.CurrentPageCount = 1
-        }
-        
-        self.mainCollectionView.reloadData()
-    }
-    
-    //床位点击事件
-    func BedSelected(bedModel:BedModel){
-        try {
-            ({
-                
-                if bedModel.UserCode != nil{
-                    Session.GetSession()!.CurUserCode = bedModel.UserCode!
-                    
-                    self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
-                }
-                },
-                catch: { ex in
-                    //异常处理
-                    
-                },
-                finally: {
-                    
-                }
-            )}
-        
+        self.ReloadMainScrollView()
     }
     
     
-    //属性绑定
+    //--------------------------------属性绑定--------------------------
     func rac_setting(){
         sleepcareMainViewModel = SleepcareMainViewModel()
         sleepcareMainViewModel?.controller = self
         RACObserve(self.sleepcareMainViewModel, "BedModelList") ~> RAC(self, "BedViews")
-        //    RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self.curPager, "pageCount")
-     //   RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self, "MaxPageCount")
+        //   RACObserve(self.sleepcareMainViewModel, "PageCount") ~> RAC(self, "MaxPageCount")
         
         RACObserve(self.sleepcareMainViewModel, "MainName") ~> RAC(self.lblMainName, "text")
         RACObserve(self.sleepcareMainViewModel, "CurTime") ~> RAC(self.lblDateTime, "text")
@@ -342,8 +285,8 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         
     }
     
-    
-    //刷新
+    //--------------------------------刷新操作-----------------------
+    //点击刷新后的业务
     @IBAction func Refresh(){
         if Session.GetSession()!.CurPartCode != ""{
             if self.spinner == nil{
@@ -352,9 +295,12 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
                 self.mainCollectionView.userInteractionEnabled = false
             }
             
-            self.search.text == ""
-            self.searchText = ""
-            /*定时器，检查支线程是否完成
+            //清空搜索内容
+            if self.search.text != ""{
+                self.search.text = ""
+                self.searchText = ""
+            }
+            /*定时器，检查支线程：载入床位信息 是否完成
             */
             self.setTimer()
             
@@ -384,6 +330,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         else{
             self.ResetCheckbox()
             self.sleepcareMainViewModel!.SearchByBedOrRoom("")
+            self.threadFlag = true
         }
     }
     
@@ -401,18 +348,16 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             }
             self.threadFlag = false
             realtimer.invalidate()
-            
+           
             self.ReloadMainScrollView()
             
             self.mainCollectionView.userInteractionEnabled = true
             self.spinner!.dismiss()
             self.spinner = nil
-            
-            
-            
         }
     }
     
+    //恢复全选
     func ResetCheckbox(){
         self.checkEmptyBed.selected = true
         self.checkOnBed.selected = true
@@ -423,6 +368,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     }
     
     
+    //---------------------------过滤删选显示的页面---------------------------
     func FilterBedViews()-> Array<BedModel>{
         var tempBedList = Array<BedModel>()
         let onbedViews:Array<BedModel> = self.checkOnBed.selected ? self.BedViews!.filter({$0.BedStatus == BedStatusType.onbed}) : Array<BedModel>()
@@ -444,8 +390,8 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             //放入主页面中，实现分页
             let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
             self.MaxPageCount = pageCount
-           
-          //  self.sleepcareMainViewModel?.PageCount = pageCount
+            
+            //  self.sleepcareMainViewModel?.PageCount = pageCount
             //查询后可能总页数<当前页数,则需要更新当前页数
             if self.CurrentPageCount > pageCount{
                 self.CurrentPageCount = pageCount
@@ -455,19 +401,15 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             if pageCount == 0{
                 self.CurrentPageCount = 0
             }
-           if (pageCount>0 && self.CurrentPageCount == 0){
+            if (pageCount>0 && self.CurrentPageCount == 0){
                 self.CurrentPageCount = 1
             }
             
-            //          self.mainCollectionView.contentOffset.x = 0
-            
             self.mainCollectionView.reloadData()
-            
-            
-        }//bedviews非nil
+        }
     }
     
-    
+    //---------------------------页面点击，滑动操作-------------------
     func OnBedTouch(){
         
         self.checkOnBed.selected = !self.checkOnBed.selected
@@ -508,11 +450,56 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             var kNSemiModalOptionKeys = [ KNSemiModalOptionKeys.pushParentBack: "NO", KNSemiModalOptionKeys.animationDuration: "0.2", KNSemiModalOptionKeys.shadowOpacity: "0.3"]
             
             self.presentSemiViewController(self.choosepart, withOptions: kNSemiModalOptionKeys)
-            
-            
             self.choosepart!.GetMainInfo()
         }
     }
+    
+    
+    //查询按钮事件,根据本地的showbedlist进行查询，不掉用服务器接口
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
+        self.searchText = searchText
+        let searchResult:Array<BedModel> = self.sleepcareMainViewModel!.SearchByBedOrRoomFromLocal(searchText,localBedViews:self.FilterBedViews())
+        self.ShowBedViews = searchResult
+        
+        let pageCount:Int = (self.ShowBedViews.count / 8) + ((self.ShowBedViews.count % 8) > 0 ? 1 : 0)
+        //查询后可能总页数<当前页数,则需要更新当前页数
+        self.MaxPageCount = pageCount
+        if self.CurrentPageCount > pageCount{
+            self.CurrentPageCount = pageCount
+        }
+        //0页数的特殊情况
+        if pageCount == 0{
+            self.CurrentPageCount = 0
+        }
+        if (pageCount>0 && self.CurrentPageCount == 0){
+            self.CurrentPageCount = 1
+        }
+        
+        self.mainCollectionView.reloadData()
+    }
+    
+    //床位点击事件
+    func BedSelected(bedModel:BedModel){
+        try {
+            ({
+                
+                if bedModel.UserCode != nil{
+                    Session.GetSession()!.CurUserCode = bedModel.UserCode!
+                    
+                    self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
+                }
+                },
+                catch: { ex in
+                    //异常处理
+                    
+                },
+                finally: {
+                    
+                }
+            )}
+        
+    }
+    
     
     
     //选择某科室代理
@@ -548,21 +535,16 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         }
         
         if self.MaxPageCount == 0{
-        self.CurrentPageCount = 0
+            self.CurrentPageCount = 0
         }
         else if (self.CurrentPageCount != page ){
             self.CurrentPageCount = page
         }
         
-        //        print(scrollView.contentOffset.x )
-        //        print(self.mainCollectionView.contentSize)
-        //        print("\n")
-        
-        //     self.curPager.jump(page)
     }
     
     
-    
+    //--------------------------床位信息显示collection view------------------
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return self.ShowBedViews.count
@@ -589,12 +571,8 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         
     }
     
-    //    //代理
-    //    func JumpPage(pageIndex:NSInteger){
-    //        self.mainCollectionView.contentOffset.x = CGFloat(pageIndex - 1) * self.mainCollectionView.frame.width
-    //
-    //    }
     
+    //----------------------实现各类代理--------------------------
     //选中查询类型
     func ChoosedItem(downListModel:DownListModel){
         self.sleepcareMainViewModel?.ChoosedSearchType = downListModel.value

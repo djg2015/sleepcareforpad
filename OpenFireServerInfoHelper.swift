@@ -50,7 +50,7 @@ class OpenFireServerInfoHelper: NSObject,NSURLConnectionDataDelegate {
                     SetValueIntoPlist(PASS, pwd!)
                     SetValueIntoPlist(USERID, username! + "@" + ip!)
                 }
-                print(ip)
+               
                 
             }
         }

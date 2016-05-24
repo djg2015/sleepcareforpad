@@ -519,6 +519,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         self.lblMainName.text = mainname + "—" + partname
         //刷新床位信息
         self.sleepcareMainViewModel?.SearchByBedOrRoom("")
+        self.ReloadMainScrollView()
     }
     
     //点击报警信息提示

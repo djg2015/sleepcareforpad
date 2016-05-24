@@ -62,7 +62,7 @@ class XmppMsgManager:MessageDelegate{
     }
     
     //发送数据--等待数据响应
-    func SendData(baseMessage:BaseMessage,timeOut:NSTimeInterval=9)->BaseMessage?{
+    func SendData(baseMessage:BaseMessage,timeOut:NSTimeInterval=10)->BaseMessage?{
         var  result :BaseMessage!
         
         //非注册相关的服务器数据请求

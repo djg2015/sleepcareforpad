@@ -18,8 +18,8 @@ class OpenFireServerInfoHelper: NSObject,NSURLConnectionDataDelegate {
     
     func CheckServerInfo(){
         
-     //   let urlPath: String = "http://usleepcare.com/app/getApp.aspx"
-        let urlPath:String = ""
+        let urlPath: String = "http://usleepcare.com/app/getApp.aspx"
+      //  let urlPath:String = ""
         let url: NSURL = NSURL(string: urlPath)!
         let request:NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 5)
         NSURLConnection(request: request, delegate: self)
@@ -50,6 +50,7 @@ class OpenFireServerInfoHelper: NSObject,NSURLConnectionDataDelegate {
                     SetValueIntoPlist(PASS, pwd!)
                     SetValueIntoPlist(USERID, username! + "@" + ip!)
                 }
+                print(ip)
                 
             }
         }

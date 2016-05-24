@@ -17,17 +17,17 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
     private var IsOpen:Bool = false
     //-------------------类字段--------------------------
     //未处理报警总数
-    var _warningcouts:Int = 0
-    dynamic var Warningcouts:Int{
-        get
-        {
-            return self._warningcouts
-        }
-        set(value)
-        {
-            self._warningcouts = value
-        }
-    }
+//    var _warningcouts:Int = 0
+//    dynamic var Warningcouts:Int{
+//        get
+//        {
+//            return self._warningcouts
+//        }
+//        set(value)
+//        {
+//            self._warningcouts = value
+//        }
+//    }
     
     //所有未处理报警code
     var _codes:Array<String> = Array<String>()
@@ -144,18 +144,18 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                         //放入codes
                         self.Codes.append(alarmItem.AlarmCode)
                     }
-                    self.Warningcouts = self.WarningList.count
+               //     self.Warningcouts = self.WarningList.count
                     //外部图标上的badge number
-                    TodoList.sharedInstance.SetBadgeNumber(self.Warningcouts)
+                    TodoList.sharedInstance.SetBadgeNumber(self.WarningList.count)
                     
                     
-                    if self.Warningcouts > 0{
+                    if self.WarningList.count > 0{
                         self.AlertSound()
                         
                     }
                     
                     if self.setalarmlabelDelegate != nil{
-                        self.setalarmlabelDelegate.SetAlarmWarningLabel(self.Warningcouts)
+                        self.setalarmlabelDelegate.SetAlarmWarningLabel(self.WarningList.count)
                     }
                 }
                 },
@@ -186,7 +186,28 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
         
     }
     
- 
+    //-----------------------成功处理报警后，同步删除此报警在warninglist，codes，todolist中的记录---
+    func DeleteAlarmInfoByCode(code:String){
+        for (var i = 0; i<self.WarningList.count; i++){
+            if self.WarningList[i].AlarmCode == code{
+            self.WarningList.removeAtIndex(i)
+                return
+            }
+        }
+        for (var i = 0; i<self.Codes.count; i++){
+            if self.Codes[i] == code{
+                self.Codes.removeAtIndex(i)
+                return
+            }
+        }
+        TodoList.sharedInstance.removeItemByID(code)
+     //   self.Warningcouts = self.WarningList.count
+        if self.setalarmlabelDelegate != nil{
+            self.setalarmlabelDelegate.SetAlarmWarningLabel(self.WarningList.count)
+        }
+    }
+    
+    
     
     //--------------------------------------定时器--------------------------------------------
     
@@ -218,7 +239,7 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                     
                     //往todolist／warninglist/codes里加
                     self.WarningList.append(item)
-                    self.Warningcouts = self.WarningList.count
+                 //   self.Warningcouts = self.WarningList.count
                     if !self.IsCodeExist(item.AlarmCode){
                         self.Codes.append(item.AlarmCode)
                     }
@@ -227,7 +248,7 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                 }
                 
                 if self.setalarmlabelDelegate != nil{
-                    self.setalarmlabelDelegate.SetAlarmWarningLabel(self.Warningcouts)
+                    self.setalarmlabelDelegate.SetAlarmWarningLabel(self.WarningList.count)
                 }
                 
                 self._wariningCaches.removeAtIndex(0)

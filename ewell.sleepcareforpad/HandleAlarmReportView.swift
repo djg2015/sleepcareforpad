@@ -40,12 +40,14 @@ class HandleAlarmReportView: UIView,PopDownListItemChoosed {
      //处理报告提交到服务器
     @IBAction func SubmitReport(){
         if self.handleResultText.text == ""{
-            SweetAlert(contentHeight: 300).showAlert("报警处理内容不能为空！请继续填写", subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:nil)
+            SweetAlert(contentHeight: 300).showAlert("报警处理结果不能为空！请继续填写", subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:nil)
         }
         else{
         let resultFlag =   self.handleAlarmViewModel.HandleAlarmAction("002")
  
         if resultFlag{
+            //从alarmhelper中删除这条报警
+          AlarmHelper.GetAlarmInstance().DeleteAlarmInfoByCode(self.AlarmCode)
         self.parentController.navigationController?.popViewControllerAnimated(true)
         }
         else{
@@ -56,19 +58,18 @@ class HandleAlarmReportView: UIView,PopDownListItemChoosed {
     
     //提交误报警
     @IBAction func ClickFalseAlarm(){
-        if self.handleResultText.text == ""{
-          SweetAlert(contentHeight: 300).showAlert("报警处理内容不能为空！请继续填写", subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:nil)
-        }
-        else{
+       
         let resultFlag =  self.handleAlarmViewModel.HandleAlarmAction("003")
         if resultFlag{
+            //从alarmhelper中删除这条报警
+             AlarmHelper.GetAlarmInstance().DeleteAlarmInfoByCode(self.AlarmCode)
             self.parentController.navigationController?.popViewControllerAnimated(true)
         }
             //弹窗提示处理出错
         else{
          SweetAlert(contentHeight: 300).showAlert("报警处理操作失败！请再试一次", subTitle:"提示", style: AlertStyle.None,buttonTitle:"确认",buttonColor: UIColor.colorFromRGB(0xAEDEF4), action:nil)
         }
-        }
+        
     }
     
    
@@ -122,6 +123,9 @@ class HandleAlarmReportView: UIView,PopDownListItemChoosed {
         RACObserve(self, "AlarmCode") ~> RAC(self.handleAlarmViewModel, "AlarmCode")
         self.handleResultText.rac_textSignal() ~> RAC(self.handleAlarmViewModel, "TransferResult")
          self.remarkText.rac_textSignal() ~> RAC(self.handleAlarmViewModel, "Remark")
+        
+        self.alarmContentText.font = UIFont.systemFontOfSize(17)
+        self.handleResultText.font = UIFont.systemFontOfSize(17)
     }
 
     

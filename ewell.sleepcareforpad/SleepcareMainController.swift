@@ -34,6 +34,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     @IBOutlet weak var checkOffDuty: UIButton!
     //切换养老院
     @IBOutlet weak var btnChoose: UIButton!
+    @IBOutlet weak var lblWarningLine: UILabel!
     //页数
     @IBOutlet weak var lblCurrentPage: UILabel!
     @IBOutlet weak var lblMaxPage: UILabel!
@@ -51,7 +52,8 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         
     }
     @IBAction func UnwindAlarmQuery(segue:UIStoryboardSegue){
-        
+       
+//       self.WarningSet = AlarmHelper.GetAlarmInstance().WarningList.count
     }
     
     
@@ -115,10 +117,12 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         didSet{
             if(self.WarningSet > 0){
                 
-                self.lblWarining.text = "有" + self.WarningSet.description + "条报警未处理,请点击查看"
+                self.lblWarining.text = "有" + self.WarningSet.description + "条报警未处理,请点击此处查看"
+                self.lblWarningLine.hidden = false
             }
             else{
                 self.lblWarining.text = ""
+                 self.lblWarningLine.hidden = true
             }
         }
     }
@@ -167,7 +171,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             }
         }
         self.search.delegate = self
-        //   self.curPager.detegate = self
+       
         
         //若没有选择记住密码，则清空登录页面里的输入信息
         if self.clearlogininfoDelegate != nil{
@@ -348,7 +352,8 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
                 self.mainCollectionView.userInteractionEnabled = false
             }
             
-            
+            self.search.text == ""
+            self.searchText = ""
             /*定时器，检查支线程是否完成
             */
             self.setTimer()
@@ -394,6 +399,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             if self.thread != nil{
                 self.thread!.cancel()
             }
+            self.threadFlag = false
             realtimer.invalidate()
             
             self.ReloadMainScrollView()
@@ -401,7 +407,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
             self.mainCollectionView.userInteractionEnabled = true
             self.spinner!.dismiss()
             self.spinner = nil
-            self.threadFlag = false
+            
             
             
         }

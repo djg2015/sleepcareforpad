@@ -33,7 +33,7 @@ class QueryAlarmViewModel:BaseViewModel
     func SearchAlarm() -> RACSignal{
         try {
             ({
-                TodoList.sharedInstance.removeItemAll()
+               
                 let session = Session.GetSession()
                 if session != nil{
                 //清空报警列表
@@ -44,7 +44,8 @@ class QueryAlarmViewModel:BaseViewModel
                 var loginName = session!.LoginUser!.LoginName
                   
                 var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(curpartcode,loginName:loginName, userCode: "", userNameLike: self.UserNameCondition, bedNumberLike: self.BedNumberCondition, schemaCode: self.SelectedAlarmTypeCode, alarmTimeBegin:self.AlarmDateBeginCondition, alarmTimeEnd: self.AlarmDateEndCondition, from: nil, max: nil)
-                
+               
+                    
                 var index:Int = 1
                 for alarmItem in alarmList.alarmInfoList
                 {
@@ -59,10 +60,10 @@ class QueryAlarmViewModel:BaseViewModel
                     item.AlarmCode = alarmItem.AlarmCode
                     index++
                     self.AlarmInfoList.append(item)
-                    //放入todolist
-                    let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmItem.UserName + alarmItem.SchemaContent, UUID: alarmItem.AlarmCode)
-                    TodoList.sharedInstance.addItem(todoItem)
+                    
+                   
                 }
+                    
                 self.tableView.reloadData()
                 }
                 },

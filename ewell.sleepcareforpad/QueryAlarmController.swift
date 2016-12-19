@@ -38,18 +38,9 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     var tabViewAlarm: UITableView!
     var selectAlarmCode = ""
     
-    @IBAction func CancleHandleAlarm(segue:UIStoryboardSegue){
-        
-        
-    }
+ 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "OpenHandleAlarmView"{
-        let destination = segue.destinationViewController as! ViewController
-            destination.alarmcode = self.selectAlarmCode
-        }
-    }
-    
+       
     override func viewWillAppear(animated: Bool) {
         self._queryAlarmViewModel.SearchAlarm()
     }
@@ -302,7 +293,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
             lblAlarmTime.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].AlarmTime
             lblAlarmContent.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].AlarmContent
             
-            lblOperate.addTarget(self, action: "OpenHandleAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
+//            lblOperate.addTarget(self, action: "OpenHandleAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
             lblOperate.tag = indexPath.row
             
         }
@@ -321,9 +312,6 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
 
     
     
-    func OpenHandleAlarm(sender:AnyObject){
-        self.selectAlarmCode = self._queryAlarmViewModel.AlarmInfoList[sender.tag!].AlarmCode
-        self.performSegueWithIdentifier("OpenHandleAlarmView", sender: self)
-    }
+  
     
 }

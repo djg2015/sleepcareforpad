@@ -129,10 +129,9 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                     {
                         //放入报警列表
                         var item:QueryAlarmItem = QueryAlarmItem()
-                        item.UserName = alarmItem.UserName
-                        item.BedNumber = alarmItem.BedNumber
+                       
                         item.Number = index
-                        item.SchemaCode = alarmItem.SchemaCode
+                        item.AlarmType = alarmItem.SchemaCode
                         item.AlarmTime = (alarmItem.AlarmTime as NSString).substringFromIndex(5)
                         item.AlarmContent = alarmItem.SchemaContent
                         item.AlarmCode = alarmItem.AlarmCode
@@ -229,10 +228,9 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                 if !self.IsCodeExist(alarmInfo.AlarmCode){
                     let todoItem = TodoItem(deadline: NSDate(timeIntervalSinceNow: 0), title: alarmInfo.SchemaContent, UUID: alarmInfo.AlarmCode)
                     var item:QueryAlarmItem = QueryAlarmItem()
-                    item.UserName = alarmInfo.UserName
-                    item.BedNumber = alarmInfo.BedNumber
+                   
                     item.Number = self.WarningList.count
-                    item.SchemaCode = alarmInfo.SchemaCode
+                    item.AlarmType = alarmInfo.SchemaCode
                     item.AlarmTime = (alarmInfo.AlarmTime as NSString).substringFromIndex(5)
                     item.AlarmContent = alarmInfo.SchemaContent
                     item.AlarmCode = alarmInfo.AlarmCode

@@ -13,12 +13,13 @@ class QueryAlarmViewModel:BaseViewModel
 {
     var searchAlarm: RACCommand?
     var tableView:UITableView = UITableView()
+    
     override init()
     {
         super.init()
         
         // 初始化时间
-        self.AlarmDateBeginCondition = "2016-01-01"
+        self.AlarmDateBeginCondition = Date.today().addDays(-10).description(format: "yyyy-MM-dd")
         self.AlarmDateEndCondition = Date.today().description(format: "yyyy-MM-dd")
         
         self.searchAlarm = RACCommand(){
@@ -28,44 +29,54 @@ class QueryAlarmViewModel:BaseViewModel
         }
     }
     
-    //点击搜索按钮获取报警信息,默认2016/1/1至今的未处理信息
-    //有其他属性可以设置
+   
     func SearchAlarm() -> RACSignal{
         try {
             ({
                
-                let session = Session.GetSession()
-                if session != nil{
-                //清空报警列表
-                self.AlarmInfoList.removeAll(keepCapacity: true)
-                //获取最新在离床报警
-                var sleepCareBLL = SleepCareBussiness()
-                var curpartcode = session!.CurPartCode
-                var loginName = session!.LoginUser!.LoginName
-                  
-                var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(curpartcode,loginName:loginName, userCode: "", userNameLike: self.UserNameCondition, bedNumberLike: self.BedNumberCondition, schemaCode: self.SelectedAlarmTypeCode, alarmTimeBegin:self.AlarmDateBeginCondition, alarmTimeEnd: self.AlarmDateEndCondition, from: nil, max: nil)
-               
-                    
-                var index:Int = 1
-                for alarmItem in alarmList.alarmInfoList
-                {
-                    //放入报警列表
-                    var item:QueryAlarmItem = QueryAlarmItem()
-                    item.UserName = alarmItem.UserName
-                    item.BedNumber = alarmItem.BedNumber
-                    item.Number = index
-                    item.SchemaCode = alarmItem.SchemaCode
-                    item.AlarmTime = (alarmItem.AlarmTime as NSString).substringFromIndex(5)
-                    item.AlarmContent = alarmItem.SchemaContent
-                    item.AlarmCode = alarmItem.AlarmCode
-                    index++
-                    self.AlarmInfoList.append(item)
-                    
-                   
-                }
-                    
-                self.tableView.reloadData()
-                }
+//                let session = Session.GetSession()
+//                if session != nil{
+//                //清空报警列表
+//                self.AlarmInfoList.removeAll(keepCapacity: true)
+//                //获取最新在离床报警
+//                var sleepCareBLL = SleepCareBussiness()
+//                var curpartcode = session!.CurPartCode
+//                var loginName = session!.LoginUser!.LoginName
+//                  
+//                var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(curpartcode,loginName:loginName, userCode: "", userNameLike: self.UserNameCondition, bedNumberLike: self.BedNumberCondition, schemaCode: self.SelectedAlarmTypeCode, alarmTimeBegin:self.AlarmDateBeginCondition, alarmTimeEnd: self.AlarmDateEndCondition, from: nil, max: nil)
+//               
+//                    
+//                var index:Int = 1
+//                for alarmItem in alarmList.alarmInfoList
+//                {
+//                    //放入报警列表
+//                    var item:QueryAlarmItem = QueryAlarmItem()
+//                    item.UserName = alarmItem.UserName
+//                    item.BedNumber = alarmItem.BedNumber
+//                    item.Number = index
+//                    item.SchemaCode = alarmItem.SchemaCode
+//                    item.AlarmTime = (alarmItem.AlarmTime as NSString).substringFromIndex(5)
+//                    item.AlarmContent = alarmItem.SchemaContent
+//                    item.AlarmCode = alarmItem.AlarmCode
+//                    index++
+//                    self.AlarmInfoList.append(item)
+//                    
+//                   
+//                }
+//                
+//                self.tableView.reloadData()
+//                }
+                
+                                    var item:QueryAlarmItem = QueryAlarmItem()
+                
+                                    item.Number = 1
+                                    item.AlarmType = "离床报警"
+                                    item.AlarmTime = "2011-01-01 19:10:10"
+                                    item.AlarmContent = "离床超过30分钟"
+                                    item.AlarmCode = "0000001"
+                item.HandleStatus = "未处理"
+                item.HandleTime = "2011-01-01 19:10:10"
+                                    self.AlarmInfoList.append(item)
                 },
                 catch: { ex in
                     //异常处理
@@ -79,31 +90,6 @@ class QueryAlarmViewModel:BaseViewModel
     }
     
         
-    var _userNameCondition:String = ""
-    // 用户姓名查询条件
-    dynamic var UserNameCondition:String{
-        get
-        {
-            return self._userNameCondition
-        }
-        set(value)
-        {
-            self._userNameCondition = value
-        }
-    }
-    
-    var _bedNumberCondition:String = ""
-    // 床位号查询条件
-    dynamic var BedNumberCondition:String{
-        get
-        {
-            return self._bedNumberCondition
-        }
-        set(value)
-        {
-            self._bedNumberCondition = value
-        }
-    }
     
     var _alarmDateBeginCondition:String = ""
     // 报警日期起始查询条件
@@ -128,6 +114,19 @@ class QueryAlarmViewModel:BaseViewModel
         set(value)
         {
             self._alarmDateEndCondition = value
+        }
+    }
+    
+    var _selectedAlarmStatus:String = "全部"
+    // 选择的报警状态
+    dynamic var SelectedAlarmStatus:String{
+        get
+        {
+            return self._selectedAlarmStatus
+        }
+        set(value)
+        {
+            self._selectedAlarmStatus = value
         }
     }
     
@@ -172,6 +171,35 @@ class QueryAlarmViewModel:BaseViewModel
         }
     }
     
+    var _alarmStatusList:Array<DownListModel> = Array<DownListModel>()
+    dynamic var AlarmStatusList:Array<DownListModel>{
+        get
+        {
+            var item:DownListModel = DownListModel()
+            item.key = "全部"
+            item.value = "全部"
+            _alarmStatusList.append(item)
+            
+            item = DownListModel()
+            item.key = "已处理"
+            item.value = "已处理"
+            _alarmStatusList.append(item)
+            
+            item = DownListModel()
+            item.key = "误报警"
+            item.value = "误报警"
+            _alarmStatusList.append(item)
+            
+            item = DownListModel()
+            item.key = "未处理"
+            item.value = "未处理"
+            _alarmStatusList.append(item)
+            
+            
+            return _alarmStatusList
+        }
+    }
+            
     var _alarmTypeList:Array<DownListModel> = Array<DownListModel>()
     dynamic var AlarmTypeList:Array<DownListModel>{
         get
@@ -250,16 +278,16 @@ class QueryAlarmItem
         }
     }
     
-    var _schemaCode:String = ""
+    var _alarmType:String = ""
     // 报警类型
-    dynamic var SchemaCode:String{
+    dynamic var AlarmType:String{
         get
         {
-            return self._schemaCode
+            return self._alarmType
         }
         set(value)
         {
-            self._schemaCode = value
+            self._alarmType = value
         }
     }
     
@@ -289,30 +317,27 @@ class QueryAlarmItem
         }
     }
     
-    var _userName:String = ""
-    // 用户姓名
-    dynamic var UserName:String{
+    var _handleTime:String = ""
+    dynamic var HandleTime:String{
         get
         {
-            return self._userName
+            return self._handleTime
         }
         set(value)
         {
-            self._userName = value
+            self._handleTime = value
         }
     }
     
-    var _bedNumber:String = ""
-    // 床位号
-    dynamic var BedNumber:String{
+    var _handleStatus:String = ""
+    dynamic var HandleStatus:String{
         get
         {
-            return self._bedNumber
+            return self._handleStatus
         }
         set(value)
         {
-            self._bedNumber = value
+            self._handleStatus = value
         }
     }
-    
-}
+   }

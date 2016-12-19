@@ -13,11 +13,16 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
 {
     // 查询按钮
     @IBOutlet weak var btnQuery: UIButton!
-    // 报警类型下拉图片
+    // 报警类型
     @IBOutlet weak var btnPopDown: UIImageView!
-  
     // 报警类型查询条件
     @IBOutlet weak var txtAlarmType: UITextField!
+    // 报警状态
+    @IBOutlet weak var btnPopDown2: UIImageView!
+    // 报警状态查询条件
+    @IBOutlet weak var txtAlarmStatus: UITextField!
+    
+    
     // 报警日期起始日期
     @IBOutlet weak var lblAlarmDateBegin: UILabel!
     // 报警日期结束日期
@@ -25,7 +30,10 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     // 报警信息View
     @IBOutlet weak var viewAlarm: UIView!
     // 报警类型
-    var popDownListAlarmType:PopDownList?
+    var popDownListAlarmType:PopDownList!
+    // 报警状态
+    var popDownListAlarmStatus:PopDownList!
+    
     // 界面模板
     var _queryAlarmViewModel:QueryAlarmViewModel = QueryAlarmViewModel()
     // 屏幕宽高
@@ -33,9 +41,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     var screenHeight:CGFloat = 0.0
     let identifier = "CellIdentifier"
     var tabViewAlarm: UITableView!
-    var selectAlarmCode = ""
-    
- 
+
     
        
     override func viewWillAppear(animated: Bool) {
@@ -47,12 +53,16 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         self.btnQuery.setImage(UIImage(named: "searchBtn"), forState: UIControlState.Normal)
         self.btnQuery.setImage(UIImage(named: "searchBtnChecked"), forState: UIControlState.Highlighted)
         
-        // 设置下拉框图片事件
+        // 设置下拉
         self.btnPopDown.userInteractionEnabled = true
         var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "popDownTouch")
         self.btnPopDown .addGestureRecognizer(singleTap)
-        
         self.popDownListAlarmType = PopDownList(datasource: self._queryAlarmViewModel.AlarmTypeList, dismissHandler: self.ChoosedAlarmTypeItem)
+        self.btnPopDown2.userInteractionEnabled = true
+        var singleTap4:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "popDownTouch2")
+        self.btnPopDown2.addGestureRecognizer(singleTap4)
+        self.popDownListAlarmStatus = PopDownList(datasource: self._queryAlarmViewModel.AlarmStatusList, dismissHandler: self.ChoosedAlarmStatusItem)
+        
         
         // 设置报警日期起始/结束时间控件属性
         self.lblAlarmDateBegin.userInteractionEnabled = true
@@ -62,18 +72,11 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         self.lblAlarmDateEnd.userInteractionEnabled = true
         var singleTap2:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DatePickerEnd")
         self.lblAlarmDateEnd .addGestureRecognizer(singleTap2)
-        
-        self.lblAlarmDateBegin.layer.borderColor = UIColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1).CGColor
-        self.lblAlarmDateBegin.layer.borderWidth = 1
-        self.lblAlarmDateBegin.layer.cornerRadius = 5
-        self.lblAlarmDateEnd.layer.borderColor = UIColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1).CGColor
-        self.lblAlarmDateEnd.layer.borderWidth = 1
-        self.lblAlarmDateEnd.layer.cornerRadius = 5
-        
+  
         
         // 加载数据的tableView
-        self.screenWidth = self.viewAlarm.frame.width
-        self.screenHeight = self.viewAlarm.frame.height
+        self.screenWidth = self.viewAlarm.frame.size.width
+        self.screenHeight = self.viewAlarm.frame.size.height
         
         
         
@@ -94,7 +97,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     
     //属性绑定
     func rac_setting(){
-       
+       RACObserve(self._queryAlarmViewModel, "SelectedAlarmStatus") ~> RAC(self.txtAlarmStatus, "text")
         RACObserve(self._queryAlarmViewModel, "SelectedAlarmType") ~> RAC(self.txtAlarmType, "text")
         RACObserve(self._queryAlarmViewModel, "AlarmDateBeginCondition") ~> RAC(self.lblAlarmDateBegin, "text")
         RACObserve(self._queryAlarmViewModel, "AlarmDateEndCondition") ~> RAC(self.lblAlarmDateEnd, "text")
@@ -106,15 +109,25 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     // 弹出报警类型选择
     func popDownTouch()
     {
-        self.popDownListAlarmType!.Show(160, uiElement: self.btnPopDown)
+        self.popDownListAlarmType.Show(160, uiElement: self.btnPopDown)
     }
     
-    //选中科室/楼层
+    func popDownTouch2()
+    {
+        self.popDownListAlarmStatus.Show(160, uiElement: self.btnPopDown2)
+    }
+
+    
+   
     func ChoosedAlarmTypeItem(downListModel:DownListModel){
         self._queryAlarmViewModel.SelectedAlarmType = downListModel.value
         self._queryAlarmViewModel.SelectedAlarmTypeCode = downListModel.key
     }
     
+    func ChoosedAlarmStatusItem(downListModel:DownListModel){
+        self._queryAlarmViewModel.SelectedAlarmStatus = downListModel.value
+       
+    }
     
     var alertviewBegin:DatePickerView!
     var alertviewEnd:DatePickerView!
@@ -169,65 +182,41 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         return 44
     }
     
+    //选中某行操作
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    }
+    
+
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // 创建睡眠质量总览tableView的列头
-        var headViewAlarmInfo:UIView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
+        var headViewAlarmInfo:UIView = UIView(frame: CGRectMake(0, 0, self.screenWidth, 44))
 
-        var lblNumber = UILabel(frame: CGRectMake(0, 0,  60, 44))
+        var lblNumber = TableLabel(frame: CGRectMake(0, 0,  40, 44))
         lblNumber.text = "序号"
-        lblNumber.font = UIFont.boldSystemFontOfSize(18)
-        lblNumber.textAlignment = .Center
-        lblNumber.layer.borderWidth = 1
-        lblNumber.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblNumber.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
-        
-        var lblUserName = UILabel(frame: CGRectMake(60, 0, 80, 44))
-        lblUserName.text = "用户姓名"
-        lblUserName.font = UIFont.boldSystemFontOfSize(18)
-        lblUserName.textAlignment = .Center
-        lblUserName.layer.borderWidth = 1
-        lblUserName.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblUserName.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
-        
-        var lblBedNumber = UILabel(frame: CGRectMake(140, 0, 60, 44))
-        lblBedNumber.text = "床位号"
-        lblBedNumber.font = UIFont.boldSystemFontOfSize(18)
-        lblBedNumber.textAlignment = .Center
-        lblBedNumber.layer.borderWidth = 1
-        lblBedNumber.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblBedNumber.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
-        
-        var lblAlarmTime = UILabel(frame: CGRectMake(200, 0, 160, 44))
+        var lblAlarmTime = TableLabel(frame: CGRectMake(40, 0, 160, 44))
         lblAlarmTime.text = "报警时间"
-        lblAlarmTime.font = UIFont.boldSystemFontOfSize(18)
-        lblAlarmTime.textAlignment = .Center
-        lblAlarmTime.layer.borderWidth = 1
-        lblAlarmTime.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblAlarmTime.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
-        
-        var lblAlarmContent = UILabel(frame: CGRectMake(360, 0, self.screenWidth - 440, 44))
+        var lblAlarmType = TableLabel(frame: CGRectMake(200, 0, 90, 44))
+        lblAlarmType.text = "报警类型"
+        var lblAlarmContent =  TableLabel(frame: CGRectMake(290, 0, self.screenWidth - 670, 44))
         lblAlarmContent.text = "报警内容"
-        lblAlarmContent.font = UIFont.boldSystemFontOfSize(18)
-        lblAlarmContent.textAlignment = .Center
-        lblAlarmContent.layer.borderWidth = 1
-        lblAlarmContent.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblAlarmContent.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
-        
-        var lblOperate = UILabel(frame: CGRectMake(self.screenWidth - 80, 0, 80, 44))
-        lblOperate.text = "处理操作"
-        lblOperate.font = UIFont.boldSystemFontOfSize(18)
-        lblOperate.textAlignment = .Center
-        lblOperate.layer.borderWidth = 1
-        lblOperate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblOperate.backgroundColor = UIColor(red: 190/255, green: 236/255, blue: 255/255, alpha: 1)
+        var lblHandleStatus = TableLabel(frame: CGRectMake(self.screenWidth - 390, 0, 80, 44))
+        lblHandleStatus.text = "处理状态"
+        var lblHandleTime = TableLabel(frame: CGRectMake(self.screenWidth - 310, 0, 160, 44))
+        lblHandleTime.text = "处理时间"
+        var lblOperate = TableLabel(frame: CGRectMake(self.screenWidth - 150, 0, 150, 44))
+        lblOperate.text = "操作"
         
         headViewAlarmInfo.addSubview(lblNumber)
-        headViewAlarmInfo.addSubview(lblUserName)
-        headViewAlarmInfo.addSubview(lblBedNumber)
         headViewAlarmInfo.addSubview(lblAlarmTime)
+        headViewAlarmInfo.addSubview(lblAlarmType)
         headViewAlarmInfo.addSubview(lblAlarmContent)
+        headViewAlarmInfo.addSubview(lblHandleStatus)
+         headViewAlarmInfo.addSubview(lblHandleTime)
         headViewAlarmInfo.addSubview(lblOperate)
-      //  }
+    
         return headViewAlarmInfo
     }
     
@@ -235,77 +224,66 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         
         var cell :UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(identifier) as? UITableViewCell
         cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
-        
+       
 
-        var lblNumber = UILabel(frame: CGRectMake(0, 0,  60, 44))
-        lblNumber.font = UIFont.boldSystemFontOfSize(18)
-        lblNumber.textAlignment = .Center
-        lblNumber.layer.borderWidth = 1
-        lblNumber.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblNumber.backgroundColor = UIColor.whiteColor()
+        var lblNumber = TableDataLabel(frame: CGRectMake(0, 0,  40, 44))
+        var lblAlarmTime = TableDataLabel(frame: CGRectMake(40, 0, 160, 44))
+        var lblAlarmType = TableDataLabel(frame: CGRectMake(200, 0, 90, 44))
+        var lblAlarmContent = TableDataLabel(frame: CGRectMake(290, 0, self.screenWidth - 680, 44))
+        var lblHandleStatus = TableDataLabel(frame: CGRectMake(self.screenWidth - 390, 0, 80, 44))
+        var lblHandleTime = TableDataLabel(frame: CGRectMake(self.screenWidth - 310, 0, 160, 44))
         
-        var lblUserName = UILabel(frame: CGRectMake(60, 0, 80, 44))
-        lblUserName.font = UIFont.boldSystemFontOfSize(18)
-        lblUserName.textAlignment = .Center
-        lblUserName.layer.borderWidth = 1
-        lblUserName.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblUserName.backgroundColor = UIColor.whiteColor()
-        
-        var lblBedNumber = UILabel(frame: CGRectMake(140, 0, 60, 44))
-        lblBedNumber.font = UIFont.boldSystemFontOfSize(18)
-        lblBedNumber.textAlignment = .Center
-        lblBedNumber.layer.borderWidth = 1
-        lblBedNumber.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblBedNumber.backgroundColor = UIColor.whiteColor()
-        
-        var lblAlarmTime = UILabel(frame: CGRectMake(200, 0, 160, 44))
-        lblAlarmTime.font = UIFont.boldSystemFontOfSize(18)
-        lblAlarmTime.textAlignment = .Center
-        lblAlarmTime.layer.borderWidth = 1
-        lblAlarmTime.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblAlarmTime.backgroundColor = UIColor.whiteColor()
-        
-        var lblAlarmContent = UILabel(frame: CGRectMake(360, 0, self.screenWidth - 440, 44))
-        lblAlarmContent.font = UIFont.boldSystemFontOfSize(18)
-        lblAlarmContent.textAlignment = .Left
-        lblAlarmContent.layer.borderWidth = 1
-        lblAlarmContent.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblAlarmContent.backgroundColor = UIColor.whiteColor()
-
-        var lblOperate:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        var lblOperate:UIView = UIView(frame:CGRectMake(self.screenWidth - 150, 0, 150, 44))
         lblOperate.layer.borderWidth = 1
         lblOperate.layer.borderColor = UIColor(red: 30/255, green: 144/255, blue: 255/255, alpha: 1).CGColor
-        lblOperate.frame = CGRectMake(self.screenWidth - 80, 0, 80, 44)
-        lblOperate.setImage(UIImage(named:"QR.png"),forState:UIControlState.Normal)
+        var btnHandle:UIButton = UIButton(frame:CGRectMake(10, 7, 45, 30))
+        btnHandle.setTitle("处理", forState: .Normal)
+        btnHandle.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        btnHandle.userInteractionEnabled = true
+        lblOperate.addSubview(btnHandle)
+        var btnErrorHandle:UIButton = UIButton(frame:CGRectMake(70, 7, 70, 30))
+        btnErrorHandle.setTitle("误报警", forState: .Normal)
+        btnErrorHandle.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        btnErrorHandle.userInteractionEnabled = true
+        lblOperate.addSubview(btnErrorHandle)
     
 
         if(self._queryAlarmViewModel.AlarmInfoList.count > indexPath.row)
         {
             lblNumber.text = String(self._queryAlarmViewModel.AlarmInfoList[indexPath.row].Number)
-            lblUserName.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].UserName
-            lblBedNumber.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].BedNumber
             lblAlarmTime.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].AlarmTime
+            lblAlarmType.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].AlarmType
             lblAlarmContent.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].AlarmContent
-            
-//            lblOperate.addTarget(self, action: "OpenHandleAlarm:", forControlEvents: UIControlEvents.TouchUpInside)
-            lblOperate.tag = indexPath.row
+            lblHandleStatus.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].HandleStatus
+             lblHandleTime.text = self._queryAlarmViewModel.AlarmInfoList[indexPath.row].HandleTime
+          
+            btnHandle.addTarget(self, action: "OpenHandle:", forControlEvents: UIControlEvents.TouchUpInside)
+            btnHandle.tag = indexPath.row
+            btnErrorHandle.addTarget(self, action: "OpenErrorHandle:", forControlEvents: UIControlEvents.TouchUpInside)
+            btnErrorHandle.tag = indexPath.row
             
         }
         
         
         cell?.addSubview(lblNumber)
-        cell?.addSubview(lblUserName)
-        cell?.addSubview(lblBedNumber)
+        cell?.addSubview(lblHandleStatus)
+        cell?.addSubview(lblHandleTime)
+        cell?.addSubview(lblAlarmType)
         cell?.addSubview(lblAlarmTime)
         cell?.addSubview(lblAlarmContent)
         cell?.addSubview(lblOperate)
- //       }
+
         
         return cell!
     }
 
-    
-    
+    func OpenHandle(sender:UIButton){
+       // self.selectAlarmCode = self._queryAlarmViewModel.AlarmInfoList[sender.tag!].AlarmCode
+       print(sender.tag)
+    }
+    func OpenErrorHandle(sender:UIButton){
+       print(sender.tag)
+    }
   
     
 }

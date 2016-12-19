@@ -19,6 +19,14 @@
 		0D1F6F9C1CB4F7220016719C /* queryDetail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F9B1CB4F7220016719C /* queryDetail.png */; };
 		0D1F6F9F1CB5EAF80016719C /* viewbox_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F9D1CB5EAF80016719C /* viewbox_border.png */; };
 		0D1F6FA01CB5EAF80016719C /* viewbox_topBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F9E1CB5EAF80016719C /* viewbox_topBg.png */; };
+		0D2586C11E079D39004E0BD1 /* TizhengViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586C01E079D39004E0BD1 /* TizhengViewController.swift */; };
+		0D2586C31E079D7D004E0BD1 /* TizhengViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586C21E079D7D004E0BD1 /* TizhengViewModel.swift */; };
+		0D2586C51E079DAE004E0BD1 /* YejianViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586C41E079DAE004E0BD1 /* YejianViewModel.swift */; };
+		0D2586C71E079DD1004E0BD1 /* YejianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586C61E079DD1004E0BD1 /* YejianViewController.swift */; };
+		0D2586C91E079E17004E0BD1 /* BasicinfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586C81E079E17004E0BD1 /* BasicinfoViewController.swift */; };
+		0D2586CB1E079E3F004E0BD1 /* BasicinfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586CA1E079E3F004E0BD1 /* BasicinfoViewModel.swift */; };
+		0D2586CD1E07AE05004E0BD1 /* TableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586CC1E07AE05004E0BD1 /* TableLabel.swift */; };
+		0D2586CF1E07B374004E0BD1 /* TableDataLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2586CE1E07B374004E0BD1 /* TableDataLabel.swift */; };
 		0D336D0E1C92596D0049883F /* RemoteNoticeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D336D0D1C92596D0049883F /* RemoteNoticeHelper.swift */; };
 		0D35D5F61C488CDE009F8EB2 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D35D5F51C488CDE009F8EB2 /* MessageHelper.swift */; };
 		0D35D5FA1C4CC3D8009F8EB2 /* Message.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D35D5F91C4CC3D8009F8EB2 /* Message.plist */; };
@@ -222,6 +230,14 @@
 		0D1F6F9B1CB4F7220016719C /* queryDetail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = queryDetail.png; sourceTree = "<group>"; };
 		0D1F6F9D1CB5EAF80016719C /* viewbox_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewbox_border.png; sourceTree = "<group>"; };
 		0D1F6F9E1CB5EAF80016719C /* viewbox_topBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewbox_topBg.png; sourceTree = "<group>"; };
+		0D2586C01E079D39004E0BD1 /* TizhengViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TizhengViewController.swift; sourceTree = "<group>"; };
+		0D2586C21E079D7D004E0BD1 /* TizhengViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TizhengViewModel.swift; sourceTree = "<group>"; };
+		0D2586C41E079DAE004E0BD1 /* YejianViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YejianViewModel.swift; sourceTree = "<group>"; };
+		0D2586C61E079DD1004E0BD1 /* YejianViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YejianViewController.swift; sourceTree = "<group>"; };
+		0D2586C81E079E17004E0BD1 /* BasicinfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicinfoViewController.swift; sourceTree = "<group>"; };
+		0D2586CA1E079E3F004E0BD1 /* BasicinfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicinfoViewModel.swift; sourceTree = "<group>"; };
+		0D2586CC1E07AE05004E0BD1 /* TableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableLabel.swift; sourceTree = "<group>"; };
+		0D2586CE1E07B374004E0BD1 /* TableDataLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataLabel.swift; sourceTree = "<group>"; };
 		0D336D0D1C92596D0049883F /* RemoteNoticeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNoticeHelper.swift; sourceTree = "<group>"; };
 		0D35D5F51C488CDE009F8EB2 /* MessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
 		0D35D5F91C4CC3D8009F8EB2 /* Message.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Message.plist; sourceTree = "<group>"; };
@@ -456,6 +472,8 @@
 		0D1341C51C50B9F800051E2C /* common */ = {
 			isa = PBXGroup;
 			children = (
+				0D2586CE1E07B374004E0BD1 /* TableDataLabel.swift */,
+				0D2586CC1E07AE05004E0BD1 /* TableLabel.swift */,
 				3AB3CB241BD7633B0067F9D4 /* DatePickerView.swift */,
 				0DC2280D1C1FD65F00AF4737 /* JHSpinnerView.swift */,
 				3AB3CB281BD763890067F9D4 /* Li_common.swift */,
@@ -629,12 +647,15 @@
 		3A41ADE01BA7B396000C109B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3A325A331BD08B7B00DE4E78 /* BaseViewModel.swift */,
 				3A41ADE91BA7B438000C109B /* LoginViewModel.swift */,
 				3A346BF71BCCD36200E75E4E /* SleepcareMainViewModel.swift */,
+				2C555B461BE31763008A3AC9 /* QueryAlarmViewModel.swift */,
+				0D2586C21E079D7D004E0BD1 /* TizhengViewModel.swift */,
+				0D2586C41E079DAE004E0BD1 /* YejianViewModel.swift */,
+				0D2586CA1E079E3F004E0BD1 /* BasicinfoViewModel.swift */,
 				2C3BAF121BCBA387003A2F48 /* AlarmViewModel.swift */,
 				2C37F1381BD093280034D9F1 /* SleepQualityPandectViewModel.swift */,
-				2C555B461BE31763008A3AC9 /* QueryAlarmViewModel.swift */,
-				3A325A331BD08B7B00DE4E78 /* BaseViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -657,9 +678,12 @@
 				3A6360281BB2900300F7F953 /* SleepcareMainController.swift */,
 				0DAC753D1C76FCE700EF3260 /* ChooseMainhouseController.swift */,
 				0DF032571CE0526000629BA1 /* DetailTabbarController.swift */,
+				2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */,
+				0D2586C01E079D39004E0BD1 /* TizhengViewController.swift */,
+				0D2586C61E079DD1004E0BD1 /* YejianViewController.swift */,
+				0D2586C81E079E17004E0BD1 /* BasicinfoViewController.swift */,
 				0D3E68C81CE1843F003D24DA /* SleepQualityPandectController.swift */,
 				0D1F09E71CE18AAA001CF7CE /* MonitorActivityController.swift */,
-				2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1108,6 +1132,7 @@
 				0D9160B01CAE3CA600AECFAF /* partandmainInfo.swift in Sources */,
 				3A4CD3FF1BA808C1002C8A1A /* XmppMsgHelper.swift in Sources */,
 				3AB3CB1A1BD762FE0067F9D4 /* PopDownList.swift in Sources */,
+				0D2586CB1E079E3F004E0BD1 /* BasicinfoViewModel.swift in Sources */,
 				3A41ADF01BA7B45D000C109B /* MessageDelegate.swift in Sources */,
 				3A4B85C61BB14D34006E4CF1 /* SleepCareBussinessManager.swift in Sources */,
 				3A3D65E41BAA8E1100CEFB25 /* MessageFactory.swift in Sources */,
@@ -1129,6 +1154,7 @@
 				0DF6BD801C599FEC007BF0A9 /* LoadImageHelper.swift in Sources */,
 				3A4CD3FD1BA80852002C8A1A /* BaseMessage.swift in Sources */,
 				0D9F87441CABA57A008E5F3E /* MainAndPartInfoHelper.swift in Sources */,
+				0D2586C11E079D39004E0BD1 /* TizhengViewController.swift in Sources */,
 				3A35AB671BCCECF000ED3293 /* Session.swift in Sources */,
 				3A4D17F11BAFB07400E0B862 /* BedUser.swift in Sources */,
 				3A376E4C1BABDA3B00D70953 /* Bed.swift in Sources */,
@@ -1146,7 +1172,9 @@
 				0D1F09E81CE18AAA001CF7CE /* MonitorActivityController.swift in Sources */,
 				0D9AE0791C8E7FB800625D5E /* Const.swift in Sources */,
 				3A41ADC11BA7A65A000C109B /* AppDelegate.swift in Sources */,
+				0D2586C71E079DD1004E0BD1 /* YejianViewController.swift in Sources */,
 				3A4D17FB1BAFE17D00E0B862 /* AlarmInfo.swift in Sources */,
+				0D2586CF1E07B374004E0BD1 /* TableDataLabel.swift in Sources */,
 				3A4D17F91BAFDF4800E0B862 /* TurnOverAnalysList.swift in Sources */,
 				0D35D5F61C488CDE009F8EB2 /* MessageHelper.swift in Sources */,
 				3A36B0211BA94E89000F4AED /* RealTimeDelegate.swift in Sources */,
@@ -1162,6 +1190,8 @@
 				3A36B0231BA96648000F4AED /* RealTimeReport.swift in Sources */,
 				3AB3CB191BD762FE0067F9D4 /* Pager.swift in Sources */,
 				2C3150A51BCDFAF300EC749E /* LeaveBedReportList.swift in Sources */,
+				0D2586CD1E07AE05004E0BD1 /* TableLabel.swift in Sources */,
+				0D2586C91E079E17004E0BD1 /* BasicinfoViewController.swift in Sources */,
 				0DC5231D1CE9A6CE00BEB124 /* ZSYPopoverListView.m in Sources */,
 				0D9F87481CACFFD2008E5F3E /* RoleTreeList.swift in Sources */,
 				2C2CB47A1BD7654100A6DB65 /* ServerSettingController.swift in Sources */,
@@ -1172,6 +1202,7 @@
 				3A41ADF11BA7B45D000C109B /* ReactiveCocoa.swift in Sources */,
 				3A4D17FF1BAFE33C00E0B862 /* EMServiceException.swift in Sources */,
 				3A35AB651BCCE8B000ED3293 /* SweetAlert.swift in Sources */,
+				0D2586C51E079DAE004E0BD1 /* YejianViewModel.swift in Sources */,
 				3A41ADE71BA7B425000C109B /* BaseViewController.swift in Sources */,
 				3A346BF81BCCD36200E75E4E /* SleepcareMainViewModel.swift in Sources */,
 				0DD476A01CE2DFAA00D0446A /* AlarmHelper.swift in Sources */,
@@ -1180,6 +1211,7 @@
 				0DF032581CE0526000629BA1 /* DetailTabbarController.swift in Sources */,
 				3A3EF7C11BDE05A800CDDAED /* TodoList.swift in Sources */,
 				3AB3CB171BD762FE0067F9D4 /* AlarmTableViewCell.swift in Sources */,
+				0D2586C31E079D7D004E0BD1 /* TizhengViewModel.swift in Sources */,
 				2C3BAF131BCBA387003A2F48 /* AlarmViewModel.swift in Sources */,
 				0D6525B01CE9784100ED5EB7 /* AlarmInfoByScanQR.swift in Sources */,
 				0DAC75341C76DF7B00EF3260 /* SectionHeaderView.swift in Sources */,

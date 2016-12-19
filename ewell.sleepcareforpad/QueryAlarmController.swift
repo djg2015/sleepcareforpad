@@ -15,10 +15,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     @IBOutlet weak var btnQuery: UIButton!
     // 报警类型下拉图片
     @IBOutlet weak var btnPopDown: UIImageView!
-    // 用户姓名查询条件
-    @IBOutlet weak var txtUserNameCondition: UITextField!
-    // 床位号查询条件
-    @IBOutlet weak var txtBedNumberCondition: UITextField!
+  
     // 报警类型查询条件
     @IBOutlet weak var txtAlarmType: UITextField!
     // 报警日期起始日期
@@ -97,10 +94,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     
     //属性绑定
     func rac_setting(){
-        RACObserve(self._queryAlarmViewModel, "UserNameCondition") ~> RAC(self.txtUserNameCondition, "text")
-        self.txtUserNameCondition.rac_textSignal() ~> RAC(self._queryAlarmViewModel, "UserNameCondition")
-        RACObserve(self._queryAlarmViewModel, "BedNumberCondition") ~> RAC(self.txtBedNumberCondition, "text")
-        self.txtBedNumberCondition.rac_textSignal() ~> RAC(self._queryAlarmViewModel, "BedNumberCondition")
+       
         RACObserve(self._queryAlarmViewModel, "SelectedAlarmType") ~> RAC(self.txtAlarmType, "text")
         RACObserve(self._queryAlarmViewModel, "AlarmDateBeginCondition") ~> RAC(self.lblAlarmDateBegin, "text")
         RACObserve(self._queryAlarmViewModel, "AlarmDateEndCondition") ~> RAC(self.lblAlarmDateEnd, "text")

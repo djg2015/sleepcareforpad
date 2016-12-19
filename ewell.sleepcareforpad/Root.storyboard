@@ -380,26 +380,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="用户姓名：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4x-vm-xej">
-                                <rect key="frame" x="343" y="76" width="88" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yxd-WL-45G">
-                                <rect key="frame" x="431" y="72" width="100" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="床位号：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3i-n8-LOw">
-                                <rect key="frame" x="542" y="76" width="68" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="报警类型：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCL-mX-9Eo">
                                 <rect key="frame" x="717" y="76" width="87" height="21"/>
                                 <animations/>
@@ -427,8 +407,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="~" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMm-A7-evm">
-                                <rect key="frame" x="213" y="76" width="13" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="至" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMm-A7-evm">
+                                <rect key="frame" x="213" y="76" width="20" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -441,16 +421,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kC7-jZ-fWc">
-                                <rect key="frame" x="609" y="72" width="100" height="30"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="38B-RH-pr3">
                                 <rect key="frame" x="935" y="66" width="73" height="43"/>
                                 <animations/>
-                                <state key="normal">
+                                <color key="backgroundColor" red="0.36139313509999998" green="0.96273799370000002" blue="0.62691949950000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="查询">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -463,9 +439,26 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="处理状态：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvX-go-uSP">
+                                <rect key="frame" x="478" y="76" width="87" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zdI-zR-ioZ">
+                                <rect key="frame" x="558" y="72" width="124" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dropdown.png" translatesAutoresizingMaskIntoConstraints="NO" id="5y1-wu-qhd">
+                                <rect key="frame" x="652" y="70" width="32" height="31"/>
+                                <animations/>
+                            </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="j1p-AH-JJ5" secondAttribute="centerX" id="3pb-ZU-xk2"/>
                             <constraint firstItem="j1p-AH-JJ5" firstAttribute="top" secondItem="4wc-sn-xn4" secondAttribute="top" constant="17" id="5Kk-mR-qhD"/>
@@ -485,14 +478,12 @@
                         <outlet property="lblAlarmDateBegin" destination="z33-d2-zja" id="BRO-wq-vUd"/>
                         <outlet property="lblAlarmDateEnd" destination="t8k-MP-bvq" id="5Er-au-1EW"/>
                         <outlet property="txtAlarmType" destination="1Yf-Fc-3Db" id="x97-gd-C1n"/>
-                        <outlet property="txtBedNumberCondition" destination="kC7-jZ-fWc" id="fa8-D8-azE"/>
-                        <outlet property="txtUserNameCondition" destination="Yxd-WL-45G" id="8kh-dF-RbW"/>
                         <outlet property="viewAlarm" destination="jiV-C7-FSZ" id="Iji-fj-r93"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2D0-dH-DMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3160" y="399"/>
+            <point key="canvasLocation" x="3580" y="847"/>
         </scene>
         <!--主页面-->
         <scene sceneID="wVr-29-HFG">
@@ -1455,7 +1446,7 @@
         <!--基础信息-->
         <scene sceneID="tyQ-3Z-AUu">
             <objects>
-                <viewController id="rtD-G7-xjH" sceneMemberID="viewController">
+                <viewController id="rtD-G7-xjH" customClass="BasicinfoViewController" customModule="ewell_sleepcareforpad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="70x-Pf-PK0"/>
                         <viewControllerLayoutGuide type="bottom" id="FET-vT-naZ"/>
@@ -1638,7 +1629,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VBI-QW-LbT">
-                                <rect key="frame" x="16" y="15" width="25" height="30"/>
+                                <rect key="frame" x="20" y="15" width="25" height="30"/>
                                 <animations/>
                                 <state key="normal" backgroundImage="back.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1709,7 +1700,7 @@
                                 <animations/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aev-F4-IkH">
-                                <rect key="frame" x="30" y="129" width="965" height="599"/>
+                                <rect key="frame" x="30" y="122" width="965" height="581"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -1732,7 +1723,7 @@
                             </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="LDR-4R-AzD" firstAttribute="top" secondItem="zZY-hC-68z" secondAttribute="bottom" id="Icp-ZY-VYo"/>
                             <constraint firstItem="LDR-4R-AzD" firstAttribute="leading" secondItem="1Nj-By-Nfs" secondAttribute="leading" id="Yqo-nH-fi9"/>
@@ -1760,10 +1751,10 @@
             </objects>
             <point key="canvasLocation" x="4898" y="413"/>
         </scene>
-        <!--历史分析-->
+        <!--体征分析-->
         <scene sceneID="XY4-1B-1KQ">
             <objects>
-                <viewController id="iiO-47-mHb" sceneMemberID="viewController">
+                <viewController id="iiO-47-mHb" customClass="TizhengViewController" customModule="ewell_sleepcareforpad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="C1l-f5-zJC"/>
                         <viewControllerLayoutGuide type="bottom" id="PDb-qe-FcB"/>
@@ -1772,6 +1763,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yI-Yd-CPe">
+                                <rect key="frame" x="811" y="164" width="42" height="14"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maintop.png" translatesAutoresizingMaskIntoConstraints="NO" id="cEK-3b-yDc">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="60"/>
                                 <animations/>
@@ -1818,15 +1816,15 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2011-01-01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4t4-qm-Z8S">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2011-01-01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4t4-qm-Z8S">
                                         <rect key="frame" x="101" y="20" width="104" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2011-01-01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiI-8p-Bsr">
-                                        <rect key="frame" x="250" y="20" width="90" height="21"/>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2011-01-01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiI-8p-Bsr">
+                                        <rect key="frame" x="250" y="20" width="119" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1840,114 +1838,76 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="224-CC-Yk8">
-                                        <rect key="frame" x="892" y="20" width="46" height="30"/>
+                                        <rect key="frame" x="830" y="12" width="108" height="35"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.30196078430000001" green="0.74117647060000003" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="查询">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kVO-mT-M6u" userLabel="statuschooseView">
-                                        <rect key="frame" x="474" y="0.0" width="399" height="61"/>
+                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vsb-l2-T3q" userLabel="statuschooseView">
+                                        <rect key="frame" x="552" y="8" width="260" height="44"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="选择状态：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvt-59-J9C">
-                                                <rect key="frame" x="19" y="20" width="119" height="21"/>
+                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xiA-uf-05s">
+                                                <rect key="frame" x="146" y="8" width="106" height="30"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="选择状态" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8b-h3-5zH">
+                                                <rect key="frame" x="55" y="12" width="82" height="21"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cs-lC-zaI">
-                                                <rect key="frame" x="133" y="16" width="28" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJn-Ss-CYA">
+                                                <rect key="frame" x="223" y="6" width="30" height="30"/>
                                                 <animations/>
-                                                <state key="normal" backgroundImage="checkboxchoosed.png">
+                                                <state key="normal" backgroundImage="dropdown.png">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="ChooseStatus:" destination="iiO-47-mHb" eventType="touchUpInside" id="5Dp-cB-pd4"/>
+                                                </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="在床" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqR-n6-6aQ" userLabel="在床">
-                                                <rect key="frame" x="169" y="20" width="45" height="21"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="620-NM-Fn5">
-                                                <rect key="frame" x="228" y="16" width="28" height="30"/>
-                                                <animations/>
-                                                <state key="normal" backgroundImage="checkbox.png">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="离床" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25g-jn-PvV" userLabel="离床">
-                                                <rect key="frame" x="265" y="20" width="45" height="21"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glU-8f-fBj">
-                                                <rect key="frame" x="318" y="16" width="28" height="30"/>
-                                                <animations/>
-                                                <state key="normal" backgroundImage="checkbox.png">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="不限" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQz-tt-6WI" userLabel="不限">
-                                                <rect key="frame" x="360" y="20" width="45" height="21"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CHT-cG-kzB" userLabel="typechooseView">
-                                        <rect key="frame" x="474" y="0.0" width="399" height="61"/>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CHT-cG-kzB" userLabel="typechooseView">
+                                        <rect key="frame" x="552" y="8" width="260" height="44"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="选择分析方式：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiL-zm-iIQ">
-                                                <rect key="frame" x="19" y="20" width="119" height="21"/>
+                                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fD9-9x-yFn">
+                                                <rect key="frame" x="146" y="8" width="106" height="30"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="选择分析方式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czH-Of-B2P">
+                                                <rect key="frame" x="32" y="12" width="102" height="21"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bk-ma-Znq">
-                                                <rect key="frame" x="133" y="16" width="28" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYg-ur-p4Y">
+                                                <rect key="frame" x="223" y="6" width="30" height="30"/>
                                                 <animations/>
-                                                <state key="normal" backgroundImage="checkboxchoosed.png">
+                                                <state key="normal" backgroundImage="dropdown.png">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="ChooseType:" destination="iiO-47-mHb" eventType="touchUpInside" id="yuG-KQ-bVS"/>
+                                                </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="按小时分析" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7M-WO-adZ">
-                                                <rect key="frame" x="169" y="20" width="88" height="21"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9zF-3m-zGZ">
-                                                <rect key="frame" x="270" y="16" width="28" height="30"/>
-                                                <animations/>
-                                                <state key="normal" backgroundImage="checkbox.png">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="按天分析" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEu-Q5-11D">
-                                                <rect key="frame" x="305" y="20" width="68" height="21"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="sTd-oc-2rZ"/>
                                 </constraints>
@@ -1978,9 +1938,22 @@
                             <constraint firstItem="l3v-Mn-luN" firstAttribute="leading" secondItem="Max-0p-9Up" secondAttribute="leadingMargin" constant="19" id="yQi-fA-KLf"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="历史分析" id="2Rg-B7-jtN"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <tabBarItem key="tabBarItem" title="体征分析" id="2Rg-B7-jtN"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="btnSearch" destination="224-CC-Yk8" id="7Cy-dZ-KtJ"/>
+                        <outlet property="btnStatus" destination="GJn-Ss-CYA" id="WYp-FQ-w6G"/>
+                        <outlet property="btnType" destination="hYg-ur-p4Y" id="DHt-AP-pq3"/>
+                        <outlet property="dataview" destination="Yr5-DV-CAT" id="gG5-Yv-KpO"/>
+                        <outlet property="lblEndTimeSpan" destination="fiI-8p-Bsr" id="Mhu-No-3sq"/>
+                        <outlet property="lblFlag" destination="0yI-Yd-CPe" id="TMh-YM-14l"/>
+                        <outlet property="lblStartTimeSpan" destination="4t4-qm-Z8S" id="GrV-A9-MvC"/>
+                        <outlet property="segment" destination="l3v-Mn-luN" id="oLc-oh-JHX"/>
+                        <outlet property="statusView" destination="Vsb-l2-T3q" id="Cku-1t-ltq"/>
+                        <outlet property="textStatus" destination="xiA-uf-05s" id="1kt-UZ-SfK"/>
+                        <outlet property="textType" destination="fD9-9x-yFn" id="qZk-if-XFN"/>
+                        <outlet property="typeView" destination="CHT-cG-kzB" id="oYI-Xl-0hS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MCE-Uo-5NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1989,7 +1962,7 @@
         <!--夜间分析-->
         <scene sceneID="Pgd-nr-J0q">
             <objects>
-                <viewController id="UV7-7f-3NL" sceneMemberID="viewController">
+                <viewController id="UV7-7f-3NL" customClass="YejianViewController" customModule="ewell_sleepcareforpad" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H9h-Gp-mPx"/>
                         <viewControllerLayoutGuide type="bottom" id="kEA-eG-ZHc"/>

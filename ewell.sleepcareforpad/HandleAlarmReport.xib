@@ -213,7 +213,7 @@
                 <outlet property="handleResultText" destination="Fe2-BH-mnk" id="2Ef-2t-V8J"/>
                 <outlet property="remarkText" destination="dO1-AS-pIS" id="4Jb-jw-QyB"/>
             </connections>
-            <point key="canvasLocation" x="550" y="197"/>
+            <point key="canvasLocation" x="619" y="191"/>
         </view>
     </objects>
     <resources>

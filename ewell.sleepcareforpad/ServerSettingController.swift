@@ -63,4 +63,11 @@ class ServerSettingController:BaseViewController {
     {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    //点击空白处收起键盘
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.view.endEditing(true)
+    }
+
+    
 }

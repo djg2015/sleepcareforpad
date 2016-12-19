@@ -208,7 +208,7 @@ class SleepcareDetailViewModel: BaseViewModel {
                 var sleepCareReport:SleepCareReport = sleepCareBussiness.QuerySleepQulityDetail(self.userCode, analysDate: date)
                 self.DeepSleepSpan = sleepCareReport.DeepSleepTimeSpan
                 self.LightSleepSpan = sleepCareReport.LightSleepTimeSpan
-                self.OnbedSpan = sleepCareReport.OnBedTimeSpan.subString(0, length: 5)
+                self.OnbedSpan = sleepCareReport.OnBedTimeSpan
                 self.HR = sleepCareReport.HR
                 self.RR = sleepCareReport.RR
                 self.AvgHR = sleepCareReport.AVGHR
@@ -242,7 +242,22 @@ class SleepcareDetailViewModel: BaseViewModel {
                 }
                 },
                 catch: { ex in
-                    //异常处理
+                    //异常处理,获取不到数据，则清空页面数据信息
+                    self.DeepSleepSpan = ""
+                    self.LightSleepSpan = ""
+                    self.OnbedSpan = ""
+                    self.HR = ""
+                    self.RR = ""
+                    self.AvgHR = ""
+                    self.AvgRR = ""
+                    self.LeaveBedTimes = ""
+                    self.MaxLeaveBedSpan = ""
+                    self.LeaveSuggest = ""
+                    self.TrunTimes = ""
+                    self.TurnOverRate = ""
+                    self.SignReports = Array<SignReport>()
+                     self.SleepCareReports = Array<SleepCareReport>()
+                    
                     handleException(ex,showDialog: true)
                  
                 },

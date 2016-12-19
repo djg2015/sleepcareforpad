@@ -122,7 +122,7 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
                 }
 
                 //获取openfire信息
-                self.BeforeLogin()
+              //  self.BeforeLogin()
                 
             
                     //从服务器获取user信息，并设置当前session

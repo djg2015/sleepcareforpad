@@ -51,6 +51,10 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     @IBAction func UnwindToMainController3(segue:UIStoryboardSegue){
         
     }
+    @IBAction func UnwindToMainController4(segue:UIStoryboardSegue){
+        
+    }
+    
     @IBAction func UnwindAlarmQuery(segue:UIStoryboardSegue){
         
         //       self.WarningSet = AlarmHelper.GetAlarmInstance().WarningList.count

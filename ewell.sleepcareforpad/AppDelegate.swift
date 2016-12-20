@@ -33,16 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
         
         CheckRemoteNotice()
         
-        //检查更新，每日一次
-        var curUpdate = DateFormatterHelper.GetInstance().GetStringDateFromCurrent("yyyy-MM-dd")
-        var updateflag = UpdateHelper.GetUpdateInstance().CheckLocalUpdateDate(curUpdate)
-        //更新本地sleepcare.plist文件里updatedate
-        SetValueIntoPlist("updatedate",curUpdate)
-        if updateflag{
-            UpdateHelper.GetUpdateInstance().PrepareConnection()
-            //本地version对比store里最新的version大小
-            UpdateHelper.GetUpdateInstance().CheckUpdate()
-        }
+//        //检查更新，每日一次
+//        var curUpdate = DateFormatterHelper.GetInstance().GetStringDateFromCurrent("yyyy-MM-dd")
+//        var updateflag = UpdateHelper.GetUpdateInstance().CheckLocalUpdateDate(curUpdate)
+//        //更新本地sleepcare.plist文件里updatedate
+//        SetValueIntoPlist("updatedate",curUpdate)
+//        if updateflag{
+//            UpdateHelper.GetUpdateInstance().PrepareConnection()
+//            //本地version对比store里最新的version大小
+//            UpdateHelper.GetUpdateInstance().CheckUpdate()
+//        }
         
         self.isBackRun = false
     }

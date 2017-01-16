@@ -97,9 +97,11 @@ class QueryOverallAlarmViewController: BaseViewController, UITableViewDelegate,U
         RACObserve(self._queryOverallAlarmViewModel, "AlarmDateBeginCondition") ~> RAC(self.lblAlarmDateBegin, "text")
         RACObserve(self._queryOverallAlarmViewModel, "AlarmDateEndCondition") ~> RAC(self.lblAlarmDateEnd, "text")
         
-        RACObserve(self.txtBedNumberLike, "text") ~> RAC(self._queryOverallAlarmViewModel, "BedNumberCondition")
-        RACObserve(self.txtUserNameLike, "text") ~> RAC(self._queryOverallAlarmViewModel, "UserNameCondition")
-        
+      
+        self.txtUserNameLike.rac_textSignal() ~> RAC(self._queryOverallAlarmViewModel, "UserNameCondition")
+        self.txtBedNumberLike.rac_textSignal() ~> RAC(self._queryOverallAlarmViewModel, "BedNumberCondition")
+        RACObserve(self._queryOverallAlarmViewModel, "UserNameCondition") ~> RAC(self.txtUserNameLike, "text")
+        RACObserve(self._queryOverallAlarmViewModel, "BedNumberCondition") ~> RAC(self.txtBedNumberLike, "text")
         //事件绑定
         self.btnQuery.rac_command = _queryOverallAlarmViewModel.searchAlarm
     }

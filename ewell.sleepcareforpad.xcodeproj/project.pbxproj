@@ -19,7 +19,6 @@
 		0D1F6F9C1CB4F7220016719C /* queryDetail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F9B1CB4F7220016719C /* queryDetail.png */; };
 		0D1F6F9F1CB5EAF80016719C /* viewbox_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F9D1CB5EAF80016719C /* viewbox_border.png */; };
 		0D1F6FA01CB5EAF80016719C /* viewbox_topBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F6F9E1CB5EAF80016719C /* viewbox_topBg.png */; };
-		0D239B5B1E1F769400EA8C21 /* UserBasicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D239B5A1E1F769400EA8C21 /* UserBasicInfo.swift */; };
 		0D239B5D1E1F7A2E00EA8C21 /* SignHistoryReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D239B5C1E1F7A2E00EA8C21 /* SignHistoryReport.swift */; };
 		0D239B5F1E1F7B0100EA8C21 /* SignHistoryReportList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D239B5E1E1F7B0100EA8C21 /* SignHistoryReportList.swift */; };
 		0D239B611E1F867600EA8C21 /* PartLeaveBedReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D239B601E1F867600EA8C21 /* PartLeaveBedReport.swift */; };
@@ -42,6 +41,7 @@
 		0D336D0E1C92596D0049883F /* RemoteNoticeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D336D0D1C92596D0049883F /* RemoteNoticeHelper.swift */; };
 		0D35D5F61C488CDE009F8EB2 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D35D5F51C488CDE009F8EB2 /* MessageHelper.swift */; };
 		0D35D5FA1C4CC3D8009F8EB2 /* Message.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D35D5F91C4CC3D8009F8EB2 /* Message.plist */; };
+		0D5C88B71E2CBC9A00AFC19C /* UserBasicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5C88B61E2CBC9A00AFC19C /* UserBasicInfo.swift */; };
 		0D60F6481E08210A00C680F7 /* ChatLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D60F6431E08210A00C680F7 /* ChatLineView.m */; };
 		0D60F6491E08210A00C680F7 /* PointBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D60F6451E08210A00C680F7 /* PointBtn.m */; };
 		0D60F64A1E08210A00C680F7 /* ChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D60F6471E08210A00C680F7 /* ChartView.m */; };
@@ -241,7 +241,6 @@
 		0D1F6F9B1CB4F7220016719C /* queryDetail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = queryDetail.png; sourceTree = "<group>"; };
 		0D1F6F9D1CB5EAF80016719C /* viewbox_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewbox_border.png; sourceTree = "<group>"; };
 		0D1F6F9E1CB5EAF80016719C /* viewbox_topBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewbox_topBg.png; sourceTree = "<group>"; };
-		0D239B5A1E1F769400EA8C21 /* UserBasicInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBasicInfo.swift; sourceTree = "<group>"; };
 		0D239B5C1E1F7A2E00EA8C21 /* SignHistoryReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignHistoryReport.swift; sourceTree = "<group>"; };
 		0D239B5E1E1F7B0100EA8C21 /* SignHistoryReportList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignHistoryReportList.swift; sourceTree = "<group>"; };
 		0D239B601E1F867600EA8C21 /* PartLeaveBedReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartLeaveBedReport.swift; sourceTree = "<group>"; };
@@ -264,6 +263,7 @@
 		0D336D0D1C92596D0049883F /* RemoteNoticeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNoticeHelper.swift; sourceTree = "<group>"; };
 		0D35D5F51C488CDE009F8EB2 /* MessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
 		0D35D5F91C4CC3D8009F8EB2 /* Message.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Message.plist; sourceTree = "<group>"; };
+		0D5C88B61E2CBC9A00AFC19C /* UserBasicInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBasicInfo.swift; sourceTree = "<group>"; };
 		0D60F6421E08210A00C680F7 /* ChatLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatLineView.h; sourceTree = "<group>"; };
 		0D60F6431E08210A00C680F7 /* ChatLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatLineView.m; sourceTree = "<group>"; };
 		0D60F6441E08210A00C680F7 /* PointBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointBtn.h; sourceTree = "<group>"; };
@@ -557,43 +557,14 @@
 			isa = PBXGroup;
 			children = (
 				3AA4A7771BB2BF3F00B214C7 /* SleepCareReportList.swift */,
-				3A376E451BABBB1200D70953 /* User.swift */,
-				3A376E471BABD54200D70953 /* Role.swift */,
-				3A376E491BABD9F400D70953 /* PartInfo.swift */,
-				3A376E4B1BABDA3B00D70953 /* Bed.swift */,
 				0D666D001E260A9000E7AE10 /* SinglePartInfo.swift */,
-				0D666CFE1E26030B00E7AE10 /* PartInfoList.swift */,
 				0D9160AF1CAE3CA600AECFAF /* partandmainInfo.swift */,
 				3A376E4D1BABDE3500D70953 /* SignReport.swift */,
-				3A4D17F01BAFB07400E0B862 /* BedUser.swift */,
 				3A4D17F21BAFB83500E0B862 /* SleepCareReport.swift */,
-				3A36B0221BA96648000F4AED /* RealTimeReport.swift */,
 				3A4D17F61BAFDEFF00E0B862 /* TurnOverAnalysReport.swift */,
 				3A4D17F81BAFDF4800E0B862 /* TurnOverAnalysList.swift */,
-				3A4D17FA1BAFE17D00E0B862 /* AlarmInfo.swift */,
-				3A4D17FC1BAFE20A00E0B862 /* AlarmList.swift */,
-				3A4B85C71BB14DFD006E4CF1 /* Worktask.swift */,
-				2C5AEC471BB397130096DF3F /* RoleList.swift */,
 				2C3150A41BCDFAF300EC749E /* BedReportList.swift */,
 				2C3150A61BCDFB4500EC749E /* BedReport.swift */,
-				0D9F87451CACC9DE008E5F3E /* Result.swift */,
-				0D9F87471CACFFD2008E5F3E /* RoleTreeList.swift */,
-				0D9F874B1CAD1367008E5F3E /* RoleTree.swift */,
-				0D9F87491CAD08D1008E5F3E /* Child.swift */,
-				0D239B5A1E1F769400EA8C21 /* UserBasicInfo.swift */,
-				0D239B5C1E1F7A2E00EA8C21 /* SignHistoryReport.swift */,
-				0D239B5E1E1F7B0100EA8C21 /* SignHistoryReportList.swift */,
-				0D239B601E1F867600EA8C21 /* PartLeaveBedReport.swift */,
-				0D239B621E1F869800EA8C21 /* PartLeaveBedReportList.swift */,
-				0D239B641E1F8F2500EA8C21 /* NightReport.swift */,
-				0D239B661E1F94B000EA8C21 /* nightSignReport.swift */,
-				0D239B681E1F94FB00EA8C21 /* nightSleepReport.swift */,
-				0D239B6A1E1F95AA00EA8C21 /* nightLeaveBedReport.swift */,
-				0D239B6C1E1F960C00EA8C21 /* nightHourSign.swift */,
-				0D239B6E1E1F964900EA8C21 /* nightTurnOver.swift */,
-				0D239B701E1F97C000EA8C21 /* nightAnalysisReport.swift */,
-				0D666CFA1E25FB1200E7AE10 /* HistoryAlarmList.swift */,
-				0D666CFC1E25FC4B00E7AE10 /* HistoryAlarmItem.swift */,
 			);
 			name = ipad;
 			sourceTree = "<group>";
@@ -700,10 +671,10 @@
 				3A41ADE91BA7B438000C109B /* LoginViewModel.swift */,
 				0DD52AA21E28CEBB0090938A /* QueryOverallAlarmViewModel.swift */,
 				3A346BF71BCCD36200E75E4E /* SleepcareMainViewModel.swift */,
-				2C555B461BE31763008A3AC9 /* QueryAlarmViewModel.swift */,
 				0D2586C21E079D7D004E0BD1 /* TizhengViewModel.swift */,
 				0D2586CA1E079E3F004E0BD1 /* BasicinfoViewModel.swift */,
 				0D2586C41E079DAE004E0BD1 /* YejianViewModel.swift */,
+				2C555B461BE31763008A3AC9 /* QueryAlarmViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -727,10 +698,10 @@
 				0DAC753D1C76FCE700EF3260 /* ChooseMainhouseController.swift */,
 				0D18787C1E286C5700F71493 /* QueryOverallAlarmViewController.swift */,
 				0DF032571CE0526000629BA1 /* DetailTabbarController.swift */,
-				2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */,
-				0D2586C01E079D39004E0BD1 /* TizhengViewController.swift */,
 				0D2586C81E079E17004E0BD1 /* BasicinfoViewController.swift */,
+				0D2586C01E079D39004E0BD1 /* TizhengViewController.swift */,
 				0D2586C61E079DD1004E0BD1 /* YejianViewController.swift */,
+				2C555B4A1BE341B8008A3AC9 /* QueryAlarmController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -785,7 +756,35 @@
 		3A4CD3FB1BA80826002C8A1A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3A28CA9B1BEC489F007D9A3A /* ipad */,
+				3A376E451BABBB1200D70953 /* User.swift */,
+				0D5C88B61E2CBC9A00AFC19C /* UserBasicInfo.swift */,
+				0D239B5C1E1F7A2E00EA8C21 /* SignHistoryReport.swift */,
+				0D239B5E1E1F7B0100EA8C21 /* SignHistoryReportList.swift */,
+				0D239B601E1F867600EA8C21 /* PartLeaveBedReport.swift */,
+				0D239B621E1F869800EA8C21 /* PartLeaveBedReportList.swift */,
+				0D239B641E1F8F2500EA8C21 /* NightReport.swift */,
+				0D239B661E1F94B000EA8C21 /* nightSignReport.swift */,
+				0D239B681E1F94FB00EA8C21 /* nightSleepReport.swift */,
+				0D239B6A1E1F95AA00EA8C21 /* nightLeaveBedReport.swift */,
+				0D239B6C1E1F960C00EA8C21 /* nightHourSign.swift */,
+				0D239B6E1E1F964900EA8C21 /* nightTurnOver.swift */,
+				0D239B701E1F97C000EA8C21 /* nightAnalysisReport.swift */,
+				0D666CFA1E25FB1200E7AE10 /* HistoryAlarmList.swift */,
+				0D666CFC1E25FC4B00E7AE10 /* HistoryAlarmItem.swift */,
+				3A36B0221BA96648000F4AED /* RealTimeReport.swift */,
+				0D9F87451CACC9DE008E5F3E /* Result.swift */,
+				0D9F87471CACFFD2008E5F3E /* RoleTreeList.swift */,
+				0D9F874B1CAD1367008E5F3E /* RoleTree.swift */,
+				0D9F87491CAD08D1008E5F3E /* Child.swift */,
+				3A4D17FA1BAFE17D00E0B862 /* AlarmInfo.swift */,
+				3A4D17FC1BAFE20A00E0B862 /* AlarmList.swift */,
+				3A4D17F01BAFB07400E0B862 /* BedUser.swift */,
+				0D666CFE1E26030B00E7AE10 /* PartInfoList.swift */,
+				3A376E491BABD9F400D70953 /* PartInfo.swift */,
+				3A376E4B1BABDA3B00D70953 /* Bed.swift */,
+				2C5AEC471BB397130096DF3F /* RoleList.swift */,
+				3A376E471BABD54200D70953 /* Role.swift */,
+				3A4B85C71BB14DFD006E4CF1 /* Worktask.swift */,
 				3A4CD3FC1BA80852002C8A1A /* BaseMessage.swift */,
 				3A33EF841BAA56D700D82A4D /* MessageSubject.swift */,
 				3A3D65E31BAA8E1100CEFB25 /* MessageFactory.swift */,
@@ -793,6 +792,7 @@
 				3A376E431BABB81100D70953 /* EMProperties.swift */,
 				3A4D17FE1BAFE33C00E0B862 /* EMServiceException.swift */,
 				3A4B85CB1BB150C1006E4CF1 /* Constants.swift */,
+				3A28CA9B1BEC489F007D9A3A /* ipad */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1200,10 +1200,10 @@
 				0D60F6491E08210A00C680F7 /* PointBtn.m in Sources */,
 				0DD52AA31E28CEBB0090938A /* QueryOverallAlarmViewModel.swift in Sources */,
 				0DAC752C1C76C76800EF3260 /* PartNameCell.swift in Sources */,
+				0D5C88B71E2CBC9A00AFC19C /* UserBasicInfo.swift in Sources */,
 				0D18787D1E286C5700F71493 /* QueryOverallAlarmViewController.swift in Sources */,
 				0DC2280E1C1FD65F00AF4737 /* JHSpinnerView.swift in Sources */,
 				0DF6BD801C599FEC007BF0A9 /* LoadImageHelper.swift in Sources */,
-				0D239B5B1E1F769400EA8C21 /* UserBasicInfo.swift in Sources */,
 				0D239B671E1F94B000EA8C21 /* nightSignReport.swift in Sources */,
 				3A4CD3FD1BA80852002C8A1A /* BaseMessage.swift in Sources */,
 				0D9F87441CABA57A008E5F3E /* MainAndPartInfoHelper.swift in Sources */,

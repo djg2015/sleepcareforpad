@@ -489,6 +489,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
                 if bedModel.UserCode != nil{
                     Session.GetSession()!.CurUserCode = bedModel.UserCode!
                     Session.GetSession()!.CurUserName = bedModel.UserName!
+                     Session.GetSession()!.CurEquipmentID = bedModel.EquipmentID
                     
                     self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
                 }

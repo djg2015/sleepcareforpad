@@ -30,6 +30,10 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
     @IBOutlet weak var lblAlarmDateEnd: UILabel!
     // 报警信息View
     @IBOutlet weak var viewAlarm: UIView!
+    
+    @IBOutlet weak var lblEquipmentID: UILabel!
+    
+    
     // 报警类型
     var popDownListAlarmType:PopDownList!
     // 报警状态
@@ -92,6 +96,7 @@ class QueryAlarmController:BaseViewController,UITableViewDelegate,UITableViewDat
         self.viewAlarm.addSubview(self.tabViewAlarm)
        
         self.lblUserName.text = Session.GetSession()!.CurUserName
+        self.lblEquipmentID.text = Session.GetSession()!.CurEquipmentID
         
         self.rac_setting()
     }

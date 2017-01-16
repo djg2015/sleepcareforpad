@@ -71,6 +71,20 @@ class SleepCareCollectionViewCell: UICollectionViewCell {
 
 class BedModel:NSObject{
     //属性定义
+    
+    var _equipmentID:String = ""
+    dynamic var EquipmentID:String{
+        get
+        {
+            return self._equipmentID
+        }
+        set(value)
+        {
+                       self._equipmentID=value
+        }
+    }
+
+    
     var _hiddenValue:Bool=false
     dynamic var HiddenValue:Bool{
         get

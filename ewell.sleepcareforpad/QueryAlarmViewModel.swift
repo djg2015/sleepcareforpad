@@ -43,6 +43,7 @@ class QueryAlarmViewModel:BaseViewModel
                 let curpartcode = session!.CurPartCode
                 let loginName = session!.LoginUser!.LoginName
                 let usercode = session!.CurUserCode
+                    
                     var historyAlarmlist:HistoryAlarmList = sleepCareBLL.GetPartUsersAlarmList(self.AlarmDateBeginCondition, analysisDateEnd: self.AlarmDateEndCondition, userCode: usercode, selectAlarmType: self._selectedAlarmStatusCode, selectTransferType: self._selectedAlarmTypeCode)
                
                     

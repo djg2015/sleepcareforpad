@@ -9,7 +9,9 @@
 import UIKit
 
 class TizhengViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,SelectDateEndDelegate{
-
+    @IBOutlet weak var lblTopname: UILabel!
+    @IBOutlet weak var lblEquipmentID: UILabel!
+    
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var dataview: UIView!
     
@@ -82,8 +84,12 @@ class TizhengViewController: UIViewController ,UITableViewDelegate,UITableViewDa
         // 加载数据
        self.tizhengViewModel = TizhengViewModel()
         self.rac_settings()
- self.tizhengViewModel.tableView = tabViewTizheng
+       self.tizhengViewModel.tableView = tabViewTizheng
         self.tizhengViewModel.tableView2 = tabViewLeavebed
+        
+        
+        self.lblTopname.text = Session.GetSession()!.CurUserName
+        self.lblEquipmentID.text = Session.GetSession()!.CurEquipmentID
     }
 
     override func didReceiveMemoryWarning() {

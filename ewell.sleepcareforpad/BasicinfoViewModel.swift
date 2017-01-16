@@ -85,13 +85,44 @@ class BasicinfoViewModel: BaseViewModel {
         super.init()
         
        
-  self.LoadData()
+       self.LoadBasicInfo()
+        self.LoadData()
         
         
     }
 
+    //底部基本信息的data
+    func LoadBasicInfo(){
+        try {
+            ({
+        let session = Session.GetSession()
+        if session != nil{
+            let curpartcode = session!.CurPartCode
+            let curusercode = session!.CurUserCode
+            var basicInfo:UserBasicInfo = SleepCareBussiness().GetPartUsersBasicInfo(curpartcode, userCode: curusercode)
+           
+            self.Name = basicInfo.UserName
+            self.Address = basicInfo.Address
+            self.Sex = basicInfo.Sex
+            self.Tel = basicInfo.Phone
+            self.Bingli = basicInfo.CaseCode
+        }
+                },
+                catch: { ex in
+                    //异常处理
+                    handleException(ex,showDialog: true)
+                },
+                finally: {
+                    
+                }
+            )}
+    }
+    
+    
+    //chart的data
     func LoadData(){
-        
+        try {
+            ({
         var tempValueY:Array<String> = []
         var tempValueY2:Array<String> = []
         var tempValueX: Array<String> = []
@@ -102,7 +133,35 @@ class BasicinfoViewModel: BaseViewModel {
         }
         self.HRRRRange.ValueY = NSArray(objects:tempValueY,tempValueY2)
         self.HRRRRange.ValueX = tempValueX
-    }
+        
+       
+                let session = Session.GetSession()
+                if session != nil{
+                  
+                    let curusercode = session!.CurUserCode
+                    // 如果是按小时查询yyyy-MM-dd HH:00:00
+                    var date = NSDate()
+                    var timeFormatter = NSDateFormatter()
+                    timeFormatter.dateFormat = "yyy-MM-dd HH:00:00"
+                    let strEndTime = timeFormatter.stringFromDate(date) as String
+                     var date2 = NSDate().dateByAddingTimeInterval(-24*60*60)
+                    //[NSDate dateWithTimeInterval:-24*60*60 sinceDate:date];//前一天
+                    
+                    let strStartTime = timeFormatter.stringFromDate(date2) as String
+        SleepCareBussiness().GetPartUsersSignHistory(strStartTime, analysisDateEnd: strEndTime, userCode: curusercode, selectQueryType: "1")
+                }
+                
+                },
+                catch: { ex in
+                    //异常处理
+                    handleException(ex,showDialog: true)
+                },
+                finally: {
+                    
+                }
+                )}
+        }
+    
     
 }
 //心率呼吸chart

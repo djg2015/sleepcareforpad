@@ -9,7 +9,9 @@
 import UIKit
 
 class YejianViewController: UIViewController,UIScrollViewDelegate {
-
+    @IBOutlet weak var lblTopname: UILabel!
+    @IBOutlet weak var lblEquipmentID: UILabel!
+    
     @IBOutlet weak var mainscrollview: UIScrollView!
     
     var hrrrcontainer:UIView!
@@ -28,6 +30,10 @@ class YejianViewController: UIViewController,UIScrollViewDelegate {
         self.mainscrollview.delegate = self
         self.mainscrollview.contentSize = CGSize(width:scrollviewWidth,height:1050)
     
+        self.lblTopname.text = Session.GetSession()!.CurUserName
+        self.lblEquipmentID.text = Session.GetSession()!.CurEquipmentID
+        
+        
         self.InitUISettings()
     }
 

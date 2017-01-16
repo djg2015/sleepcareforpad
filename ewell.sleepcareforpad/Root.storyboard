@@ -396,13 +396,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Yf-Fc-3Db">
-                                <rect key="frame" x="797" y="72" width="124" height="30"/>
+                                <rect key="frame" x="797" y="72" width="111" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="报警时间：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PhU-gg-IYw">
-                                <rect key="frame" x="23" y="77" width="90" height="21"/>
+                                <rect key="frame" x="27" y="77" width="90" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -430,15 +430,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="38B-RH-pr3">
-                                <rect key="frame" x="935" y="66" width="73" height="43"/>
+                                <rect key="frame" x="925" y="66" width="73" height="43"/>
                                 <animations/>
-                                <state key="normal" title="查询">
+                                <state key="normal">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dropdown.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Dk-4p-dDB">
-                                <rect key="frame" x="891" y="70" width="32" height="31"/>
+                                <rect key="frame" x="878" y="70" width="32" height="31"/>
                                 <animations/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jiV-C7-FSZ">
@@ -1269,11 +1269,15 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="设备ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xDS-Qg-tWk">
-                                <rect key="frame" x="937" y="22" width="64" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xDS-Qg-tWk">
+                                <rect key="frame" x="867" y="21" width="133" height="21"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="YH8-1m-Y4s"/>
+                                    <constraint firstAttribute="width" constant="133" id="lS6-QP-CXV"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1282,11 +1286,13 @@
                         <constraints>
                             <constraint firstItem="FET-vT-naZ" firstAttribute="top" secondItem="8FT-9b-uZy" secondAttribute="bottom" constant="8" id="3ED-cH-9vk"/>
                             <constraint firstItem="Y4E-lG-Wsd" firstAttribute="top" secondItem="70x-Pf-PK0" secondAttribute="bottom" id="71K-nQ-E1p"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xDS-Qg-tWk" secondAttribute="trailing" constant="4" id="9xl-mm-uiq"/>
                             <constraint firstAttribute="trailing" secondItem="Y4E-lG-Wsd" secondAttribute="trailing" id="NfF-7M-tQB"/>
                             <constraint firstItem="O2G-AD-tEm" firstAttribute="top" secondItem="70x-Pf-PK0" secondAttribute="bottom" constant="18" id="PZ2-xJ-nrM"/>
                             <constraint firstItem="Y4E-lG-Wsd" firstAttribute="leading" secondItem="4p1-et-cAe" secondAttribute="leading" id="QIV-jr-dxM"/>
                             <constraint firstAttribute="centerX" secondItem="O2G-AD-tEm" secondAttribute="centerX" id="RRI-zz-FZt"/>
                             <constraint firstAttribute="trailing" secondItem="Sq6-Ra-jhS" secondAttribute="trailing" constant="35" id="WRY-7s-gYJ"/>
+                            <constraint firstItem="xDS-Qg-tWk" firstAttribute="top" secondItem="70x-Pf-PK0" secondAttribute="bottom" constant="21" id="ehM-JA-im4"/>
                             <constraint firstItem="Sq6-Ra-jhS" firstAttribute="top" secondItem="Y4E-lG-Wsd" secondAttribute="bottom" constant="65" id="hCK-Nm-n27"/>
                             <constraint firstItem="Sq6-Ra-jhS" firstAttribute="leading" secondItem="4p1-et-cAe" secondAttribute="leading" constant="48" id="kjn-Ti-AuG"/>
                             <constraint firstItem="8FT-9b-uZy" firstAttribute="leading" secondItem="4p1-et-cAe" secondAttribute="leading" constant="48" id="nPh-Ol-6O1"/>
@@ -1301,10 +1307,12 @@
                         <outlet property="chartView" destination="Sq6-Ra-jhS" id="QIe-et-S1y"/>
                         <outlet property="lblAddress" destination="z8W-J7-Wis" id="ued-Bk-XtI"/>
                         <outlet property="lblBingli" destination="oak-4B-rDk" id="vuv-uc-sbG"/>
+                        <outlet property="lblEquipmentID" destination="xDS-Qg-tWk" id="tCY-Bn-XA4"/>
                         <outlet property="lblName" destination="b2S-YK-GQF" id="suT-eZ-l5w"/>
                         <outlet property="lblSex" destination="fK5-Ux-f3b" id="sb3-PQ-en2"/>
                         <outlet property="lblStatus" destination="nIN-DU-MJx" id="NPc-lL-17q"/>
                         <outlet property="lblTel" destination="bly-OA-CRL" id="rdw-TQ-OXa"/>
+                        <outlet property="lblTopname" destination="O2G-AD-tEm" id="puk-x3-o6Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HAD-4v-kqf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1426,11 +1434,15 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="设备ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KbP-fK-Uld">
-                                <rect key="frame" x="940" y="21" width="51" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="KbP-fK-Uld">
+                                <rect key="frame" x="871" y="21" width="133" height="21"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="133" id="7F6-jF-Xy1"/>
+                                    <constraint firstAttribute="height" constant="21" id="cRe-9A-e0V"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1439,12 +1451,14 @@
                         <constraints>
                             <constraint firstItem="aev-F4-IkH" firstAttribute="top" secondItem="LDR-4R-AzD" secondAttribute="bottom" constant="62" id="7N7-lw-Qbj"/>
                             <constraint firstItem="LDR-4R-AzD" firstAttribute="top" secondItem="zZY-hC-68z" secondAttribute="bottom" id="Icp-ZY-VYo"/>
+                            <constraint firstItem="KbP-fK-Uld" firstAttribute="top" secondItem="zZY-hC-68z" secondAttribute="bottom" constant="21" id="N3C-MG-8DH"/>
                             <constraint firstItem="LDR-4R-AzD" firstAttribute="leading" secondItem="1Nj-By-Nfs" secondAttribute="leading" id="Yqo-nH-fi9"/>
                             <constraint firstItem="opd-kY-8Cg" firstAttribute="top" secondItem="1Nj-By-Nfs" secondAttribute="top" constant="17" id="lLn-UO-pg7"/>
                             <constraint firstAttribute="centerX" secondItem="opd-kY-8Cg" secondAttribute="centerX" id="rqv-X5-aAy"/>
                             <constraint firstAttribute="trailing" secondItem="LDR-4R-AzD" secondAttribute="trailing" id="sPQ-yj-iof"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aev-F4-IkH" secondAttribute="trailing" constant="13" id="uLq-oS-KUQ"/>
                             <constraint firstItem="o8c-qZ-ax1" firstAttribute="top" secondItem="aev-F4-IkH" secondAttribute="bottom" constant="16" id="uni-PG-uPg"/>
+                            <constraint firstItem="KbP-fK-Uld" firstAttribute="trailing" secondItem="1Nj-By-Nfs" secondAttribute="trailingMargin" id="wTO-Nb-G4k"/>
                             <constraint firstItem="aev-F4-IkH" firstAttribute="leading" secondItem="1Nj-By-Nfs" secondAttribute="leadingMargin" constant="14" id="zU9-IW-wZJ"/>
                         </constraints>
                     </view>
@@ -1460,6 +1474,7 @@
                         <outlet property="btnQuery" destination="jgR-cP-iLT" id="YXA-Ze-0lj"/>
                         <outlet property="lblAlarmDateBegin" destination="6zs-tL-oQF" id="ukt-9d-oI3"/>
                         <outlet property="lblAlarmDateEnd" destination="zda-Pp-1Rk" id="pAD-2o-4ul"/>
+                        <outlet property="lblEquipmentID" destination="KbP-fK-Uld" id="nVr-WH-9tC"/>
                         <outlet property="lblUserName" destination="opd-kY-8Cg" id="G5C-nF-GwH"/>
                         <outlet property="txtAlarmStatus" destination="0mt-bc-H2W" id="bId-68-VYI"/>
                         <outlet property="txtAlarmType" destination="lbv-lq-7au" id="Kem-OW-MKy"/>
@@ -1639,17 +1654,23 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="设备ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zR-4R-q8t">
-                                <rect key="frame" x="958" y="25" width="51" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="4zR-4R-q8t">
+                                <rect key="frame" x="867" y="21" width="133" height="21"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="JyX-4P-eJO"/>
+                                    <constraint firstAttribute="width" constant="133" id="obD-Wd-rSY"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="4zR-4R-q8t" firstAttribute="top" secondItem="C1l-f5-zJC" secondAttribute="bottom" constant="21" id="BVI-Eu-40o"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4zR-4R-q8t" secondAttribute="trailing" constant="4" id="Fbd-vM-ebl"/>
                             <constraint firstItem="htK-w6-sqx" firstAttribute="top" secondItem="l3v-Mn-luN" secondAttribute="bottom" constant="13" id="HDi-jr-EbW"/>
                             <constraint firstItem="l3v-Mn-luN" firstAttribute="top" secondItem="cEK-3b-yDc" secondAttribute="bottom" constant="20" id="KPK-Gb-60g"/>
                             <constraint firstItem="htK-w6-sqx" firstAttribute="leading" secondItem="Max-0p-9Up" secondAttribute="leadingMargin" constant="23" id="LcC-Y2-kF5"/>
@@ -1675,8 +1696,10 @@
                         <outlet property="btnType" destination="hYg-ur-p4Y" id="DHt-AP-pq3"/>
                         <outlet property="dataview" destination="Yr5-DV-CAT" id="gG5-Yv-KpO"/>
                         <outlet property="lblEndTimeSpan" destination="fiI-8p-Bsr" id="Mhu-No-3sq"/>
+                        <outlet property="lblEquipmentID" destination="4zR-4R-q8t" id="KY5-1p-Mve"/>
                         <outlet property="lblFlag" destination="0yI-Yd-CPe" id="TMh-YM-14l"/>
                         <outlet property="lblStartTimeSpan" destination="4t4-qm-Z8S" id="GrV-A9-MvC"/>
+                        <outlet property="lblTopname" destination="qEO-4N-O0k" id="7Bb-GR-Afa"/>
                         <outlet property="segment" destination="l3v-Mn-luN" id="oLc-oh-JHX"/>
                         <outlet property="statusView" destination="Vsb-l2-T3q" id="Cku-1t-ltq"/>
                         <outlet property="textStatus" destination="xiA-uf-05s" id="1kt-UZ-SfK"/>
@@ -1733,11 +1756,15 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="设备ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCi-xC-qzu">
-                                <rect key="frame" x="960" y="22" width="51" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCi-xC-qzu">
+                                <rect key="frame" x="867" y="21" width="133" height="21"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="133" id="RMt-L1-MOK"/>
+                                    <constraint firstAttribute="height" constant="21" id="TGW-Qr-3na"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1745,16 +1772,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mf9-kd-YcQ" firstAttribute="leading" secondItem="fpV-BX-f96" secondAttribute="leading" id="4Vh-Zh-0g6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lCi-xC-qzu" secondAttribute="trailing" constant="4" id="OSW-My-qV0"/>
                             <constraint firstAttribute="centerX" secondItem="CNI-FE-jRT" secondAttribute="centerX" id="ZA4-g7-Ua5"/>
                             <constraint firstItem="CNI-FE-jRT" firstAttribute="top" secondItem="H9h-Gp-mPx" secondAttribute="bottom" constant="18" id="fCh-aM-UXM"/>
                             <constraint firstItem="mf9-kd-YcQ" firstAttribute="top" secondItem="H9h-Gp-mPx" secondAttribute="bottom" id="kLV-Ah-0Ai"/>
                             <constraint firstAttribute="trailing" secondItem="mf9-kd-YcQ" secondAttribute="trailing" id="nPD-mo-nu4"/>
+                            <constraint firstItem="lCi-xC-qzu" firstAttribute="top" secondItem="H9h-Gp-mPx" secondAttribute="bottom" constant="21" id="s1D-EF-YIi"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="夜间分析" id="ajm-Xo-4cS"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="lblEquipmentID" destination="lCi-xC-qzu" id="ClI-bz-Yuh"/>
+                        <outlet property="lblTopname" destination="CNI-FE-jRT" id="x0s-CM-yGD"/>
                         <outlet property="mainscrollview" destination="ecB-ly-K1J" id="iqJ-30-CdR"/>
                     </connections>
                 </viewController>

@@ -180,19 +180,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
         }
     }
     
-//    //分页数
-//    var _pageCount:Int = 0
-//    dynamic var PageCount:Int{
-//        get
-//        {
-//            return self._pageCount
-//        }
-//        set(value)
-//        {
-//            self._pageCount=value
-//        }
-//    }
-    
+
     //警告数
     var _wariningCount:Int = 0
     dynamic var WariningCount:Int{
@@ -241,19 +229,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
         }
     }
     
-    
-    //    var _showbedViews:Array<BedModel> = Array<BedModel>()
-    //    dynamic var ShowBedViews:Array<BedModel>{
-    //        get
-    //        {
-    //            return self._showbedViews
-    //        }
-    //        set(value)
-    //        {
-    //            self._showbedViews=value
-    //        }
-    //
-    //    }
+  
     
     //获取指定分页对应的床位集合
     func GetBedsOfPage(pageIndex:Int, count:NSInteger, list:Array<BedModel>, maxcount:Int) -> Array<BedModel> {
@@ -516,6 +492,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
                 bed.RoomNumber = partInfo.BedList[i].RoomNumber
                 bed.BedCode = partInfo.BedList[i].BedCode
                 bed.BedNumber = partInfo.BedList[i].BedNumber
+                bed.EquipmentID = partInfo.BedList[i].EquipmentID
                 //若存在username，初始化状态为离线，收到实时数据后改变
                 //         否则，初始化状态为emptybed
                 if bed.UserName == ""{

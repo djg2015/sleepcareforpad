@@ -87,6 +87,17 @@ class Session {
         }
     }
     
+    private var _curEquipmentID:String = ""
+    var  CurEquipmentID:String{
+        get{
+            return self._curEquipmentID
+        }
+        set(value){
+            self._curEquipmentID=value
+        }
+    }
+   
+    
 //每个partcode对应的mainname，partname字典
     private var _partcodeDictionary:Dictionary<String,partandmainInfo> = Dictionary<String,partandmainInfo>()
     var PartcodeDictionary:Dictionary<String,partandmainInfo>{

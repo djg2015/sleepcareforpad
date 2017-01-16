@@ -9,9 +9,10 @@
 import UIKit
 
 class BasicinfoViewController: UIViewController {
-
-    @IBOutlet weak var lblStatus: UILabel!
+    @IBOutlet weak var lblTopname: UILabel!
+    @IBOutlet weak var lblEquipmentID: UILabel!
     
+    @IBOutlet weak var lblStatus: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblTel: UILabel!
     @IBOutlet weak var lblBingli: UILabel!
@@ -20,7 +21,9 @@ class BasicinfoViewController: UIViewController {
     
     @IBOutlet weak var chartView: UIView!
     var HrRrChartView = ChartView()
-      var hrrrWarning:UILabel!
+    
+    
+    var hrrrWarning:UILabel!
     
     var basicinfoViewModel:BasicinfoViewModel!
     
@@ -33,8 +36,13 @@ class BasicinfoViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.basicinfoViewModel  = BasicinfoViewModel()
         
-        InitChartView()
+        self.lblTopname.text = Session.GetSession()!.CurUserName
+        self.lblEquipmentID.text = Session.GetSession()!.CurEquipmentID
+
+
         Settings()
+        
+        InitChartView()
     }
 
     override func didReceiveMemoryWarning() {

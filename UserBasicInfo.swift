@@ -22,35 +22,41 @@ class UserBasicInfo:BaseMessage{
         let result = UserBasicInfo(messageSubject: MessageSubject.ParseXmlToSubject(subjectXml))
         //构造XML文档
         var doc = DDXMLDocument(XMLString: bodyXMl, options:0, error:nil)
-        var users = doc.nodesForXPath("//UserBasicInfo", error:nil) as! [DDXMLElement]
-        for user in users {
-            if(user.elementForName("UserCode") != nil)
+        var userinfos = doc.nodesForXPath("//UserBasicInfo", error:nil) as! [DDXMLElement]
+        for userinfo in userinfos {
+            if(userinfo.elementForName("UserCode") != nil)
             {
-                result.UserCode = user.elementForName("UserCode").stringValue()
+                result.UserCode = userinfo.elementForName("UserCode").stringValue()
             }
-            if(user.elementForName("UserName") != nil)
+            if(userinfo.elementForName("UserName") != nil)
             {
-                result.UserName = user.elementForName("UserName").stringValue()
+                result.UserName = userinfo.elementForName("UserName").stringValue()
             }
-            if(user.elementForName("Age") != nil)
+            if(userinfo.elementForName("Age") != nil)
             {
-                result.Age = user.elementForName("Age").stringValue()
+                result.Age = userinfo.elementForName("Age").stringValue()
             }
-            if(user.elementForName("Sex") != nil)
+            if(userinfo.elementForName("Sex") != nil)
             {
-                result.Sex = user.elementForName("Sex").stringValue()
+                if(userinfo.elementForName("Sex").stringValue() == "0"){
+                result.Sex = "男"
+                }
+                else if(userinfo.elementForName("Sex").stringValue() == "1"){
+                result.Sex = "女"
+                }
+                
             }
-            if(user.elementForName("Phone") != nil)
+            if(userinfo.elementForName("Phone") != nil)
             {
-                result.Phone = user.elementForName("Phone").stringValue()
+                result.Phone = userinfo.elementForName("Phone").stringValue()
             }
-            if(user.elementForName("Address") != nil)
+            if(userinfo.elementForName("Address") != nil)
             {
-                result.Address = user.elementForName("Address").stringValue()
+                result.Address = userinfo.elementForName("Address").stringValue()
             }
-            if(user.elementForName("CaseCode") != nil)
+            if(userinfo.elementForName("CaseCode") != nil)
             {
-                result.CaseCode = user.elementForName("CaseCode").stringValue()
+                result.CaseCode = userinfo.elementForName("CaseCode").stringValue()
             }
         }
         return result

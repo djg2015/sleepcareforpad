@@ -10,6 +10,13 @@ import Foundation
 class AlarmList:BaseMessage {
     
     var alarmInfoList = Array<AlarmInfo>()
+//    注：报警类型如下：
+//    ALM_TEMPERATURE   体温报警
+//    ALM_HEARTBEAT      心率报警
+//    ALM_BREATH         呼吸报警'
+//    ALM_BEDSTATUS		     在离床报警
+//    ALM_FALLINGOUTOFBED	坠床风险报警
+//    ALM_BEDSORE			褥疮风险报警
     
     //解析响应的message
     override class func XmlToMessage(subjectXml:String,bodyXMl:String) -> BaseMessage{
@@ -43,16 +50,12 @@ class AlarmList:BaseMessage {
             {
                 newalarmInfo.BedNumber = alarmInfo.elementForName("BedNumber").stringValue()
             }
-            if(nil != alarmInfo.elementForName("HandleFlag"))
-            {
-                newalarmInfo.HandleFlag = alarmInfo.elementForName("HandleFlag").stringValue()
-            }
+           
            
             newalarmInfo.SchemaCode = alarmInfo.elementForName("SchemaCode").stringValue()
             newalarmInfo.SchemaContent = alarmInfo.elementForName("SchemaContent").stringValue()
             newalarmInfo.AlarmDate = alarmInfo.elementForName("AlarmDate").stringValue()
-            newalarmInfo.AlarmTime = alarmInfo.elementForName("AlarmTime").stringValue()
-            if(alarmInfo.elementForName("FoobLevelCode") != nil)
+           if(alarmInfo.elementForName("FoobLevelCode") != nil)
             {
                 newalarmInfo.FoobLevelCode = alarmInfo.elementForName("FoobLevelCode").stringValue()
             }
@@ -60,6 +63,19 @@ class AlarmList:BaseMessage {
             {
                 newalarmInfo.BedSoreLevelCode = alarmInfo.elementForName("BedSoreLevelCode").stringValue()
             }
+            
+            //推送
+            if(alarmInfo.elementForName("HandleFlag") != nil)
+            {
+                newalarmInfo.HandleFlag = alarmInfo.elementForName("HandleFlag").stringValue()
+            }
+
+            if(alarmInfo.elementForName("AlarmTime") != nil)
+            {
+                newalarmInfo.AlarmTime = alarmInfo.elementForName("AlarmTime").stringValue()
+            }
+
+            
             result.alarmInfoList.append(newalarmInfo)
         }
         return result

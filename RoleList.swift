@@ -41,6 +41,12 @@ class RoleList:BaseMessage
             {
                 newRole.PartCode = role.elementForName("PartCode").stringValue()
             }
+            if(role.elementForName("ParentCode") != nil)
+            {
+                newRole.ParentCode = role.elementForName("ParentCode").stringValue()
+            }
+
+            
             result.roleList.append(newRole)
         }
         return result

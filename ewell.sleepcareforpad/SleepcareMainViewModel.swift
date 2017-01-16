@@ -497,7 +497,7 @@ class SleepcareMainViewModel:BaseViewModel,RealTimeDelegate {
         // self.BedModelList = Array<BedModel>()
         let sleepCareBussiness = SleepCareBussiness()
         //获取医院下的床位信息
-        var partInfo:PartInfo = sleepCareBussiness.GetPartInfoByPartCode(partCode, loginName:session!.LoginUser!.LoginName,searchType: searchType, searchContent: searchContent, from: nil, max: nil)
+        var partInfo:SinglePartInfo = sleepCareBussiness.GetPartInfoByPartCode(partCode, loginName:session!.LoginUser!.LoginName,searchType: searchType, searchContent: searchContent, from: nil, max: nil)
         
         self.PartCode = partInfo.PartCode
         self.BedCount = partInfo.BedCount

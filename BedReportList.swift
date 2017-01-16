@@ -9,19 +9,19 @@
 import Foundation
 import UIKit
 
-class LeaveBedReportList:BaseMessage
+class BedReportList:BaseMessage
 {
-    var reportList = Array<LeaveBedReport>()
+    var reportList = Array<BedReport>()
     
     //解析响应的message
     override class func XmlToMessage(subjectXml:String,bodyXMl:String) -> BaseMessage{
         
-        let result = LeaveBedReportList(messageSubject: MessageSubject.ParseXmlToSubject(subjectXml))
+        let result = BedReportList(messageSubject: MessageSubject.ParseXmlToSubject(subjectXml))
         //构造XML文档
         var doc = DDXMLDocument(XMLString: bodyXMl, options:0, error:nil)
         var leaveBedReports = doc.nodesForXPath("//BedReport", error:nil) as! [DDXMLElement]
         for report in leaveBedReports {
-            var newReport = LeaveBedReport()
+            var newReport = BedReport()
             newReport.BedCode = report.elementForName("BedCode").stringValue()
             newReport.UserCode = report.elementForName("UserCode").stringValue()
             newReport.PartCode = report.elementForName("PartCode").stringValue()

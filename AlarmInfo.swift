@@ -16,11 +16,13 @@ class AlarmInfo{
     var PartName:String = ""
     var BedCode:String = ""
     var BedNumber:String = ""
-    var HandleFlag:String = ""
     var SchemaCode:String = ""
     var SchemaContent:String = ""
     var AlarmDate:String = ""
-    var AlarmTime:String = ""
     var FoobLevelCode:String = ""
     var BedSoreLevelCode:String = ""
+    
+    //推送的alarminfo用
+    var HandleFlag:String = ""
+     var AlarmTime:String = ""
 }

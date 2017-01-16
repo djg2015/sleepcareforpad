@@ -17,4 +17,5 @@ class Bed {
     var CaseCode:String = ""
     var OnBedStatus:String = ""
     var Sleep:String = ""
+    var EquipmentID:String = ""
 }

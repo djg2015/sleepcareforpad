@@ -34,49 +34,49 @@ class QueryAlarmViewModel:BaseViewModel
         try {
             ({
                
-//                let session = Session.GetSession()
-//                if session != nil{
-//                //清空报警列表
-//                self.AlarmInfoList.removeAll(keepCapacity: true)
-//                //获取最新在离床报警
-//                var sleepCareBLL = SleepCareBussiness()
-//                var curpartcode = session!.CurPartCode
-//                var loginName = session!.LoginUser!.LoginName
-//                  
-//                var alarmList:AlarmList = sleepCareBLL.GetAlarmByUser(curpartcode,loginName:loginName, userCode: "", userNameLike: self.UserNameCondition, bedNumberLike: self.BedNumberCondition, schemaCode: self.SelectedAlarmTypeCode, alarmTimeBegin:self.AlarmDateBeginCondition, alarmTimeEnd: self.AlarmDateEndCondition, from: nil, max: nil)
-//               
-//                    
-//                var index:Int = 1
-//                for alarmItem in alarmList.alarmInfoList
-//                {
-//                    //放入报警列表
-//                    var item:QueryAlarmItem = QueryAlarmItem()
-//                    item.UserName = alarmItem.UserName
-//                    item.BedNumber = alarmItem.BedNumber
-//                    item.Number = index
-//                    item.SchemaCode = alarmItem.SchemaCode
-//                    item.AlarmTime = (alarmItem.AlarmTime as NSString).substringFromIndex(5)
-//                    item.AlarmContent = alarmItem.SchemaContent
-//                    item.AlarmCode = alarmItem.AlarmCode
-//                    index++
-//                    self.AlarmInfoList.append(item)
-//                    
-//                   
-//                }
+                let session = Session.GetSession()
+                if session != nil{
+                //清空报警列表
+                self.AlarmInfoList.removeAll(keepCapacity: true)
+                //获取最新在离床报警
+                let sleepCareBLL = SleepCareBussiness()
+                let curpartcode = session!.CurPartCode
+                let loginName = session!.LoginUser!.LoginName
+                let usercode = session!.CurUserCode
+                    var historyAlarmlist:HistoryAlarmList = sleepCareBLL.GetPartUsersAlarmList(self.AlarmDateBeginCondition, analysisDateEnd: self.AlarmDateEndCondition, userCode: usercode, selectAlarmType: self._selectedAlarmStatusCode, selectTransferType: self._selectedAlarmTypeCode)
+               
+                    
+                var index:Int = 1
+                for alarmItem in historyAlarmlist.alarmItemList
+                {
+                    //放入报警列表
+                    var item:QueryHistoryAlarmItem = QueryHistoryAlarmItem()
+                    item.Number = index
+                    item.AlarmType = alarmItem.AlarmType
+                    item.AlarmTime = (alarmItem.AlarmTime as NSString).substringFromIndex(5)
+                    item.AlarmContent = alarmItem.Content
+                    item.AlarmCode = alarmItem.AlarmCode
+                    item.HandleTime = alarmItem.HandleTime
+                    item.HandleStatus = alarmItem.HandleStatus
+                    
+                    index++
+                    self.AlarmInfoList.append(item) 
+                }
+                
+               self.tableView.reloadData()
+               }
+                
+                //testdata
+//                                    var item:QueryHistoryAlarmItem = QueryHistoryAlarmItem()
 //                
-//                self.tableView.reloadData()
-//                }
-                
-                                    var item:QueryAlarmItem = QueryAlarmItem()
-                
-                                    item.Number = 1
-                                    item.AlarmType = "离床报警"
-                                    item.AlarmTime = "2011-01-01 19:10:10"
-                                    item.AlarmContent = "离床超过30分钟"
-                                    item.AlarmCode = "0000001"
-                item.HandleStatus = "未处理"
-                item.HandleTime = "2011-01-01 19:10:10"
-                                    self.AlarmInfoList.append(item)
+//                                    item.Number = 1
+//                                    item.AlarmType = "离床报警"
+//                                    item.AlarmTime = "2011-01-01 19:10:10"
+//                                    item.AlarmContent = "离床超过30分钟"
+//                                    item.AlarmCode = "0000001"
+//                item.HandleStatus = "未处理"
+//                item.HandleTime = "2011-01-01 19:10:10"
+//                                    self.AlarmInfoList.append(item)
                 },
                 catch: { ex in
                     //异常处理
@@ -130,6 +130,19 @@ class QueryAlarmViewModel:BaseViewModel
         }
     }
     
+    var _selectedAlarmStatusCode:String = ""
+    // 选择的报警状态
+    dynamic var SelectedAlarmStatusCode:String{
+        get
+        {
+            return self._selectedAlarmStatusCode
+        }
+        set(value)
+        {
+            self._selectedAlarmStatusCode = value
+        }
+    }
+    
     var _selectedAlarmType:String = "全部"
     // 选择的报警类型编号
     dynamic var SelectedAlarmType:String{
@@ -158,9 +171,9 @@ class QueryAlarmViewModel:BaseViewModel
 
     
     // 属性定义
-    var _alarmInfoList:Array<QueryAlarmItem> = Array<QueryAlarmItem>()
+    var _alarmInfoList:Array<QueryHistoryAlarmItem> = Array<QueryHistoryAlarmItem>()
     // 报警信息列表
-    dynamic var AlarmInfoList:Array<QueryAlarmItem>{
+    dynamic var AlarmInfoList:Array<QueryHistoryAlarmItem>{
         get
         {
             return self._alarmInfoList
@@ -176,24 +189,28 @@ class QueryAlarmViewModel:BaseViewModel
         get
         {
             var item:DownListModel = DownListModel()
-            item.key = "全部"
+            item.key = ""
             item.value = "全部"
             _alarmStatusList.append(item)
             
             item = DownListModel()
-            item.key = "已处理"
+            item.key = "1"
+            item.value = "未处理"
+            _alarmStatusList.append(item)
+
+            
+            item = DownListModel()
+            item.key = "2"
             item.value = "已处理"
             _alarmStatusList.append(item)
             
+           
+            
             item = DownListModel()
-            item.key = "误报警"
+            item.key = "3"
             item.value = "误报警"
             _alarmStatusList.append(item)
             
-            item = DownListModel()
-            item.key = "未处理"
-            item.value = "未处理"
-            _alarmStatusList.append(item)
             
             
             return _alarmStatusList
@@ -249,7 +266,7 @@ class QueryAlarmViewModel:BaseViewModel
     }
 }
 
-class QueryAlarmItem
+class QueryHistoryAlarmItem
 {
     //属性定义
     var _number:Int = 0

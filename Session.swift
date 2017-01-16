@@ -77,6 +77,16 @@ class Session {
         }
     }
     
+    private var _curUserName:String = ""
+    var CurUserName:String{
+        get{
+            return self._curUserName
+        }
+        set(value){
+            self._curUserName=value
+        }
+    }
+    
 //每个partcode对应的mainname，partname字典
     private var _partcodeDictionary:Dictionary<String,partandmainInfo> = Dictionary<String,partandmainInfo>()
     var PartcodeDictionary:Dictionary<String,partandmainInfo>{

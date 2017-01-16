@@ -17,12 +17,11 @@ class RealTimeReport:BaseMessage{
     var HR:String = ""
     var RR:String = ""
     var BodyTemperature:String = ""
-    var OnBedStatus:String = ""
-    var MsgTime:String = ""
+    var OnBedStatus:String = ""  //有四个值: 请假 在床 离床 异常
+    var MsgTime:String = "" //(yyyy-MM-dd HH:mm:ss)
     var LastedLeaveTime:String = ""
-     var LastedAvgHR:String = ""
-     var LastedAvgRR:String = ""
     
+    //服务器会每隔1秒推送一条实时数据
     override class func XmlToMessage(subjectXml:String,bodyXMl:String) -> BaseMessage{
         let result = RealTimeReport(messageSubject: MessageSubject.ParseXmlToSubject(subjectXml))
         //构造XML文档
@@ -44,8 +43,7 @@ class RealTimeReport:BaseMessage{
             }
             result.MsgTime = realTimeReport.elementForName("MsgTime").stringValue()
             result.LastedLeaveTime = realTimeReport.elementForName("LastedLeaveTime") != nil ?realTimeReport.elementForName("LastedLeaveTime").stringValue() : ""
-            result.LastedAvgHR = realTimeReport.elementForName("LastedAvgHR") != nil ?realTimeReport.elementForName("LastedAvgHR").stringValue() : ""
-            result.LastedAvgRR = realTimeReport.elementForName("LastedAvgRR") != nil ?realTimeReport.elementForName("LastedAvgRR").stringValue() : ""
+        
         }
         
         return result

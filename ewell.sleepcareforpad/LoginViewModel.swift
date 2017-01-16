@@ -87,25 +87,7 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
     }
     
    
-    /**
-    登录前操作，获取openfire地址等信息，获取成功则记录在本地plist文件中
-    */
-    func BeforeLogin(){
-        try {
-            ({
-               OpenFireServerInfoHelper().CheckServerInfo()
-                },
-                catch: { ex in
-                    //异常处理
-                    handleException(ex,showDialog: true)
-                },
-                finally: {
-                    
-                }
-            )}
-        
-    }
-
+  
     
     //点击登录按钮操作
     func Login() -> RACSignal{
@@ -121,14 +103,15 @@ class LoginViewModel: BaseViewModel,ClearLoginInfoDelegate{
                     return
                 }
 
-                //获取openfire信息
-              //  self.BeforeLogin()
+             
                 
             
                     //从服务器获取user信息，并设置当前session
                     let testBLL = SleepCareBussiness()
                     var user:User = testBLL.GetLoginInfo(self.UserName!, LoginPassword: self.UserPwd!)
-                    Session.SetSession(user)
+                user.LoginPassword = self.UserPwd!
+                
+                Session.SetSession(user)
                     var session = Session.GetSession()
  
                     //登录成功，记住用户名密码处理

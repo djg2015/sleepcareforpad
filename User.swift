@@ -11,11 +11,22 @@ class User:BaseMessage{
     var role:Role? = Role()
     var LoginName:String = ""
     var LoginPassword:String = ""
-    var Status:String = ""
+    var Status:String = "" // 是否启用 1.启用 2.禁用
     var MainCode:String = ""
     var PartCode:String = ""
     var WorktaskList = Array<Worktask>()
     //解析响应的message
+//    注：权限编码 参考如下：
+//    000001	睡眠质量分析与报表查看
+//    000002	报警设置
+//    000003	在离床历史查看
+//    000004	历史体征查看
+//    000005	权限设置
+//    所属角色类型 参考如下：
+//    Floor	 楼层/科室
+//    Hospital	养老院/医院
+    
+    
     override class func XmlToMessage(subjectXml:String,bodyXMl:String) -> BaseMessage{
         let result = User(messageSubject: MessageSubject.ParseXmlToSubject(subjectXml))
         //构造XML文档
@@ -59,8 +70,9 @@ class User:BaseMessage{
                     result.role?.RoleType = role.elementForName("RoleType").stringValue()
                 }
             }
-            var worktasks = doc.nodesForXPath("//Worktask", error:nil) as! [DDXMLElement]
-            for worktask in worktasks {
+            var worktasks = doc.nodesForXPath("//Worktask", error:nil) as? [DDXMLElement]
+            if(worktasks != nil){
+            for worktask in worktasks! {
                 var newWorktask = Worktask()
                 if(worktask.elementForName("WorktaskCode") != nil)
                 {
@@ -71,6 +83,7 @@ class User:BaseMessage{
                     newWorktask.WorktaskName = worktask.elementForName("WorktaskName").stringValue()
                 }
                 result.WorktaskList.append(newWorktask)
+            }
             }
         }
         return result

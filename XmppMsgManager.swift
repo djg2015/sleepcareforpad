@@ -109,6 +109,8 @@ class XmppMsgManager:MessageDelegate{
         }
         else if(object.isKindOfClass(AlarmList) && "GetAlarmByUser" != object.messageSubject.operate && "GetAlarmByLoginUser" != object.messageSubject.operate)
         {
+            //14 推送的报警信息 ListAlarmMessageReport（没有handleflag）
+            //16.	推送已处理报警信息 ListAlarmMessageReport(有handleflag)
             if(self._waringAttentionDelegate != nil){
                 self._waringAttentionDelegate?.GetWaringAttentionDelegate(object as! AlarmList)
             }

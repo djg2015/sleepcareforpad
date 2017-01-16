@@ -266,6 +266,7 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
         if(self.IsOpen){
             for(var i = 0;i < alarmList.alarmInfoList.count;i++){
                 //已处理，检查alarmcode是否在本地的codes，是则删掉这条报警
+                //0:未处理;1:已处理,默认“”
                 if alarmList.alarmInfoList[i].HandleFlag == "1"{
                     let code = alarmList.alarmInfoList[i].AlarmCode
                     if self.IsCodeExist(code){
@@ -289,7 +290,8 @@ class AlarmHelper:NSObject, WaringAttentionDelegate {
                     }
                 }
                     //新的报警信息，需加入到cashe
-                else if alarmList.alarmInfoList[i].HandleFlag == "0"{
+               // else if alarmList.alarmInfoList[i].HandleFlag == "0"{
+                else{
                     self._wariningCaches.append(alarmList.alarmInfoList[i])
                 }
             }//for
@@ -318,4 +320,133 @@ protocol SetAlarmWarningLabelDelegate{
     func SetAlarmWarningLabel(count:Int)
 }
 
+
+class QueryAlarmItem
+{
+    //属性定义
+    var _number:Int = 0
+    // 序号
+    dynamic var Number:Int{
+        get
+        {
+            return self._number
+        }
+        set(value)
+        {
+            self._number=value
+        }
+    }
+    
+    var _alarmCode:String = ""
+    // 报警编号
+    dynamic var AlarmCode:String{
+        get
+        {
+            return self._alarmCode
+        }
+        set(value)
+        {
+            self._alarmCode = value
+        }
+    }
+    
+    var _alarmType:String = ""
+    // 报警类型
+    dynamic var AlarmType:String{
+        get
+        {
+            return self._alarmType
+        }
+        set(value)
+        {
+            self._alarmType = value
+        }
+    }
+    
+    var _alarmTime:String = ""
+    // 报警时间
+    dynamic var AlarmTime:String{
+        get
+        {
+            return self._alarmTime
+        }
+        set(value)
+        {
+            self._alarmTime = value
+        }
+    }
+    
+    var _alarmContent:String = ""
+    // 报警内容
+    dynamic var AlarmContent:String{
+        get
+        {
+            return self._alarmContent
+        }
+        set(value)
+        {
+            self._alarmContent = value
+        }
+    }
+    
+    var _handleTime:String = ""
+    dynamic var HandleTime:String{
+        get
+        {
+            return self._handleTime
+        }
+        set(value)
+        {
+            self._handleTime = value
+        }
+    }
+    
+    var _handleStatus:String = ""
+    dynamic var HandleStatus:String{
+        get
+        {
+            return self._handleStatus
+        }
+        set(value)
+        {
+            self._handleStatus = value
+        }
+    }
+    
+    var _bedNumber:String = ""
+    dynamic var BedNumber:String{
+        get
+        {
+            return self._bedNumber
+        }
+        set(value)
+        {
+            self._bedNumber = value
+        }
+    }
+    
+    var _userName:String = ""
+    dynamic var UserName:String{
+        get
+        {
+            return self._userName
+        }
+        set(value)
+        {
+            self._userName = value
+        }
+    }
+    
+    var _partName:String = ""
+    dynamic var PartName:String{
+        get
+        {
+            return self._partName
+        }
+        set(value)
+        {
+            self._partName = value
+        }
+    }
+}
 

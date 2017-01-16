@@ -34,7 +34,6 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
     @IBOutlet weak var checkOffDuty: UIButton!
     //切换养老院
     @IBOutlet weak var btnChoose: UIButton!
-    @IBOutlet weak var lblWarningLine: UILabel!
     //页数
     @IBOutlet weak var lblCurrentPage: UILabel!
     @IBOutlet weak var lblMaxPage: UILabel!
@@ -108,12 +107,12 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
         didSet{
             if(self.WarningSet > 0){
                 
-                self.lblWarining.text = "有" + self.WarningSet.description + "条报警未处理,请点击此处查看"
-                self.lblWarningLine.hidden = false
+                self.lblWarining.text = "有" + self.WarningSet.description + "条报警未处理"
+            
             }
             else{
                 self.lblWarining.text = ""
-                self.lblWarningLine.hidden = true
+              
             }
         }
     }
@@ -489,6 +488,7 @@ class SleepcareMainController: BaseViewController,UISearchBarDelegate,ChoosePart
                 
                 if bedModel.UserCode != nil{
                     Session.GetSession()!.CurUserCode = bedModel.UserCode!
+                    Session.GetSession()!.CurUserName = bedModel.UserName!
                     
                     self.performSegueWithIdentifier("ShowPatientDetail", sender: self)
                 }

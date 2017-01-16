@@ -21,10 +21,6 @@ class EMServiceException:BaseMessage{
         for eMServiceException in eMServiceExceptions {
             result.code = eMServiceException.attributeForName("code").stringValue()
             result.message = eMServiceException.attributeForName("message").stringValue()
-            if(eMServiceException.attributeForName("trace") != nil)
-            {
-                result.trace = eMServiceException.attributeForName("trace").stringValue()
-            }
         }
         return result
     }

@@ -24,6 +24,8 @@ class SleepCareReport:BaseMessage{
     var OnBedTimeSpan:String = ""
     var AnalysisDateSection:String = ""
     var SleepQuality:String = ""
+    
+    
     var LeaveBedCount:String = ""
     var MaxLeaveTimeSpan:String = ""
     var LeaveBedSuggest:String = ""

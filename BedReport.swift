@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LeaveBedReport
+class BedReport
 {
     var BedCode:String = ""
     var UserCode:String = ""
@@ -19,4 +19,7 @@ class LeaveBedReport
     var StartTime:String = ""
     var EndTime:String = ""
     var LeaveBedTimespan:String = ""
+    
+    
+    
 }

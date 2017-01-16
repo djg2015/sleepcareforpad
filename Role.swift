@@ -13,4 +13,5 @@
         var RoleName:String = ""
         var MainCode:String = ""
         var PartCode:String = ""
+        var ParentCode:String = ""
     }
